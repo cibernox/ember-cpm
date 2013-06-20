@@ -12,6 +12,7 @@
     <script src="../node_modules/chai/chai.js"></script>
     <script src="../node_modules/mocha-phantomjs/node_modules/mocha/mocha.js"></script>
     <script>
+      Ember.testing = true;
       expect = chai.expect;
       mocha.ui('bdd');
       mocha.reporter('html');
