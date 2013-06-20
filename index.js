@@ -98,15 +98,15 @@
   // Backport Ember 1.0 CP Macros:
 
   registerComputed('empty', function(dependentKey) {
-    return Ember.isEmpty(get(this, dependentKey));
+    return Ember.empty(get(this, dependentKey));
   });
 
   registerComputed('notEmpty', function(dependentKey) {
-    return !Ember.isEmpty(get(this, dependentKey));
+    return !Ember.empty(get(this, dependentKey));
   });
 
   registerComputed('none', function(dependentKey) {
-    return Ember.isNone(get(this, dependentKey));
+    return get(this, dependentKey) == null;
   });
 
   registerComputed('not', function(dependentKey) {
@@ -193,7 +193,7 @@
     var res = [];
     for (var key in properties) {
       if (properties.hasOwnProperty(key)) {
-        if (Ember.isNone(properties[key])) {
+        if (properties[key] == null) {
           res.push(null);
         } else {
           res.push(properties[key]);
@@ -225,7 +225,10 @@
   };
 
   EmberCPM.Macros.oneWay = function(dependentKey) {
-    return Ember.computed(dependentKey, function() {
+    return Ember.computed(dependentKey, function(propertyName, newValue) {
+      if (arguments.length > 1) {
+        return newValue;
+      }
       return get(this, dependentKey);
     }).cacheable();
   };
