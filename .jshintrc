@@ -3,7 +3,7 @@
   "undef":  true,
 
   "predef":    [
-    "Handlebars", "Ember", "console",
+    "Handlebars", "Ember",
     "EmberCPM",
     "describe", "it", "expect", "beforeEach", "afterEach"
   ]
