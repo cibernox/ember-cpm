@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../components/jquery/jquery.js"></script>
+    <script src="../components/handlebars/handlebars.runtime.js"></script>
+    <script src="../components/ember/ember.js"></script>
+    <script src="../index.js"></script>
+    <link rel="stylesheet" href="../node_modules/mocha-phantomjs/node_modules/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha-phantomjs/node_modules/mocha/mocha.js"></script>
+    <script>
+      expect = chai.expect;
+      mocha.ui('bdd');
+      mocha.reporter('html');
+    </script>
+    <script src="./amongSpec.js"></script>
+    <script src="./encodeURIComponentSpec.js"></script>
+    <script src="./encodeURISpec.js"></script>
+    <script src="./fmtSpec.js"></script>
+    <script src="./htmlEscapeSpec.js"></script>
+    <script src="./ifNullSpec.js"></script>
+    <script src="./notAmongSpec.js"></script>
+    <script src="./notEqualSpec.js"></script>
+    <script src="./notMatchSpec.js"></script>
+    <script src="./promiseSpec.js"></script>
+    <script src="./safeStringSpec.js"></script>
+    <script src="./installSpec.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+      else { mocha.run(); }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "eqnull": true,
+  "undef":  true,
+
+  "predef":    [
+    "Handlebars", "Ember", "console",
+    "EmberCPM",
+    "describe", "it", "expect", "beforeEach", "afterEach"
+  ]
+}
