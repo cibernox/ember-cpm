@@ -22,7 +22,7 @@
       var args = a_slice.call(arguments);
       return Ember.computed(dependentKey, function() {
         return macro.apply(this, args);
-      });
+      }).cacheable();
     };
   }
 
@@ -94,6 +94,152 @@
     if (value == null) { return value; }
     return new Handlebars.SafeString(value);
   });
+
+  // Backport Ember 1.0 CP Macros:
+
+  registerComputed('empty', function(dependentKey) {
+    return Ember.isEmpty(get(this, dependentKey));
+  });
+
+  registerComputed('notEmpty', function(dependentKey) {
+    return !Ember.isEmpty(get(this, dependentKey));
+  });
+
+  registerComputed('none', function(dependentKey) {
+    return Ember.isNone(get(this, dependentKey));
+  });
+
+  registerComputed('not', function(dependentKey) {
+    return !get(this, dependentKey);
+  });
+
+  registerComputed('bool', function(dependentKey) {
+    return !!get(this, dependentKey);
+  });
+
+  registerComputed('match', function(dependentKey, regexp) {
+    var value = get(this, dependentKey);
+    return typeof value === 'string' ? !!value.match(regexp) : false;
+  });
+
+  registerComputed('equal', function(dependentKey, value) {
+    return get(this, dependentKey) === value;
+  });
+
+  registerComputed('gt', function(dependentKey, value) {
+    return get(this, dependentKey) > value;
+  });
+
+  registerComputed('gte', function(dependentKey, value) {
+    return get(this, dependentKey) >= value;
+  });
+
+  registerComputed('lt', function(dependentKey, value) {
+    return get(this, dependentKey) < value;
+  });
+
+  registerComputed('lte', function(dependentKey, value) {
+    return get(this, dependentKey) <= value;
+  });
+
+  function getProperties(self, propertyNames) {
+    var ret = {};
+    for(var i = 0; i < propertyNames.length; i++) {
+      ret[propertyNames[i]] = get(self, propertyNames[i]);
+    }
+    return ret;
+  }
+
+  function registerComputedWithProperties(name, macro) {
+    EmberCPM.Macros[name] = function() {
+      var properties = a_slice.call(arguments);
+
+      var computed = Ember.computed(function() {
+        return macro.apply(this, [getProperties(this, properties)]);
+      });
+
+      return computed.property.apply(computed, properties);
+    };
+  }
+
+  registerComputedWithProperties('and', function(properties) {
+    for (var key in properties) {
+      if (properties.hasOwnProperty(key) && !properties[key]) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  registerComputedWithProperties('or', function(properties) {
+    for (var key in properties) {
+      if (properties.hasOwnProperty(key) && properties[key]) {
+        return true;
+      }
+    }
+    return false;
+  });
+
+  registerComputedWithProperties('any', function(properties) {
+    for (var key in properties) {
+      if (properties.hasOwnProperty(key) && properties[key]) {
+        return properties[key];
+      }
+    }
+    return null;
+  });
+
+  registerComputedWithProperties('map', function(properties) {
+    var res = [];
+    for (var key in properties) {
+      if (properties.hasOwnProperty(key)) {
+        if (Ember.isNone(properties[key])) {
+          res.push(null);
+        } else {
+          res.push(properties[key]);
+        }
+      }
+    }
+    return res;
+  });
+
+  registerComputed('oneWay', function(dependentKey, value) {
+    return undefined;
+  });
+
+  registerComputed('defaultTo', function(dependentKey, value) {
+    return undefined;
+  });
+
+  var set = Ember.set;
+
+  EmberCPM.Macros.alias = function(dependentKey) {
+    return Ember.computed(dependentKey, function(key, value){
+      if (arguments.length > 1) {
+        set(this, dependentKey, value);
+        return value;
+      } else {
+        return get(this, dependentKey);
+      }
+    }).cacheable();
+  };
+
+  EmberCPM.Macros.oneWay = function(dependentKey) {
+    return Ember.computed(dependentKey, function() {
+      return get(this, dependentKey);
+    }).cacheable();
+  };
+
+  EmberCPM.Macros.defaultTo = function(defaultPath) {
+    return Ember.computed(function(key, newValue, cachedValue) {
+      if (arguments.length === 1) {
+        return cachedValue != null ? cachedValue : get(this, defaultPath);
+      }
+      return newValue != null ? newValue : get(this, defaultPath);
+    }).cacheable();
+  };
+
+  // End Backport from Ember 1.0
 
   window.EmberCPM = EmberCPM;
 
