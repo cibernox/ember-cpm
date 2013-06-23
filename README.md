@@ -21,9 +21,9 @@ Just add `index.js` to your page after Ember but before your app.
  * `encodeURI` -- calls `encodeURI` on the original value
  * `fmt` -- pass the original value into a format-string
  * `htmlEscape` -- escapes the original value with
- * `ifNull` -- fall back on a default value
    `Handlebars.Utils.escapeExpression` *and* wraps the result in a
    `Handlebars.SafeString` (since it's now safe)
+ * `ifNull` -- fall back on a default value
  * `notAmong` -- inverse of `among`
  * `notEqual` -- inverse of the built-in `equal` macro
  * `notMatch` -- inverse of the built-in `match` macro
