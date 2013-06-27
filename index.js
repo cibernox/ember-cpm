@@ -203,14 +203,6 @@
     return res;
   });
 
-  registerComputed('oneWay', function(dependentKey, value) {
-    return undefined;
-  });
-
-  registerComputed('defaultTo', function(dependentKey, value) {
-    return undefined;
-  });
-
   var set = Ember.set;
 
   EmberCPM.Macros.alias = function(dependentKey) {
