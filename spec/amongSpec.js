@@ -1,15 +1,15 @@
 describe('among', function () {
 
   var Object = Ember.Object.extend({
-    isCartoonDog: EmberCPM.Macros.among('value', 'Odie', 'Snoopy')
+    hasCartoonDog: EmberCPM.Macros.among('pet.name', 'Odie', 'Snoopy')
   });
 
   it('returns false if the value is not among the given values', function() {
-    expect(Object.create({ value: 'Garfield' }).get('isCartoonDog')).to.equal(false);
+    expect(Object.create({ pet: { name: 'Garfield' } }).get('hasCartoonDog')).to.equal(false);
   });
 
   it('returns true if the value is among the given values', function() {
-    expect(Object.create({ value: 'Odie' }).get('isCartoonDog')).to.equal(true);
+    expect(Object.create({ pet: { name: 'Odie' } }).get('hasCartoonDog')).to.equal(true);
   });
 
 });

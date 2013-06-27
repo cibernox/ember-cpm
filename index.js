@@ -9,7 +9,7 @@
   }
 
   var a_slice  = Array.prototype.slice,
-      get      = Ember.get,
+      get      = Ember.getPath,
       EmberCPM = {
         Macros: {},
         install: function() {
