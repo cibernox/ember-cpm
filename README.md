@@ -45,7 +45,7 @@ Person = Ember.Object.extend({
 
   canUseLeftHand: EmberCPM.Macros.among('handedness', 'left', 'ambidextrous'),
 
-  notNamedJohn: EmberCPM.Macros.notMach('name', /\bJohn\b/)
+  notNamedJohn: EmberCPM.Macros.notMatch('name', /\bJohn\b/)
 
 });
 ```
