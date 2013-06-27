@@ -9,13 +9,16 @@
   }
 
   var a_slice  = Array.prototype.slice,
-      get      = Ember.get,
       EmberCPM = {
         Macros: {},
         install: function() {
           reverseMerge(Ember.computed, EmberCPM.Macros);
         }
-      };
+      },
+      get = (function() {
+        var getSupportsPaths = Ember.get({ nested: { value: true } }, 'nested.value');
+        return getSupportsPaths ? Ember.get : Ember.getPath;
+      })();
 
   function registerComputed(name, macro) {
     EmberCPM.Macros[name] = function(dependentKey) {
