@@ -148,16 +148,16 @@ describe('Backported Macros', function() {
   });
 
   it('alias', function() {
-    var Object = Ember.Object.extend({ alias: EmberCPM.Macros.alias('value') });
+    var Object = Ember.Object.extend({ alias: EmberCPM.Macros.alias('farm.name') });
 
-    var o = Object.create({ value: 'initial value' });
+    var o = Object.create({ farm: { name: 'initial value' } });
     expect(o.get('alias')).to.equal('initial value');
 
     Ember.run(function() { o.set('alias', 'new value'); });
     expect(o.get('alias')).to.equal('new value');
-    expect(o.get('value')).to.equal('new value');
+    expect(o.getPath('farm.name')).to.equal('new value');
 
-    Ember.run(function() { o.set('value', 'updated value'); });
+    Ember.run(function() { o.set('farm', { name: 'updated value' }); });
     expect(o.get('alias')).to.equal('updated value');
   });
 

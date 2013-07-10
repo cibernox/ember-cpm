@@ -203,7 +203,7 @@
     return res;
   });
 
-  var set = Ember.set;
+  var set = Ember.setPath;
 
   EmberCPM.Macros.alias = function(dependentKey) {
     return Ember.computed(dependentKey, function(key, value){
