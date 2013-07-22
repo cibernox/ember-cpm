@@ -98,6 +98,20 @@
     return new Handlebars.SafeString(value);
   });
 
+  EmberCPM.Macros.join = function() {
+    var separator  = a_slice.call(arguments, -1);
+    var properties = a_slice.call(arguments, 0, -1);
+
+    var computed = Ember.computed(function() {
+      var _this = this;
+      return properties.map(function(key) {
+        return get(_this,key);
+      }).join(separator);
+    });
+
+    return computed.property.apply(computed, properties);
+  };
+
   window.EmberCPM = EmberCPM;
 
 }).call(undefined, this, this.Ember, this.jQuery);
