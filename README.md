@@ -29,6 +29,7 @@ Just add `index.js` to your page after Ember but before your app.
  * `notMatch` -- inverse of the built-in `match` macro
  * `promise` -- wraps the original value in an already-resolved promise
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
+ * `join` -- joins the supplied values together with a provided sepatator
 
 ### Examples
 
