@@ -124,5 +124,7 @@
   };
 
   window.EmberCPM = EmberCPM;
+  EmberCPM.VERSION = '1.0.1';
+  if (Ember.libraries) Ember.libraries.register('Ember-CPM', EmberCPM.VERSION);
 
 }).call(undefined, this, this.Ember, this.jQuery);
