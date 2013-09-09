@@ -19,7 +19,7 @@ Just add `index.js` to your page after Ember but before your app.
    (testing using `===`)
  * `encodeURIComponent` -- calls `encodeURIComponent` on the original value
  * `encodeURI` -- calls `encodeURI` on the original value
- * `fmt` -- pass the original value into a format-string
+ * `fmt` -- pass the original values into a format-string
  * `htmlEscape` -- escapes the original value with
    `Handlebars.Utils.escapeExpression` *and* wraps the result in a
    `Handlebars.SafeString` (since it's now safe)
@@ -40,9 +40,11 @@ Person = Ember.Object.extend({
 
   handedness: null,
 
+  greeting: null,
+
   handle: EmberCPM.Macros.ifNull('name', 'Anonymous'),
 
-  greeting: EmberCPM.Macros.fmt('name', '%@ says, "Hello!"'),
+  greeting: EmberCPM.Macros.fmt('name', 'greeting', '%@ says, "%@!"'),
 
   canUseLeftHand: EmberCPM.Macros.among('handedness', 'left', 'ambidextrous'),
 
