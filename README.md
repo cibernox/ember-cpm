@@ -1,6 +1,6 @@
 ## Ember-CPM
 
-![Build Status](https://travis-ci.org/jamesarosen/ember-cpm.png)
+[![Build Status](https://travis-ci.org/jamesarosen/ember-cpm.png)](http://travis-ci.org/jamesarosen/ember-cpm)
 
 Computed Property Macros for Ember
 
