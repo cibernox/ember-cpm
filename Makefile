@@ -13,14 +13,18 @@ test: jshint $(bower_libs)
 jshint: $(jshint_bin)
 	$(jshint_bin) index.js spec/*Spec.js
 
-$(bower_libs):
+$(bower_libs): bower_install
+
+bower_install:
 	$(bower_bin) install
 
-$(npm_libs):
+$(npm_libs): npm_install
+
+npm_install:
 	npm install
 
 clobber:
 	rm -rf ./node_modules/
 	rm -rf ./components/
 
-.PHONY: jshint test clobber
+.PHONY: jshint test clobber bower_install npm_install
