@@ -2,7 +2,7 @@ jshint_bin     = ./node_modules/jshint/bin/jshint
 phantomjs_bin  = ./node_modules/mocha-phantomjs/bin/mocha-phantomjs
 bower_bin      = ./node_modules/bower/bin/bower
 
-bower_libs = components/ember/index.js components/jquery/index.js components/handlebars/index.js
+bower_libs = bower_components/ember/index.js bower_components/jquery/index.js bower_components/handlebars/index.js
 npm_libs   = $(jshint_bin) $(phantomjs_bin) $(bower_bin)
 
 all: test
@@ -25,6 +25,6 @@ npm_install:
 
 clobber:
 	rm -rf ./node_modules/
-	rm -rf ./components/
+	rm -rf ./bower_components/
 
 .PHONY: jshint test clobber bower_install npm_install

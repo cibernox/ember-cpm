@@ -21,6 +21,6 @@
     "mocha-phantomjs": "~2.0.1",
     "jshint": "~2.0.1",
     "handlebars": "~1.0.11",
-    "bower": "~0.9"
+    "bower": "~1.2.6"
   }
 }
