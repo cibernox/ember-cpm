@@ -4,7 +4,7 @@
   "description": "Computed Propery Macros for Ember.js",
   "main": [ "index.js" ],
   "dependencies": {
-    "ember": ">0.9.7, <1.1"
+    "ember": "http://builds.emberjs.com/release/ember.js"
   },
   "scripts": {
     "test": "make test"
