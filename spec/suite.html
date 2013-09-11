@@ -16,6 +16,7 @@
       expect = chai.expect;
       mocha.ui('bdd');
       mocha.reporter('html');
+      mocha.globals([ /jQuery\d+\.\d+/ ]);
     </script>
     <script src="./amongSpec.js"></script>
     <script src="./encodeURIComponentSpec.js"></script>
