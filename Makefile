@@ -2,7 +2,7 @@ jshint_bin     = ./node_modules/jshint/bin/jshint
 phantomjs_bin  = ./node_modules/mocha-phantomjs/bin/mocha-phantomjs
 bower_bin      = ./node_modules/bower/bin/bower
 
-bower_libs = components/ember/index.js components/jquery/jquery.js components/handlebars/handlebars.js
+bower_libs = components/ember/index.js components/jquery/index.js components/handlebars/index.js
 npm_libs   = $(jshint_bin) $(phantomjs_bin) $(bower_bin)
 
 all: test
