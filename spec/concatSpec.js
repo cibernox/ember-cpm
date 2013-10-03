@@ -79,6 +79,31 @@ describe("concat", function() {
     expect(array.mapProperty('name')).to.deep.equal(['Jaime', 'Cersei', 'Sansa', 'Arya']);
   });
 
+  it("updates correctly when dependent arrays are swapped", function() {
+    var lannisters = obj.get('lannisters'),
+        starks = obj.get('starks'),
+        array = obj.get('allPeople');
+
+    Ember.run(function() {
+      obj.set('lannisters', starks);
+      obj.set('starks', lannisters);
+    });
+
+    expect(array.mapProperty('name')).to.deep.equal(['Robb', 'Eddard', 'Jaime', 'Cersei']);
+  });
+
+  it("updates correctly when multiple dependent keys are the same array", function() {
+    array = obj.get('allPeople');
+
+    Ember.run(function() {
+      obj.set('lannisters', obj.get('starks'));
+    });
+
+    expect(array.mapProperty('name')).to.deep.equal(['Robb', 'Eddard', 'Robb', 'Eddard']);
+    expect(array[0]).to.equal(array[2]);
+    expect(array[1]).to.equal(array[3]);
+  });
+
   it("ignores null or undefined dependent arrays", function() {
     array = obj.get('allPeople');
 
