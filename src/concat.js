@@ -32,7 +32,7 @@
     }
 
     arrayIndex = offset + changeMeta.index;
-    dependentArrayLengths[dependentArrayIndex] = changeMeta.arrayChanged.getWithDefault('length', 0) + dependentArrayDelta;
+    dependentArrayLengths[dependentArrayIndex] = (get(changeMeta.arrayChanged, 'length') || 0) + dependentArrayDelta;
 
     return arrayIndex;
   }
@@ -44,6 +44,31 @@
     }, context);
   }
 
+  /**
+    Keeps n arrays concatenated using `Ember.ArrayComputed`.
+
+    Example:
+    ```js
+    obj = Ember.Object.createWithMixins({
+      itemsA: [],
+      itemsB: [],
+      itemsC: [],
+      allItems: EmberCPM.Macros.concat('itemsA', 'itemsB', 'itemsC');
+    });
+
+    obj.get('itemsA').pushObjects(['a', 'b']);
+    obj.get('allItems') //=> ['a', 'b']
+
+    obj.get('itemsB').pushObjects(['c']);
+    obj.get('allItems') //=> ['a', 'b', 'c']
+
+    obj.get('itemsC').pushObjects(['d']);
+    obj.get('allItems') //=> ['a', 'b', 'c', 'd']
+
+    obj.get('itemsB').pushObjects(['e', 'f']);
+    obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
+    ```
+  */
   EmberCPM.Macros.concat = function () {
     var args = a_slice.call(arguments);
     args.push({
