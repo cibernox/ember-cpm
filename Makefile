@@ -4,11 +4,15 @@ bower_bin      = ./node_modules/bower/bin/bower
 
 bower_libs = bower_components/ember/index.js bower_components/jquery/index.js bower_components/handlebars/index.js
 npm_libs   = $(jshint_bin) $(phantomjs_bin) $(bower_bin)
+src_files = src/preamble.js src/index.js src/concat.js
 
 test: jshint $(bower_libs)
 	@$(phantomjs_bin) spec/suite.html
 
 install_dependencies: npm_install bower_install
+
+index.js: $(src_files)
+	cat $(src_files) > index.js
 
 jshint: $(jshint_bin)
 	@$(jshint_bin) index.js spec/*Spec.js
