@@ -117,4 +117,16 @@ describe("concat", function() {
     });
     expect(array.mapProperty('name')).to.deep.equal([]);
   });
+
+  it("concatenates multiple arrays", function() {
+    Obj = Ember.Object.extend({
+      allPeople: EmberCPM.Macros.concat('lannisters', 'starks', 'boltons')
+    });
+    obj = Obj.create({
+      lannisters: Ember.A([o('Jaime'), o('Cersei')]),
+      starks: Ember.A([o('Robb'), o('Eddard')]),
+      boltons: Ember.A([o('Ramsey'), o('Roose')]),
+    });
+    expect(obj.get('allPeople').mapProperty('name')).to.deep.equal(['Jaime', 'Cersei', 'Robb', 'Eddard', 'Ramsey', 'Roose']);
+  });
 });
