@@ -139,6 +139,20 @@
     return computed.property.apply(computed, properties);
   };
 
+  EmberCPM.Macros.sum = function(dependentKey) {
+    return Ember.reduceComputed.call(null, dependentKey, {
+      initialValue: function() { return 0; },
+
+      addedItem: function (accumulatedValue, item) {
+        return accumulatedValue + item;
+      },
+
+      removedItem: function (accumulatedValue, item) {
+        return accumulatedValue - item;
+      }
+    });
+  };
+
 }).call(undefined, this, this.Ember, this.jQuery, this.EmberCPM);
 (function(window, Ember, $, EmberCPM) {
   var a_slice  = Array.prototype.slice,
