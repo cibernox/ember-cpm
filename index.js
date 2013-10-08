@@ -141,14 +141,16 @@
 
   EmberCPM.Macros.sum = function(dependentKey) {
     return Ember.reduceComputed.call(null, dependentKey, {
+      // Using a function to support ember versions from before:
+      // https://github.com/emberjs/ember.js/commit/1099564f89302
       initialValue: function() { return 0; },
 
       addedItem: function (accumulatedValue, item) {
-        return accumulatedValue + item;
+        return accumulatedValue + ((typeof item)=="number" ? item : 0);
       },
 
       removedItem: function (accumulatedValue, item) {
-        return accumulatedValue - item;
+        return accumulatedValue - ((typeof item)=="number" ? item : 0);
       }
     });
   };
