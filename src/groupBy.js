@@ -48,8 +48,22 @@
   /**
     Groups an array of objects by a property.
 
-    Returns an objects whose keys are the various values of the property
-    and whose values are arrays corresponding to objects with that value.
+    Returns an array of objects representing each group. The objects are of the
+    form:
+
+    ```javascript
+    {
+      value: "someValue",
+      items: [ item1, ..., itemN ]
+    }
+    ```
+
+    where `value` is the particular value of the property being grouped on
+    and `items` is the subset of items from the dependent array with
+    `propertyKey` set to `value`.
+
+    `groupBy` respects the order of the dependent array as well as duplicate
+    items.
   */
   EmberCPM.Macros.groupBy = function(dependentKey, propertyKey) {
     return Ember.reduceComputed(dependentKey + ".@each." + propertyKey, {
