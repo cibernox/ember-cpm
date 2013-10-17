@@ -1,48 +1,45 @@
 (function(window, Ember, $, EmberCPM) {
-  var Group = Ember.Object.extend({
-    property: null,
-    value: null,
-    items: null
-  });
 
-  function findItemInsertionIndex(items, changeMeta, instanceMeta) {
-    for (var i = items.get('length') - 1; i >= 0; i--) {
-      var currentItem = items.objectAt(i),
-          currentIndex = instanceMeta.itemGuidToIndex[Ember.guidFor(currentItem)];
-
-      if (currentIndex < changeMeta.index) {
-        return i + 1;
-      }
-    }
-
-    return 0;
-  }
-
-  function getGroup(groups, item, propertyKey) {
+  function getGroupForInsertion(groups, item, propertyKey, changeMeta, instanceMeta) {
     var value = item.get(propertyKey);
     var group = groups.findBy('value', value);
 
     if (!group) {
-      group = Group.create({
+      group = Ember.Object.create({
         property: propertyKey,
         value: value,
         items: Ember.A()
       });
 
+      instanceMeta.groupGuidToDependentIndexes[Ember.guidFor(group)] = [];
       groups.pushObject(group);
     }
 
     return group;
   }
 
-  function removeItem(groups, group, item) {
-    var items = group.get('items');
+  function getGroupForRemoval(groups, item, propertyKey, changeMeta, instanceMeta) {
+    var value;
 
-    items.removeObject(item);
-
-    if (Ember.isEmpty(items)) {
-      groups.removeObject(group);
+    if (changeMeta.previousValues) {
+      value = changeMeta.previousValues[propertyKey];
+    } else {
+      value = item.get(propertyKey);
     }
+
+    return groups.findBy('value', value);
+  }
+
+  function getGroupInsertionIndex(group, dependentItemIndex, instanceMeta) {
+    var dependentIndexes = instanceMeta.groupGuidToDependentIndexes[Ember.guidFor(group)];
+
+    for (var i = dependentIndexes.get('length') - 1; i >= 0; i--) {
+      if (dependentIndexes[i] < dependentItemIndex) {
+        return i + 1;
+      }
+    }
+
+    return 0;
   }
 
   /**
@@ -69,7 +66,7 @@
     return Ember.reduceComputed(dependentKey + ".@each." + propertyKey, {
 
       initialize: function (groups, changeMeta, instanceMeta) {
-          instanceMeta.itemGuidToIndex = Ember.Object.create();
+          instanceMeta.groupGuidToDependentIndexes = {};
           return groups;
         },
 
@@ -78,27 +75,30 @@
       },
 
       addedItem: function(groups, item, changeMeta, instanceMeta) {
-        instanceMeta.itemGuidToIndex[Ember.guidFor(item)] = changeMeta.index;
+        var group = getGroupForInsertion(groups, item, propertyKey, changeMeta, instanceMeta),
+            items = group.get('items'),
+            dependentIndexes = instanceMeta.groupGuidToDependentIndexes[Ember.guidFor(group)],
+            index = getGroupInsertionIndex(group, changeMeta.index, instanceMeta);
 
-        var items = getGroup(groups, item, propertyKey).get('items');
-        var insertionIndex = findItemInsertionIndex(items, changeMeta, instanceMeta);
-        items.insertAt(insertionIndex, item);
+        dependentIndexes.insertAt(index, changeMeta.index);
+        items.insertAt(index, item);
 
         return groups;
       },
 
       removedItem: function(groups, item, changeMeta, instanceMeta) {
-        var value;
+        var group = getGroupForRemoval(groups, item, propertyKey, changeMeta, instanceMeta),
+            items = group.get('items'),
+            dependentIndexes = instanceMeta.groupGuidToDependentIndexes[Ember.guidFor(group)],
+            index = dependentIndexes.lastIndexOf(changeMeta.index);
 
-        if (changeMeta.previousValues) {
-          value = changeMeta.previousValues[propertyKey];
-        } else {
-          delete instanceMeta.itemGuidToIndex[Ember.guidFor(item)];
-          value = item.get(propertyKey);
+        dependentIndexes.removeAt(index);
+        items.removeAt(index);
+
+        if (Ember.isEmpty(items)) {
+          delete instanceMeta.groupGuidToDependentIndexes[Ember.guidFor(group)];
+          groups.removeObject(group);
         }
-
-        var group = groups.findBy('value', value);
-        removeItem(groups, group, item);
 
         return groups;
       }

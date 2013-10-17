@@ -128,4 +128,26 @@ describe("groupBy", function() {
     expect(groups.findBy('value', 'chrome').get('items').mapBy('name')).to.deep.equal(['Jack', 'Jacob', 'Jeremy']);
   });
 
+  // Duplicates
+
+  it("removes first instance of duplicate correctly", function() {
+    var inputArray = getInputArray();
+    var obj = Obj.create({model: inputArray});
+    var groups = obj.get('groupedModel');
+
+    inputArray.pushObject(inputArray.objectAt(0));
+    inputArray.removeAt(0);
+    expect(groups.findBy('value', 'firefox').get('items').mapBy('name')).to.deep.equal(['James', 'Jack']);
+  });
+
+  it("removes last instance of duplicate correctly", function() {
+    var inputArray = getInputArray();
+    var obj = Obj.create({model: inputArray});
+    var groups = obj.get('groupedModel');
+
+    inputArray.pushObject(inputArray.objectAt(0));
+    inputArray.removeAt(4);
+    expect(groups.findBy('value', 'firefox').get('items').mapBy('name')).to.deep.equal(['Jack', 'James']);
+  });
+
 });
