@@ -15,7 +15,7 @@ index.js: $(src_files)
 	cat $(src_files) > index.js
 
 jshint: $(jshint_bin)
-	@$(jshint_bin) index.js spec/*Spec.js
+	@$(jshint_bin) src/*.js spec/*Spec.js
 	@echo "JSHint OK"
 
 $(bower_libs): bower_install
