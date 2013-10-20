@@ -6,7 +6,7 @@
     "index.js"
   ],
   "dependencies": {
-    "ember": "http://builds.emberjs.com/release/ember.js",
+    "ember": "http://builds.emberjs.com/beta/ember.js",
     "jquery": "http://code.jquery.com/jquery-1.10.2.js",
     "handlebars": "https://raw.github.com/wycats/handlebars.js/1.0.0/dist/handlebars.runtime.js"
   },
