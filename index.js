@@ -9,7 +9,14 @@
   }
 
   var a_slice  = Array.prototype.slice,
-      get      = Ember.getPath,
+      get      = (function() {
+        // Ember 0.9.8.1 uses getPath. Ember 0.9.9-zendesk supports backporting
+        // get/set usage.
+        // cf https://github.com/zendesk/ember.js/blob/master/doc/accessors.md
+        var testObject = { test: {object: 'value' } },
+            supportsPaths = Ember.get(testObject, 'test.object') === 'value';
+        return supportsPaths ? Ember.get : Ember.getPath;
+      }()),
       EmberCPM = {
         Macros: {},
         install: function() {
