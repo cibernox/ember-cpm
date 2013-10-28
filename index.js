@@ -9,20 +9,28 @@
   }
 
   var a_slice  = Array.prototype.slice,
-      get      = (function() {
-        // Ember 0.9.8.1 uses getPath. Ember 0.9.9-zendesk supports backporting
-        // get/set usage.
-        // cf https://github.com/zendesk/ember.js/blob/master/doc/accessors.md
-        var testObject = { test: {object: 'value' } },
-            supportsPaths = Ember.get(testObject, 'test.object') === 'value';
-        return supportsPaths ? Ember.get : Ember.getPath;
-      }()),
       EmberCPM = {
         Macros: {},
         install: function() {
           reverseMerge(Ember.computed, EmberCPM.Macros);
         }
-      };
+      },
+      get, set;
+
+  (function() {
+    // Ember 0.9.8.1 uses getPath. Ember 0.9.9-zendesk supports backporting
+    // get/set usage.
+    // cf https://github.com/zendesk/ember.js/blob/master/doc/accessors.md
+    var testObject = { test: {object: 'value' } },
+        supportsPaths = Ember.get(testObject, 'test.object') === 'value';
+    if (supportsPaths) {
+      get = Ember.get;
+      set = Ember.set;
+    } else {
+      get = Ember.getPath;
+      set = Ember.setPath;
+    }
+  }());
 
   function registerComputed(name, macro) {
     EmberCPM.Macros[name] = function(dependentKey) {
@@ -209,8 +217,6 @@
     }
     return res;
   });
-
-  var set = Ember.setPath;
 
   EmberCPM.Macros.alias = function(dependentKey) {
     return Ember.computed(dependentKey, function(key, value){
