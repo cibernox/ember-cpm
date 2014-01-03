@@ -2,7 +2,7 @@ jshint_bin     = ./node_modules/jshint/bin/jshint
 phantomjs_bin  = ./node_modules/mocha-phantomjs/bin/mocha-phantomjs
 bower_bin      = ./node_modules/bower/bin/bower
 
-bower_libs = bower_components/ember/index.js bower_components/jquery/index.js bower_components/handlebars/index.js
+bower_libs = bower_components/ember/ember.js bower_components/jquery/jquery.js bower_components/handlebars/handlebars.runtime.js
 npm_libs   = $(jshint_bin) $(phantomjs_bin) $(bower_bin)
 src_files = src/preamble.js src/index.js src/concat.js
 

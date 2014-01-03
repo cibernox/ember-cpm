@@ -6,9 +6,9 @@
     "index.js"
   ],
   "dependencies": {
-    "ember": "http://builds.emberjs.com/release/ember.js",
-    "jquery": "http://code.jquery.com/jquery-1.10.2.js",
-    "handlebars": "https://raw.github.com/wycats/handlebars.js/1.0.0/dist/handlebars.runtime.js"
+    "ember": "1.2.0",
+    "jquery": "~>1.10",
+    "handlebars": "1.1.2"
   },
   "scripts": {
     "test": "make test"
