@@ -9,6 +9,7 @@
   }
 
   var a_slice  = Array.prototype.slice,
+      isEmpty  = Ember.isEmpty || Ember.empty,
       EmberCPM = {
         Macros: {},
         install: function() {
@@ -113,11 +114,11 @@
   // Backport Ember 1.0 CP Macros:
 
   registerComputed('empty', function(dependentKey) {
-    return Ember.empty(get(this, dependentKey));
+    return isEmpty(get(this, dependentKey));
   });
 
   registerComputed('notEmpty', function(dependentKey) {
-    return !Ember.empty(get(this, dependentKey));
+    return !isEmpty(get(this, dependentKey));
   });
 
   registerComputed('none', function(dependentKey) {
