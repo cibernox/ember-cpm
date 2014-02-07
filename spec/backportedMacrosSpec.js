@@ -167,9 +167,12 @@ describe('Backported Macros', function() {
     var o = Object.create({ value: 'initial value' });
     expect(o.get('oneWay')).to.equal('initial value');
 
-    Ember.run(function() { o.set('oneWay', 'new value'); });
-    expect(o.get('oneWay')).to.equal('new value');
+    Ember.run(function() { o.set('oneWay', 'new downstream value'); });
+    expect(o.get('oneWay')).to.equal('new downstream value');
     expect(o.get('value')).to.equal('initial value');
+
+    Ember.run(o, 'set', 'value', 'new upstream value');
+    expect(o.get('oneWay')).to.equal('new downstream value');
   });
 
   it('defaultTo', function() {

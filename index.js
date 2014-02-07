@@ -231,7 +231,7 @@
   };
 
   EmberCPM.Macros.oneWay = function(dependentKey) {
-    return Ember.computed(dependentKey, function(propertyName, newValue) {
+    return Ember.computed(function(propertyName, newValue) {
       if (arguments.length > 1) {
         return newValue;
       }
