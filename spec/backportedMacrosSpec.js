@@ -175,6 +175,19 @@ describe('Backported Macros', function() {
     expect(o.get('oneWay')).to.equal('new downstream value');
   });
 
+  it('readOnly', function() {
+    var Object = Ember.Object.extend({ readOnly: EmberCPM.Macros.readOnly('value') });
+
+    var o = Object.create({ value: 'initial value' });
+    expect(o.get('readOnly')).to.equal('initial value');
+
+    Ember.run(o, 'set', 'readOnly', 'new downstream value');
+    expect(o.get('readOnly')).to.equal('initial value');
+
+    Ember.run(o, 'set', 'value', 'new upstream value');
+    expect(o.get('readOnly')).to.equal('new upstream value');
+  });
+
   it('defaultTo', function() {
     var Object = Ember.Object.extend({ defaultTo: EmberCPM.Macros.defaultTo('value') });
 

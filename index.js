@@ -9,6 +9,7 @@
   }
 
   var a_slice  = Array.prototype.slice,
+      warn     = Ember.warn || window.ember_warn,
       isEmpty  = Ember.isEmpty || Ember.empty,
       EmberCPM = {
         Macros: {},
@@ -245,6 +246,19 @@
         return cachedValue != null ? cachedValue : get(this, defaultPath);
       }
       return newValue != null ? newValue : get(this, defaultPath);
+    }).cacheable();
+  };
+
+  function readOnlyMessage(keyName, obj) {
+    return 'Cannot Set: ' + keyName + ' on: ' + Ember.inspect(obj) + '. This will throw an exception on Ember 1.';
+  }
+
+  EmberCPM.Macros.readOnly = function(dependentKey) {
+    return Ember.computed(dependentKey, function(propertyName, newValue) {
+      if (arguments.length > 1) {
+        warn(readOnlyMessage(propertyName, this));
+      }
+      return get(this, dependentKey);
     }).cacheable();
   };
 
