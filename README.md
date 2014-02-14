@@ -32,6 +32,7 @@ Just add `index.js` to your page after Ember but before your app.
  * `promise` -- wraps the original value in an already-resolved promise
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
+ * `sum` -- gives the total of all the numbers in the supplied array
 
 ### Examples
 
