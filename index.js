@@ -108,6 +108,12 @@
     return new Handlebars.SafeString(value);
   });
 
+  registerComputed('service', function(controllerName) {
+    var container = this.get('container');
+    if (container == null) { return null; }
+    return container.lookup('service:' + controllerName);
+  });
+
   EmberCPM.Macros.fmt = function() {
     var formatString = '' + a_slice.call(arguments, -1),
         properties   = a_slice.call(arguments, 0, -1),
