@@ -105,6 +105,12 @@
     return new Handlebars.SafeString(value);
   });
 
+  EmberCPM.Macros.quotient = function(dividend, divisor) {
+    return Ember.computed(dividend, divisor, function() {
+      return get(this, dividend) / get(this, divisor);
+    });
+  };
+
   EmberCPM.Macros.fmt = function() {
     var formatString = '' + a_slice.call(arguments, -1),
         properties   = a_slice.call(arguments, 0, -1),
