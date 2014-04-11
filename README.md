@@ -33,6 +33,7 @@ Just add `index.js` to your page after Ember but before your app.
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
  * `sumBy` -- sums a property from an array of objects
+ * `averageBy` -- returns the average of a given property on the provided array of objects
 
 ### Examples
 
