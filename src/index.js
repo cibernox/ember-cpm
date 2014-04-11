@@ -83,6 +83,12 @@
     return new Handlebars.SafeString(value);
   });
 
+  EmberCPM.Macros.boundEqual = function(dependentKey, comparisonKey) {
+    return Ember.computed(dependentKey, comparisonKey, function(){
+      return get(this, dependentKey) === get(this, comparisonKey);
+    });
+  };
+
   EmberCPM.Macros.fmt = function() {
     var formatString = '' + a_slice.call(arguments, -1),
         properties   = a_slice.call(arguments, 0, -1),
