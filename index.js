@@ -105,6 +105,31 @@
     return new Handlebars.SafeString(value);
   });
 
+  EmberCPM.Macros.allEqual = function() {
+    var properties;
+    if (Ember.isArray(arguments[0])) {
+      properties = arguments[0];
+    } else {
+      properties = a_slice.call(arguments, 0);
+    }
+
+    var callback   = function() {
+          var comparisonValue = get(this, properties[0]);
+
+          for (var i = 0; i < properties.length; ++i) {
+            if (comparisonValue !== get(this, properties[i])) {
+              return false;
+            }
+          }
+
+          return true;
+        };
+    var computedArguments = a_slice.call(properties, 0);
+    computedArguments.push(callback);
+
+    return Ember.computed.apply(this, computedArguments);
+  };
+
   EmberCPM.Macros.fmt = function() {
     var formatString = '' + a_slice.call(arguments, -1),
         properties   = a_slice.call(arguments, 0, -1),
