@@ -9,10 +9,7 @@
   }
 
   var a_slice  = Array.prototype.slice,
-      get = (function() {
-        var getSupportsPaths = Ember.get({ nested: { value: true } }, 'nested.value');
-        return getSupportsPaths ? Ember.get : Ember.getPath;
-      })();
+      get = Ember.get;
 
   function registerComputed(name, macro) {
     EmberCPM.Macros[name] = function(dependentKey) {
