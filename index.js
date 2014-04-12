@@ -153,6 +153,18 @@
     });
   };
 
+  EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStart, rangeEnd, options){
+    var initFn = function(array, changeMeta, instanceMeta){
+      // array.push(3,4,5,6,7);
+    };
+    if (propertyKey !== '@this'){
+      dependentKey = dependentKey + '.@each.' + propertyKey;
+    }
+    return Ember.arrayComputed(dependentKey, {
+      initialize: initFn
+    });
+  };
+
 }).call(undefined, this, this.Ember, this.jQuery, this.EmberCPM);
 (function(window, Ember, $, EmberCPM) {
   var a_slice  = Array.prototype.slice,

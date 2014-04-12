@@ -131,4 +131,21 @@
     });
   };
 
+  EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStart, rangeEnd, options){
+    var getValue;
+    if (propertyKey !== '@this'){
+      dependentKey = dependentKey + '.@each.' + propertyKey;
+      getValue = function(element){ return element };
+    } else {
+      getValue = function(element){ return Emberelement };
+    }
+    var initFn = function(array, changeMeta, instanceMeta){
+      // array.push(3,4,5,6,7);
+    };
+    return Ember.arrayComputed(dependentKey, {
+      initialize: initFn,
+
+    });
+  };
+
 }).call(undefined, this, this.Ember, this.jQuery, this.EmberCPM);
