@@ -131,20 +131,130 @@
     });
   };
 
-  EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStart, rangeEnd, options){
-    var getValue;
-    if (propertyKey !== '@this'){
-      dependentKey = dependentKey + '.@each.' + propertyKey;
-      getValue = function(element){ return element };
+  EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStartKey, rangeEndKey, options){
+    var arrayComputedKey, getValue, inRange;
+    options = options || {};
+    if (propertyKey === '@this'){
+      arrayComputedKey = dependentKey;
+      getValue = function(element){ return element; };
     } else {
-      getValue = function(element){ return Emberelement };
+      arrayComputedKey = dependentKey + '.@each.' + propertyKey;
+      getValue = function(element){ return get(element, propertyKey); };
     }
-    var initFn = function(array, changeMeta, instanceMeta){
-      // array.push(3,4,5,6,7);
-    };
-    return Ember.arrayComputed(dependentKey, {
-      initialize: initFn,
+    if (options.exclusive){
+      inRange = function(value, start, end){ return value > start && value < end; };
+    } else {
+      inRange = function(value, start, end){ return value >= start && value <= end; };
+    }
 
+    var getIndexInTargetArray = function(sourceArray, maxIndex, rangeStart, rangeEnd){
+      var indexInTarget = 0,
+        sourceElement,
+        i;
+      for (i = 0; i < maxIndex; i++){
+        sourceElement = sourceArray.objectAt(i);
+        if (inRange(getValue(sourceElement), rangeStart, rangeEnd)) indexInTarget++;
+      }
+      return indexInTarget;
+    };
+
+    var initFn = function(array, changeMeta, instanceMeta){
+      var rangeStart = get(this, rangeStartKey),
+        rangeEnd = get(this, rangeEndKey),
+        element, isInRange, i;
+
+      var rangeStartChanged = function(){
+        var newRangeStart = get(this, rangeStartKey),
+          sourceArray = get(this, dependentKey),
+          length = get(sourceArray, 'length');
+        if (newRangeStart > rangeStart){
+          // Recorro los elementos. Aquellos que no están en rango y antes lo
+          // estaban se tienen que eliminar.
+          var elementsToRemove = [];
+          for (i = 0; i < length; i++){
+            element = sourceArray.objectAt(i);
+            isInRange = inRange(getValue(element), newRangeStart, rangeEnd);
+            if (!isInRange && inRange(getValue(element), rangeStart, rangeEnd)){
+              elementsToRemove.push(element);
+            }
+          }
+          array.removeObjects(elementsToRemove);
+        } else if (newRangeStart < rangeStart){
+          // Recorro los elementos. Si un elemento está en rango y antes no lo
+          // estaba hay que añadirlo en el lugar adecuado
+          var lastIndexesByElement = {}, elementsNotInRange, initialIndex;
+          for (i = 0; i < length; i++){
+            element = sourceArray.objectAt(i);
+            isInRange = inRange(getValue(element), newRangeStart, rangeEnd);
+            if (isInRange && !inRange(getValue(element), rangeStart, rangeEnd)){
+              initialIndex = (lastIndexesByElement[element] || -1) + 1;
+              elementsNotInRange = 0;
+              lastIndexesByElement[element] = sourceArray.indexOf(element, initialIndex);
+              for (var j = 0; j < lastIndexesByElement[element]; j++){
+                if (!inRange(getValue(sourceArray[j]), newRangeStart, rangeEnd)) elementsNotInRange++;
+              }
+              array.insertAt(lastIndexesByElement[element] - elementsNotInRange, element);
+            }
+          }
+        }
+        rangeStart = newRangeStart;
+      };
+
+      var rangeEndChanged = function(){
+        var newRangeEnd = get(this, rangeEndKey),
+          sourceArray = get(this, dependentKey),
+          length = get(sourceArray, 'length');
+
+        if (newRangeEnd > rangeEnd){
+          var lastIndexesByElement = {}, elementsNotInRange, initialIndex;
+          for (i = 0; i < length; i++){
+            element = sourceArray.objectAt(i);
+            isInRange = inRange(getValue(element), rangeStart, newRangeEnd);
+            if (isInRange && !inRange(getValue(element), rangeStart, rangeEnd)){
+              initialIndex = (lastIndexesByElement[element] || -1) + 1;
+              elementsNotInRange = 0;
+              lastIndexesByElement[element] = sourceArray.indexOf(element, initialIndex);
+              for (var j = 0; j < lastIndexesByElement[element]; j++){
+                if (!inRange(getValue(sourceArray[j]), rangeStart, newRangeEnd)) elementsNotInRange++;
+              }
+              array.insertAt(lastIndexesByElement[element] - elementsNotInRange, element);
+            }
+          }
+        } else if (newRangeEnd < rangeEnd){
+          var elementsToRemove = [];
+          for (i = length - 1; i >= 0; i--){
+            element = sourceArray.objectAt(i);
+            isInRange = inRange(getValue(element), rangeStart, newRangeEnd);
+            if (!isInRange && inRange(getValue(element), rangeStart, rangeEnd)){
+              elementsToRemove.push(element);
+            }
+          }
+          array.removeObjects(elementsToRemove);
+        }
+        rangeEnd = newRangeEnd;
+      };
+
+      Ember.addObserver(this, rangeStartKey, function(object){
+        Ember.run.once(object, rangeStartChanged);
+      });
+      Ember.addObserver(this, rangeEndKey, function(object){
+        Ember.run.once(object, rangeEndChanged);
+      });
+    };
+    return Ember.arrayComputed(arrayComputedKey, {
+      initialize: initFn,
+      addedItem: function(array, item, changeMeta, instanceMeta) {
+        var rangeStart = get(this, rangeStartKey),
+          rangeEnd = get(this, rangeEndKey);
+        if (inRange(getValue(item), rangeStart, rangeEnd)){
+          array.insertAt(getIndexInTargetArray(changeMeta.arrayChanged, changeMeta.index, rangeStart, rangeEnd), item);
+        }
+        return array;
+      },
+      removedItem: function(array, item, changeMeta, instanceMeta) {
+        array.removeObject(item);
+        return array;
+      }
     });
   };
 
