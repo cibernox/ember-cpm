@@ -6,8 +6,11 @@ bower_libs = bower_components/ember/ember.js bower_components/jquery/jquery.js b
 npm_libs   = $(jshint_bin) $(phantomjs_bin) $(bower_bin)
 src_files = src/preamble.js src/index.js src/concat.js
 
-test: jshint $(bower_libs)
+test: ensure_phantomjs jshint $(bower_libs)
 	@$(phantomjs_bin) spec/suite.html
+
+ensure_phantomjs:
+	@which phantomjs > /dev/null || (echo "Couldn't find phantomjs" && false)
 
 install_dependencies: npm_install bower_install
 
@@ -32,4 +35,4 @@ clobber:
 	@rm -rf ./node_modules/
 	@rm -rf ./bower_components/
 
-.PHONY: install_dependencies test jshint bower_install npm_install clobber
+.PHONY: ensure_phantomjs install_dependencies test jshint bower_install npm_install clobber
