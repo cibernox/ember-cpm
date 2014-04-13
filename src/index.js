@@ -83,6 +83,12 @@
     return new Handlebars.SafeString(value);
   });
 
+  EmberCPM.Macros.product = function(multiplicand, multiplier) {
+    return Ember.computed(multiplicand, multiplier, function product() {
+      return get(this, multiplicand) * get(this, multiplier);
+    });
+  };
+
   EmberCPM.Macros.fmt = function() {
     var formatString = '' + a_slice.call(arguments, -1),
         properties   = a_slice.call(arguments, 0, -1),
