@@ -1,11 +1,7 @@
 (function(window, Ember, $, EmberCPM) {
   var a_slice  = Array.prototype.slice,
       a_forEach = Ember.ArrayPolyfills.forEach,
-      get = (function() {
-        var getSupportsPaths = Ember.get({ nested: { value: true } }, 'nested.value');
-        return getSupportsPaths ? Ember.get : Ember.getPath;
-      })();
-
+      get = Ember.get;
 
   /*
      Returns the index where an item is to be removed from, or placed into, for
