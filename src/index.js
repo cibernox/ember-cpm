@@ -128,4 +128,29 @@
     });
   };
 
+  EmberCPM.Macros.averageBy = function(dependentKey, propertyKey) {
+    return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
+      initialize: function(initialValue, changeMeta, instanceMeta) {
+        instanceMeta.sum = 0;
+        instanceMeta.count = 0;
+      },
+
+      initialValue: 0.0,
+
+      addedItem: function(accumulatedValue, item, changeMeta, instanceMeta){
+        instanceMeta.count++;
+        instanceMeta.sum += parseFloat(Ember.get(item, propertyKey));
+
+        return instanceMeta.sum / instanceMeta.count;
+      },
+
+      removedItem: function(accumulatedValue, item, changeMeta, instanceMeta){
+        instanceMeta.count--;
+        instanceMeta.sum -= parseFloat(Ember.get(item, propertyKey));
+
+        return instanceMeta.sum / instanceMeta.count;
+      }
+    });
+  };
+
 }).call(undefined, this, this.Ember, this.jQuery, this.EmberCPM);
