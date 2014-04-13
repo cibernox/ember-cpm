@@ -33,6 +33,7 @@ Just add `index.js` to your page after Ember but before your app.
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
  * `sumBy` -- sums a property from an array of objects
+ * `quotient` -- returns the quotient of the given divisor and dividend
 
 ### Examples
 
