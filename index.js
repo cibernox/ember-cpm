@@ -224,6 +224,34 @@
     return Ember.arrayComputed(dependentKey, options);
   };
 
+  EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStartKey, rangeEndKey, options){
+    var arrayComputedKey, getValue, filterFunction;
+
+    options = options || {};
+
+    if (propertyKey === '@this'){
+      arrayComputedKey = dependentKey;
+      getValue = function(element){ return element; };
+    } else {
+      arrayComputedKey = dependentKey + '.@each.' + propertyKey;
+      getValue = function(element){ return get(element, propertyKey); };
+    }
+
+    if (options.exclusive){
+      filterFunction = function(item){
+        var value = getValue(item);
+        return value > get(this, rangeStartKey) && value < get(this, rangeEndKey);
+      };
+    } else {
+      filterFunction = function(item){
+        var value = getValue(item);
+        return value >= get(this, rangeStartKey) && value <= get(this, rangeEndKey);
+      };
+    }
+    return EmberCPM.Macros.boundFilter(dependentKey, rangeStartKey, rangeEndKey, filterFunction);
+  };
+
+
   // EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStartKey, rangeEndKey, options){
   //   var arrayComputedKey, getValue, inRange;
   //   options = options || {};
