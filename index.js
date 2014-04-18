@@ -154,6 +154,8 @@
   };
 
   EmberCPM.Macros.boundFilter = function(){
+    /*jshint -W053 */ /* Allow to use String as constructor only in this function */
+
     var dependentKey = arguments[0],
       argsLength = arguments.length,
       callback = arguments[argsLength - 1],
@@ -174,27 +176,31 @@
         var sourceArray = get(this, sourceArrayKey),
           length = get(sourceArray, 'length'),
           rejections = instanceMeta.rejectedItems,
+          rejectionsCount,
           item;
         for (var i = 0; i < length; i++){
           item = sourceArray[i];
           if (rejections[i] !== PLACEHOLDER && callback.call(this, item)){
-            var rejectionsCount = countRejections(rejections, i);
+            rejectionsCount = countRejections(rejections, i);
             rejections[i] = PLACEHOLDER;
             array.insertAt(i - rejectionsCount, item);
           } else if (rejections[i] === PLACEHOLDER && !callback.call(this, item)){
-            var rejectionsCount = countRejections(rejections, i);
+            rejectionsCount = countRejections(rejections, i);
             rejections[i] = item;
             array.removeAt(i - rejectionsCount);
           }
         }
       };
 
+      var refilterOnce = function(object, changedProperty){
+        Ember.run.once(object, refilter, changedProperty);
+      };
+
       instanceMeta.rejectedItems = [];
 
+
       for (var i = 0; i < otherKeys.length; i++){
-        Ember.addObserver(this, otherKeys[i], function(object, changedProperty){
-          Ember.run.once(object, refilter, changedProperty);
-        });
+        Ember.addObserver(this, otherKeys[i], refilterOnce);
       }
     };
 
@@ -248,6 +254,7 @@
         return value >= get(this, rangeStartKey) && value <= get(this, rangeEndKey);
       };
     }
+
     return EmberCPM.Macros.boundFilter(dependentKey, rangeStartKey, rangeEndKey, filterFunction);
   };
 
