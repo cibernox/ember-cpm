@@ -128,4 +128,109 @@
     });
   };
 
+  EmberCPM.Macros.boundFilter = function(){
+    /*jshint -W053 */ /* Allow to use String as constructor only in this function */
+
+    var dependentKey = arguments[0],
+      argsLength = arguments.length,
+      callback = arguments[argsLength - 1],
+      otherKeys = Array.prototype.slice.call(arguments, 1, argsLength - 1),
+      PLACEHOLDER = new String('__ember_filter_placeholder'),
+      countRejections = function(array, limit){
+        var count = 0;
+        for (var i = 0; i < limit; i++){
+          if (array[i] !== PLACEHOLDER) count++;
+        }
+        return count;
+      },
+      regexMatch = dependentKey.match(/(.*)\.@each\..*/),
+      sourceArrayKey = regexMatch && regexMatch[1] || dependentKey;
+
+    var initFn = function (array, changeMeta, instanceMeta) {
+      var refilter = function(changedProperty){
+        var sourceArray = get(this, sourceArrayKey),
+          length = get(sourceArray, 'length'),
+          rejections = instanceMeta.rejectedItems,
+          rejectionsCount,
+          item;
+        for (var i = 0; i < length; i++){
+          item = sourceArray[i];
+          if (rejections[i] !== PLACEHOLDER && callback.call(this, item)){
+            rejectionsCount = countRejections(rejections, i);
+            rejections[i] = PLACEHOLDER;
+            array.insertAt(i - rejectionsCount, item);
+          } else if (rejections[i] === PLACEHOLDER && !callback.call(this, item)){
+            rejectionsCount = countRejections(rejections, i);
+            rejections[i] = item;
+            array.removeAt(i - rejectionsCount);
+          }
+        }
+      };
+
+      var refilterOnce = function(object, changedProperty){
+        Ember.run.once(object, refilter, changedProperty);
+      };
+
+      instanceMeta.rejectedItems = [];
+
+
+      for (var i = 0; i < otherKeys.length; i++){
+        Ember.addObserver(this, otherKeys[i], refilterOnce);
+      }
+    };
+
+    var options = {
+      initialize: initFn,
+
+      addedItem: function(array, item, changeMeta, instanceMeta) {
+        if (!!callback.call(this, item)){
+          var rejectionsCount = countRejections(instanceMeta.rejectedItems, changeMeta.index);
+          instanceMeta.rejectedItems.insertAt(changeMeta.index, PLACEHOLDER);
+          array.insertAt(changeMeta.index - rejectionsCount, item);
+        } else {
+          instanceMeta.rejectedItems.insertAt(changeMeta.index, item);
+        }
+
+        return array;
+      },
+
+      removedItem: function(array, item, changeMeta, instanceMeta) {
+        array.removeObject(item);
+        instanceMeta.rejectedItems.removeAt(changeMeta.index);
+
+        return array;
+      }
+    };
+
+    return Ember.arrayComputed(dependentKey, options);
+  };
+
+  EmberCPM.Macros.inRange = function(dependentKey, propertyKey, rangeStartKey, rangeEndKey, options){
+    var arrayComputedKey, getValue, filterFunction;
+
+    options = options || {};
+
+    if (propertyKey === '@this'){
+      arrayComputedKey = dependentKey;
+      getValue = function(element){ return element; };
+    } else {
+      arrayComputedKey = dependentKey + '.@each.' + propertyKey;
+      getValue = function(element){ return get(element, propertyKey); };
+    }
+
+    if (options.exclusive){
+      filterFunction = function(item){
+        var value = getValue(item);
+        return value > get(this, rangeStartKey) && value < get(this, rangeEndKey);
+      };
+    } else {
+      filterFunction = function(item){
+        var value = getValue(item);
+        return value >= get(this, rangeStartKey) && value <= get(this, rangeEndKey);
+      };
+    }
+
+    return EmberCPM.Macros.boundFilter(dependentKey, rangeStartKey, rangeEndKey, filterFunction);
+  };
+
 }).call(undefined, this, this.Ember, this.jQuery, this.EmberCPM);
