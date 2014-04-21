@@ -11,13 +11,15 @@
     "type": "git",
     "url": "git://github.com/jamesarosen/ember-cpm.git"
   },
-  "main": "index.js",
+  "main": "dist/ember-cpm.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test-ci"
   },
   "devDependencies": {
     "testem": "~0.6.15",
-    "jshint": "~2.0.1",
-    "bower": "~1.2.6"
+    "jshint": "~2.5.0",
+    "bower": "~1.3.3",
+    "broccoli": "~0.9.0",
+    "broccoli-uglify-js": "~0.1.3"
   }
 }

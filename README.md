@@ -13,7 +13,21 @@ has them.)
 
 ### Installation
 
-Just add `index.js` to your page after Ember but before your app.
+Just add `ember-cpm.js` to your page after Ember but before your app.
+
+### Build from source
+
+You will need to install the dependencies first. Run `make install_dependencies` to do it.
+
+Then run `make` to generate `ember-cpm.js` from source in the `dist` folder.
+
+### Run tests
+
+To run the rest suite in interactive mode execute `make test` and enter `http://localhost:4200`.
+
+To run the test suite just once and exit run `make test-ci`.
+
+You can also run the test suitein watch mode with `broccoli serve`.
 
 ### Run tests
 
