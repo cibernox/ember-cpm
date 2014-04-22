@@ -6,7 +6,7 @@ Computed Property Macros for Ember
 
 ### Requirements
 
-Ember. Versions between 0.9.8 and 1.1 should work fine.
+Ember. Versions between 0.9.8 and 1.x should work fine.
 (If you're running Ember 0.9.x and want the CP macros from Ember 1.0, the
 [ember_09 branch](https://github.com/jamesarosen/ember-cpm/tree/ember_09)
 has them.)
@@ -14,6 +14,12 @@ has them.)
 ### Installation
 
 Just add `index.js` to your page after Ember but before your app.
+
+### Change Warning
+
+Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its
+scope and structure change. We will, of course, bump the major version when making
+breaking changes and make the period of instability as short as possible.
 
 ### Provided Macros
 
