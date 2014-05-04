@@ -15,6 +15,12 @@ has them.)
 
 Just add `index.js` to your page after Ember but before your app.
 
+### Run tests
+
+For run the tests once in just type `make test`.
+
+You can also run the tests in interactive mode by typing `testem`.
+
 ### Change Warning
 
 Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its

@@ -1,0 +1,10 @@
+{
+  "framework": "mocha+chai",
+  "src_files": [
+    "bower_components/jquery/jquery.js",
+    "bower_components/handlebars/handlebars.js",
+    "bower_components/ember/ember.js",
+    "index.js",
+    "spec/*.js"
+  ]
+}
