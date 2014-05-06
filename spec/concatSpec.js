@@ -47,7 +47,7 @@ describe("concat", function() {
 
     lannisters.removeAt(0);
     starks.removeAt(1);
-    
+
     expect(array.mapProperty('name')).to.deep.equal(['Cersei', 'Robb']);
   });
 

@@ -24,6 +24,7 @@
     "broccoli-concat": "0.0.6",
     "broccoli-merge-trees": "~0.1.3",
     "broccoli-bower": "~0.2.1",
-    "broccoli-static-compiler": "~0.1.4"
+    "broccoli-static-compiler": "~0.1.4",
+    "broccoli-dist-es6-module": "~0.2.0"
   }
 }
