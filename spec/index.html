@@ -7,13 +7,7 @@
     <script src="ember-cpm.js"></script>
     <script src="chai.js"></script>
     <script src="mocha.js"></script>
-    <script>
-      Ember.testing = true;
-      expect = chai.expect;
-      mocha.ui('bdd');
-      mocha.reporter('html');
-      mocha.globals([ 'jQuery*' ]);
-    </script>
+    <script>mocha.setup('bdd');</script>
     <script src="ember-cpm-specs.js"></script>
     <link rel="stylesheet" href="mocha.css" />
   </head>

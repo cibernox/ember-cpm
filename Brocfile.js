@@ -23,7 +23,7 @@ var minifiedFile = concat(emberCPMmin, {
 
 var outTrees = [emberCPM, minifiedFile];
 
-if (process.argv[2] != 'build') {
+if (process.argv[2] !== 'build') {
   var testDeps = pickFiles('node_modules/testem/public/testem/', {
     srcDir: '/',
     files: ['mocha.css', 'mocha.js', 'chai.js'],

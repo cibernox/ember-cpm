@@ -27,7 +27,7 @@ To run the rest suite in interactive mode execute `make test` and enter `http://
 
 To run the test suite just once and exit run `make test-ci`.
 
-You can also run the test suitein watch mode with `broccoli serve`.
+You can also run the test suite in watch mode with `broccoli serve`.
 
 ### Run tests
 
