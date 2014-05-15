@@ -4,8 +4,16 @@
   "undef":  true,
 
   "predef":    [
-    "Handlebars", "Ember",
+    "Handlebars",
+    "Ember",
     "EmberCPM",
-    "describe", "it", "expect", "beforeEach", "afterEach"
+    "describe",
+    "it",
+    "expect",
+    "beforeEach",
+    "afterEach",
+    "require",
+    "module",
+    "process"
   ]
 }
