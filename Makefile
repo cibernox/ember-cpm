@@ -22,4 +22,8 @@ jshint: $(jshint_bin)
 	@jshint Brocfile.js src/*.js spec/*Spec.js
 	@echo "JSHint OK"
 
-.PHONY: ensure_phantomjs install_dependencies test test-ci jshint
+pristine:
+	@rm -rf ./node_modules/
+	@rm -rf ./bower_components/
+
+.PHONY: ensure_phantomjs install_dependencies test test-ci jshint pristine
