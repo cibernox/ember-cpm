@@ -7,7 +7,7 @@ define("ember-cpm/among",
     var get   = Ember.get,
       a_slice = Array.prototype.slice;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_among(dependentKey) {
       var properties = a_slice.call(arguments, 1);
 
       return Ember.computed(dependentKey, function(){
@@ -27,9 +27,9 @@ define("ember-cpm/concat",
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
 
-    var get   = Ember.get,
+    var get     = Ember.get,
       a_forEach = Ember.ArrayPolyfills.forEach,
-      a_slice = Array.prototype.slice;
+      a_slice   = Array.prototype.slice;
 
     /*
        Returns the index where an item is to be removed from, or placed into, for
@@ -93,7 +93,7 @@ define("ember-cpm/concat",
       obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
       ```
     */
-    __exports__["default"] = function () {
+    __exports__["default"] = function EmberCPM_concat() {
       var args = a_slice.call(arguments);
       args.push({
         initialize: function (array, changeMeta, instanceMeta) {
@@ -120,7 +120,7 @@ define("ember-cpm/concat",
       });
 
       return Ember.arrayComputed.apply(null, args);
-    };
+    }
   });
 define("ember-cpm",
   ["ember","./among","./encode-uri-component","./encode-uri","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","exports"],
@@ -185,7 +185,7 @@ define("ember-cpm/encode-URI-component",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
         if (value == null) return value;
@@ -201,7 +201,7 @@ define("ember-cpm/encode-URI",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_encodeURI(dependentKey) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
         if (value == null) return value;
@@ -218,7 +218,7 @@ define("ember-cpm/fmt",
     var get   = Ember.get,
       a_slice = Array.prototype.slice;
 
-    __exports__["default"] = function() {
+    __exports__["default"] = function EmberCPM_fmt() {
       var formatString = '' + a_slice.call(arguments, -1),
           properties   = a_slice.call(arguments, 0, -1);
 
@@ -244,7 +244,7 @@ define("ember-cpm/html-escape",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_htmlEscape(dependentKey) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
@@ -264,7 +264,7 @@ define("ember-cpm/if-null",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey, defaultValue) {
+    __exports__["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
@@ -281,7 +281,7 @@ define("ember-cpm/join",
     var get   = Ember.get,
       a_slice = Array.prototype.slice;
 
-    __exports__["default"] = function() {
+    __exports__["default"] = function EmberCPM_join() {
       var separator  = a_slice.call(arguments, -1),
           properties = a_slice.call(arguments, 0, -1);
 
@@ -304,14 +304,14 @@ define("ember-cpm/not-among",
     var get   = Ember.get,
       a_slice = Array.prototype.slice;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_notAmong(dependentKey) {
       var properties = a_slice.call(arguments, 1);
 
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey),
           i;
 
-        for (var i = 0; i < properties.length; ++i) {
+        for (i = 0; i < properties.length; ++i) {
           if (properties[i] === value) return false;
         }
 
@@ -327,7 +327,7 @@ define("ember-cpm/not-equal",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey, targetValue) {
+    __exports__["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
       return Ember.computed(dependentKey, function(){
         return get(this, dependentKey) !== targetValue;
       });
@@ -341,7 +341,7 @@ define("ember-cpm/not-match",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey, regexp) {
+    __exports__["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
@@ -350,17 +350,19 @@ define("ember-cpm/not-match",
     }
   });
 define("ember-cpm/promise",
-  ["exports"],
-  function(__exports__) {
+  ["ember","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+
     // TODO: Use RSVP?
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_promise(dependentKey) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
         if (value == null) { return value; }
-        return $.when(value);
+        return Ember.$.when(value);
       });
     }
   });
@@ -372,7 +374,7 @@ define("ember-cpm/safe-string",
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_safeString(dependentKey) {
 
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
@@ -391,7 +393,7 @@ define("ember-cpm/sum-by",
     var get   = Ember.get,
       a_slice = Array.prototype.slice;
 
-    __exports__["default"] = function(dependentKey, propertyKey) {
+    __exports__["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
       return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
         initialValue: 0.0,
 

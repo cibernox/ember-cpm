@@ -49,4 +49,4 @@ export {
   VERSION,
   Macros,
   install
-}
+};

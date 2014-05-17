@@ -4,7 +4,7 @@
     "bower_components/jquery/jquery.js",
     "bower_components/handlebars/handlebars.js",
     "bower_components/ember/ember.js",
-    "dist/globals/main.js",
+    "tmp/testem_build/globals/main.js",
     "spec/*.js"
   ]
 }

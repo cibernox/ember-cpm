@@ -1,9 +1,9 @@
 "use strict";
 var Ember = require("ember")["default"] || require("ember");
 
-var get   = Ember.get,
+var get     = Ember.get,
   a_forEach = Ember.ArrayPolyfills.forEach,
-  a_slice = Array.prototype.slice;
+  a_slice   = Array.prototype.slice;
 
 /*
    Returns the index where an item is to be removed from, or placed into, for
@@ -67,7 +67,7 @@ function recomputeGuidIndexes(instanceMeta, keys, context) {
   obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
   ```
 */
-exports["default"] = function () {
+exports["default"] = function EmberCPM_concat() {
   var args = a_slice.call(arguments);
   args.push({
     initialize: function (array, changeMeta, instanceMeta) {
@@ -94,4 +94,4 @@ exports["default"] = function () {
   });
 
   return Ember.arrayComputed.apply(null, args);
-};
+}

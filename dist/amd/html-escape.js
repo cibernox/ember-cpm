@@ -6,7 +6,7 @@ define(
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey) {
+    __exports__["default"] = function EmberCPM_htmlEscape(dependentKey) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
 

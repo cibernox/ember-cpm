@@ -3,7 +3,7 @@ import Ember from 'ember';
 var get   = Ember.get,
   a_slice = Array.prototype.slice;
 
-export default function(dependentKey, propertyKey) {
+export default function EmberCPM_sumBy(dependentKey, propertyKey) {
   return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
     initialValue: 0.0,
 

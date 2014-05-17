@@ -7,7 +7,7 @@ define(
     var get   = Ember.get,
       a_slice = Array.prototype.slice;
 
-    __exports__["default"] = function() {
+    __exports__["default"] = function EmberCPM_join() {
       var separator  = a_slice.call(arguments, -1),
           properties = a_slice.call(arguments, 0, -1);
 

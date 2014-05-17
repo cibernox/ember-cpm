@@ -2,6 +2,7 @@
   "eqeqeq": true,
   "eqnull": true,
   "undef":  true,
+  "esnext": true,
 
   "predef":    [
     "Handlebars",

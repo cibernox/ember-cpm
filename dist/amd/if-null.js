@@ -6,7 +6,7 @@ define(
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey, defaultValue) {
+    __exports__["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
       return Ember.computed(dependentKey, function(){
         var value = get(this, dependentKey);
 

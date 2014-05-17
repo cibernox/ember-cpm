@@ -5,7 +5,7 @@ var Ember = window.Ember["default"] || window.Ember;
 var get   = Ember.get,
   a_slice = Array.prototype.slice;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_among(dependentKey) {
   var properties = a_slice.call(arguments, 1);
 
   return Ember.computed(dependentKey, function(){
@@ -22,9 +22,9 @@ exports["default"] = function(dependentKey) {
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
-var get   = Ember.get,
+var get     = Ember.get,
   a_forEach = Ember.ArrayPolyfills.forEach,
-  a_slice = Array.prototype.slice;
+  a_slice   = Array.prototype.slice;
 
 /*
    Returns the index where an item is to be removed from, or placed into, for
@@ -88,7 +88,7 @@ function recomputeGuidIndexes(instanceMeta, keys, context) {
   obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
   ```
 */
-exports["default"] = function () {
+exports["default"] = function EmberCPM_concat() {
   var args = a_slice.call(arguments);
   args.push({
     initialize: function (array, changeMeta, instanceMeta) {
@@ -115,7 +115,7 @@ exports["default"] = function () {
   });
 
   return Ember.arrayComputed.apply(null, args);
-};
+}
 },{}],3:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
@@ -174,7 +174,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) return value;
@@ -187,7 +187,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_encodeURI(dependentKey) {
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) return value;
@@ -201,7 +201,7 @@ var Ember = window.Ember["default"] || window.Ember;
 var get   = Ember.get,
   a_slice = Array.prototype.slice;
 
-exports["default"] = function() {
+exports["default"] = function EmberCPM_fmt() {
   var formatString = '' + a_slice.call(arguments, -1),
       properties   = a_slice.call(arguments, 0, -1);
 
@@ -224,7 +224,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
@@ -241,7 +241,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey, defaultValue) {
+exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
@@ -255,7 +255,7 @@ var Ember = window.Ember["default"] || window.Ember;
 var get   = Ember.get,
   a_slice = Array.prototype.slice;
 
-exports["default"] = function() {
+exports["default"] = function EmberCPM_join() {
   var separator  = a_slice.call(arguments, -1),
       properties = a_slice.call(arguments, 0, -1);
 
@@ -275,14 +275,14 @@ var Ember = window.Ember["default"] || window.Ember;
 var get   = Ember.get,
   a_slice = Array.prototype.slice;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_notAmong(dependentKey) {
   var properties = a_slice.call(arguments, 1);
 
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey),
       i;
 
-    for (var i = 0; i < properties.length; ++i) {
+    for (i = 0; i < properties.length; ++i) {
       if (properties[i] === value) return false;
     }
 
@@ -295,7 +295,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey, targetValue) {
+exports["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
   return Ember.computed(dependentKey, function(){
     return get(this, dependentKey) !== targetValue;
   });
@@ -306,7 +306,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey, regexp) {
+exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
@@ -315,14 +315,16 @@ exports["default"] = function(dependentKey, regexp) {
 }
 },{}],13:[function(_dereq_,module,exports){
 "use strict";
+var Ember = window.Ember["default"] || window.Ember;
+
 // TODO: Use RSVP?
 var get = Ember.get;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_promise(dependentKey) {
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) { return value; }
-    return $.when(value);
+    return Ember.$.when(value);
   });
 }
 },{}],14:[function(_dereq_,module,exports){
@@ -331,7 +333,7 @@ var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 
-exports["default"] = function(dependentKey) {
+exports["default"] = function EmberCPM_safeString(dependentKey) {
 
   return Ember.computed(dependentKey, function(){
     var value = get(this, dependentKey);
@@ -347,7 +349,7 @@ var Ember = window.Ember["default"] || window.Ember;
 var get   = Ember.get,
   a_slice = Array.prototype.slice;
 
-exports["default"] = function(dependentKey, propertyKey) {
+exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
   return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
     initialValue: 0.0,
 

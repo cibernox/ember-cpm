@@ -6,7 +6,7 @@ define(
 
     var get = Ember.get;
 
-    __exports__["default"] = function(dependentKey, targetValue) {
+    __exports__["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
       return Ember.computed(dependentKey, function(){
         return get(this, dependentKey) !== targetValue;
       });

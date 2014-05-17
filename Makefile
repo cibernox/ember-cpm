@@ -6,9 +6,11 @@ build: jshint
 	rm -rf dist && broccoli build dist
 
 test-ci: ensure_phantomjs jshint
+	rm -rf tmp/testem_build && broccoli build tmp/testem_build
 	@$(testem_bin) ci -l phantomjs
 
 test: ensure_phantomjs jshint $(bower_libs)
+	rm -rf tmp/testem_build && broccoli build tmp/testem_build
 	@$(testem_bin)
 
 install_dependencies:
