@@ -2,15 +2,13 @@ define("ember-cpm/among",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_among(dependentKey) {
-      var properties = a_slice.call(arguments, 1);
+      var properties = Array.prototype.slice.call(arguments, 1);
 
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey),
           i;
 
@@ -25,10 +23,12 @@ define("ember-cpm/concat",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var get = __dependency1__.get;
+    var ArrayPolyfills = __dependency1__.ArrayPolyfills;
+    var guidFor = __dependency1__.guidFor;
+    var arrayComputed = __dependency1__.arrayComputed;
 
-    var get     = Ember.get,
-      a_forEach = Ember.ArrayPolyfills.forEach,
+    var a_forEach = ArrayPolyfills.forEach,
       a_slice   = Array.prototype.slice;
 
     /*
@@ -39,7 +39,7 @@ define("ember-cpm/concat",
        lengths of all prior dependent arrays.
     */
     function getIndex(changeMeta, instanceMeta, dependentArrayDelta) {
-      var dependentArrayGuid = Ember.guidFor(changeMeta.arrayChanged);
+      var dependentArrayGuid = guidFor(changeMeta.arrayChanged);
 
       if (!(dependentArrayGuid in instanceMeta.dependentGuidToIndex)) {
         recomputeGuidIndexes(instanceMeta, changeMeta.property._dependentKeys, this);
@@ -64,7 +64,7 @@ define("ember-cpm/concat",
     function recomputeGuidIndexes(instanceMeta, keys, context) {
       instanceMeta.dependentGuidToIndex = {};
       a_forEach.call(keys, function (key, idx) {
-        instanceMeta.dependentGuidToIndex[Ember.guidFor(this.get(key))] = idx;
+        instanceMeta.dependentGuidToIndex[guidFor(get(this, key))] = idx;
       }, context);
     }
 
@@ -119,14 +119,14 @@ define("ember-cpm/concat",
         }
       });
 
-      return Ember.arrayComputed.apply(null, args);
+      return arrayComputed.apply(null, args);
     }
   });
 define("ember-cpm",
   ["ember","./among","./encode-uri-component","./encode-uri","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var libraries = __dependency1__.libraries;
     var among = __dependency2__["default"] || __dependency2__;
     var encodeURIComponent = __dependency3__["default"] || __dependency3__;
     var encodeURI = __dependency4__["default"] || __dependency4__;
@@ -170,39 +170,37 @@ define("ember-cpm",
       install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-    if (Ember.libraries)
-      Ember.libraries.register('Ember-CPM', VERSION);
+    if (libraries)
+      libraries.register('Ember-CPM', VERSION);
 
     __exports__.VERSION = VERSION;
     __exports__.Macros = Macros;
     __exports__.install = install;
   });
-define("ember-cpm/encode-URI-component",
+define("ember-cpm/encode-uri-component",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
         if (value == null) return value;
         return encodeURIComponent(value);
       });
     }
   });
-define("ember-cpm/encode-URI",
+define("ember-cpm/encode-uri",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_encodeURI(dependentKey) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
         if (value == null) return value;
         return encodeURI(value);
@@ -213,16 +211,17 @@ define("ember-cpm/fmt",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
+    var String = __dependency1__.String;
 
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var a_slice = Array.prototype.slice;
 
     __exports__["default"] = function EmberCPM_fmt() {
       var formatString = '' + a_slice.call(arguments, -1),
           properties   = a_slice.call(arguments, 0, -1);
 
-      return Ember.computed(function(){
+      return computed(function(){
         var values = [], i, value;
 
         for (i = 0; i < properties.length; ++i) {
@@ -232,7 +231,7 @@ define("ember-cpm/fmt",
           values.push(value);
         }
 
-        return Ember.String.fmt(formatString, values);
+        return String.fmt(formatString, values);
       });
     }
   });
@@ -240,18 +239,18 @@ define("ember-cpm/html-escape",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
+    var Handlebars = __dependency1__.Handlebars;
 
     __exports__["default"] = function EmberCPM_htmlEscape(dependentKey) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
         if (value == null) return value;
 
-        var escapedExpression = Ember.Handlebars.Utils.escapeExpression(value);
-        return new Ember.Handlebars.SafeString(escapedExpression);
+        var escapedExpression = Handlebars.Utils.escapeExpression(value);
+        return new Handlebars.SafeString(escapedExpression);
       });
 
     }
@@ -260,12 +259,11 @@ define("ember-cpm/if-null",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
         return value == null ? defaultValue : value;
@@ -276,16 +274,16 @@ define("ember-cpm/join",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var a_slice = Array.prototype.slice;
 
     __exports__["default"] = function EmberCPM_join() {
       var separator  = a_slice.call(arguments, -1),
           properties = a_slice.call(arguments, 0, -1);
 
-      var cp = Ember.computed(function(){
+      var cp = computed(function(){
         var that = this;
         return properties.map(function(key) {
           return get(that, key);
@@ -299,15 +297,13 @@ define("ember-cpm/not-among",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_notAmong(dependentKey) {
-      var properties = a_slice.call(arguments, 1);
+      var properties = Array.prototype.slice.call(arguments, 1);
 
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey),
           i;
 
@@ -323,12 +319,11 @@ define("ember-cpm/not-equal",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         return get(this, dependentKey) !== targetValue;
       });
     }
@@ -337,12 +332,11 @@ define("ember-cpm/not-match",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
         return typeof value === 'string' ? !value.match(regexp) : true;
@@ -353,16 +347,16 @@ define("ember-cpm/promise",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
+    var $ = __dependency1__.$;
 
     // TODO: Use RSVP?
-    var get = Ember.get;
-
     __exports__["default"] = function EmberCPM_promise(dependentKey) {
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
         if (value == null) { return value; }
-        return Ember.$.when(value);
+        return $.when(value);
       });
     }
   });
@@ -370,16 +364,16 @@ define("ember-cpm/safe-string",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get = Ember.get;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
+    var Handlebars = __dependency1__.Handlebars;
 
     __exports__["default"] = function EmberCPM_safeString(dependentKey) {
 
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
-        return value && new Ember.Handlebars.SafeString(value);
+        return value && new Handlebars.SafeString(value);
       });
 
     }
@@ -388,13 +382,11 @@ define("ember-cpm/sum-by",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var get = __dependency1__.get;
+    var reduceComputed = __dependency1__.reduceComputed;
 
     __exports__["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
-      return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
+      return reduceComputed(dependentKey + '.@each.' + propertyKey, {
         initialValue: 0.0,
 
         addedItem: function(accumulatedValue, item, changeMeta, instanceMeta){

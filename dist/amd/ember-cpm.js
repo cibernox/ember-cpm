@@ -2,7 +2,7 @@ define(
   ["ember","./among","./encode-uri-component","./encode-uri","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var libraries = __dependency1__.libraries;
     var among = __dependency2__["default"] || __dependency2__;
     var encodeURIComponent = __dependency3__["default"] || __dependency3__;
     var encodeURI = __dependency4__["default"] || __dependency4__;
@@ -46,8 +46,8 @@ define(
       install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-    if (Ember.libraries)
-      Ember.libraries.register('Ember-CPM', VERSION);
+    if (libraries)
+      libraries.register('Ember-CPM', VERSION);
 
     __exports__.VERSION = VERSION;
     __exports__.Macros = Macros;

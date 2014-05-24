@@ -1,8 +1,10 @@
 "use strict";
-var Ember = require("ember")["default"] || require("ember");
+var get = require("ember").get;
+var ArrayPolyfills = require("ember").ArrayPolyfills;
+var guidFor = require("ember").guidFor;
+var arrayComputed = require("ember").arrayComputed;
 
-var get     = Ember.get,
-  a_forEach = Ember.ArrayPolyfills.forEach,
+var a_forEach = ArrayPolyfills.forEach,
   a_slice   = Array.prototype.slice;
 
 /*
@@ -13,7 +15,7 @@ var get     = Ember.get,
    lengths of all prior dependent arrays.
 */
 function getIndex(changeMeta, instanceMeta, dependentArrayDelta) {
-  var dependentArrayGuid = Ember.guidFor(changeMeta.arrayChanged);
+  var dependentArrayGuid = guidFor(changeMeta.arrayChanged);
 
   if (!(dependentArrayGuid in instanceMeta.dependentGuidToIndex)) {
     recomputeGuidIndexes(instanceMeta, changeMeta.property._dependentKeys, this);
@@ -38,7 +40,7 @@ function getIndex(changeMeta, instanceMeta, dependentArrayDelta) {
 function recomputeGuidIndexes(instanceMeta, keys, context) {
   instanceMeta.dependentGuidToIndex = {};
   a_forEach.call(keys, function (key, idx) {
-    instanceMeta.dependentGuidToIndex[Ember.guidFor(this.get(key))] = idx;
+    instanceMeta.dependentGuidToIndex[guidFor(get(this, key))] = idx;
   }, context);
 }
 
@@ -93,5 +95,5 @@ exports["default"] = function EmberCPM_concat() {
     }
   });
 
-  return Ember.arrayComputed.apply(null, args);
+  return arrayComputed.apply(null, args);
 }

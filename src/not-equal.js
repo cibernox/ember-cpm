@@ -1,9 +1,7 @@
-import Ember from 'ember';
-
-var get = Ember.get;
+import {get, computed} from 'ember';
 
 export default function EmberCPM_notEqual(dependentKey, targetValue) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     return get(this, dependentKey) !== targetValue;
   });
 }

@@ -1,13 +1,12 @@
-import Ember from 'ember';
+import {get, computed, String} from 'ember';
 
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var a_slice = Array.prototype.slice;
 
 export default function EmberCPM_fmt() {
   var formatString = '' + a_slice.call(arguments, -1),
       properties   = a_slice.call(arguments, 0, -1);
 
-  return Ember.computed(function(){
+  return computed(function(){
     var values = [], i, value;
 
     for (i = 0; i < properties.length; ++i) {
@@ -17,6 +16,6 @@ export default function EmberCPM_fmt() {
       values.push(value);
     }
 
-    return Ember.String.fmt(formatString, values);
+    return String.fmt(formatString, values);
   });
 }

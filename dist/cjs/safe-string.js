@@ -1,14 +1,14 @@
 "use strict";
-var Ember = require("ember")["default"] || require("ember");
-
-var get = Ember.get;
+var get = require("ember").get;
+var computed = require("ember").computed;
+var Handlebars = require("ember").Handlebars;
 
 exports["default"] = function EmberCPM_safeString(dependentKey) {
 
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
-    return value && new Ember.Handlebars.SafeString(value);
+    return value && new Handlebars.SafeString(value);
   });
 
 }

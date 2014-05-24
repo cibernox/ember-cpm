@@ -1,14 +1,12 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.EmberCPM=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_among(dependentKey) {
-  var properties = a_slice.call(arguments, 1);
+  var properties = Array.prototype.slice.call(arguments, 1);
 
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey),
       i;
 
@@ -20,10 +18,12 @@ exports["default"] = function EmberCPM_among(dependentKey) {
 }
 },{}],2:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
+var get = window.Ember.get;
+var ArrayPolyfills = window.Ember.ArrayPolyfills;
+var guidFor = window.Ember.guidFor;
+var arrayComputed = window.Ember.arrayComputed;
 
-var get     = Ember.get,
-  a_forEach = Ember.ArrayPolyfills.forEach,
+var a_forEach = ArrayPolyfills.forEach,
   a_slice   = Array.prototype.slice;
 
 /*
@@ -34,7 +34,7 @@ var get     = Ember.get,
    lengths of all prior dependent arrays.
 */
 function getIndex(changeMeta, instanceMeta, dependentArrayDelta) {
-  var dependentArrayGuid = Ember.guidFor(changeMeta.arrayChanged);
+  var dependentArrayGuid = guidFor(changeMeta.arrayChanged);
 
   if (!(dependentArrayGuid in instanceMeta.dependentGuidToIndex)) {
     recomputeGuidIndexes(instanceMeta, changeMeta.property._dependentKeys, this);
@@ -59,7 +59,7 @@ function getIndex(changeMeta, instanceMeta, dependentArrayDelta) {
 function recomputeGuidIndexes(instanceMeta, keys, context) {
   instanceMeta.dependentGuidToIndex = {};
   a_forEach.call(keys, function (key, idx) {
-    instanceMeta.dependentGuidToIndex[Ember.guidFor(this.get(key))] = idx;
+    instanceMeta.dependentGuidToIndex[guidFor(get(this, key))] = idx;
   }, context);
 }
 
@@ -114,11 +114,11 @@ exports["default"] = function EmberCPM_concat() {
     }
   });
 
-  return Ember.arrayComputed.apply(null, args);
+  return arrayComputed.apply(null, args);
 }
 },{}],3:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
+var libraries = window.Ember.libraries;
 var among = _dereq_("./among")["default"] || _dereq_("./among");
 var encodeURIComponent = _dereq_("./encode-uri-component")["default"] || _dereq_("./encode-uri-component");
 var encodeURI = _dereq_("./encode-uri")["default"] || _dereq_("./encode-uri");
@@ -162,20 +162,19 @@ var VERSION = '1.0.1',
   install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-if (Ember.libraries)
-  Ember.libraries.register('Ember-CPM', VERSION);
+if (libraries)
+  libraries.register('Ember-CPM', VERSION);
 
 exports.VERSION = VERSION;
 exports.Macros = Macros;
 exports.install = install;
 },{"./among":1,"./concat":2,"./encode-uri":5,"./encode-uri-component":4,"./fmt":6,"./html-escape":7,"./if-null":8,"./join":9,"./not-among":10,"./not-equal":11,"./not-match":12,"./promise":13,"./safe-string":14,"./sum-by":15}],4:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) return value;
     return encodeURIComponent(value);
@@ -183,12 +182,11 @@ exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
 }
 },{}],5:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_encodeURI(dependentKey) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) return value;
     return encodeURI(value);
@@ -196,16 +194,17 @@ exports["default"] = function EmberCPM_encodeURI(dependentKey) {
 }
 },{}],6:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
+var String = window.Ember.String;
 
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var a_slice = Array.prototype.slice;
 
 exports["default"] = function EmberCPM_fmt() {
   var formatString = '' + a_slice.call(arguments, -1),
       properties   = a_slice.call(arguments, 0, -1);
 
-  return Ember.computed(function(){
+  return computed(function(){
     var values = [], i, value;
 
     for (i = 0; i < properties.length; ++i) {
@@ -215,34 +214,33 @@ exports["default"] = function EmberCPM_fmt() {
       values.push(value);
     }
 
-    return Ember.String.fmt(formatString, values);
+    return String.fmt(formatString, values);
   });
 }
 },{}],7:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
+var Handlebars = window.Ember.Handlebars;
 
 exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
     if (value == null) return value;
 
-    var escapedExpression = Ember.Handlebars.Utils.escapeExpression(value);
-    return new Ember.Handlebars.SafeString(escapedExpression);
+    var escapedExpression = Handlebars.Utils.escapeExpression(value);
+    return new Handlebars.SafeString(escapedExpression);
   });
 
 }
 },{}],8:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
     return value == null ? defaultValue : value;
@@ -250,16 +248,16 @@ exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
 }
 },{}],9:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var a_slice = Array.prototype.slice;
 
 exports["default"] = function EmberCPM_join() {
   var separator  = a_slice.call(arguments, -1),
       properties = a_slice.call(arguments, 0, -1);
 
-  var cp = Ember.computed(function(){
+  var cp = computed(function(){
     var that = this;
     return properties.map(function(key) {
       return get(that, key);
@@ -270,15 +268,13 @@ exports["default"] = function EmberCPM_join() {
 }
 },{}],10:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_notAmong(dependentKey) {
-  var properties = a_slice.call(arguments, 1);
+  var properties = Array.prototype.slice.call(arguments, 1);
 
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey),
       i;
 
@@ -291,23 +287,21 @@ exports["default"] = function EmberCPM_notAmong(dependentKey) {
 }
 },{}],11:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     return get(this, dependentKey) !== targetValue;
   });
 }
 },{}],12:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
 
 exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
     return typeof value === 'string' ? !value.match(regexp) : true;
@@ -315,42 +309,40 @@ exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
 }
 },{}],13:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
+var $ = window.Ember.$;
 
 // TODO: Use RSVP?
-var get = Ember.get;
-
 exports["default"] = function EmberCPM_promise(dependentKey) {
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) { return value; }
-    return Ember.$.when(value);
+    return $.when(value);
   });
 }
 },{}],14:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get = Ember.get;
+var get = window.Ember.get;
+var computed = window.Ember.computed;
+var Handlebars = window.Ember.Handlebars;
 
 exports["default"] = function EmberCPM_safeString(dependentKey) {
 
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
-    return value && new Ember.Handlebars.SafeString(value);
+    return value && new Handlebars.SafeString(value);
   });
 
 }
 },{}],15:[function(_dereq_,module,exports){
 "use strict";
-var Ember = window.Ember["default"] || window.Ember;
-
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var get = window.Ember.get;
+var reduceComputed = window.Ember.reduceComputed;
 
 exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
-  return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
+  return reduceComputed(dependentKey + '.@each.' + propertyKey, {
     initialValue: 0.0,
 
     addedItem: function(accumulatedValue, item, changeMeta, instanceMeta){

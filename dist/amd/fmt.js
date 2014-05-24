@@ -2,16 +2,17 @@ define(
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
+    var String = __dependency1__.String;
 
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var a_slice = Array.prototype.slice;
 
     __exports__["default"] = function EmberCPM_fmt() {
       var formatString = '' + a_slice.call(arguments, -1),
           properties   = a_slice.call(arguments, 0, -1);
 
-      return Ember.computed(function(){
+      return computed(function(){
         var values = [], i, value;
 
         for (i = 0; i < properties.length; ++i) {
@@ -21,7 +22,7 @@ define(
           values.push(value);
         }
 
-        return Ember.String.fmt(formatString, values);
+        return String.fmt(formatString, values);
       });
     }
   });

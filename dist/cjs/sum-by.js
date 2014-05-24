@@ -1,11 +1,9 @@
 "use strict";
-var Ember = require("ember")["default"] || require("ember");
-
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var get = require("ember").get;
+var reduceComputed = require("ember").reduceComputed;
 
 exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
-  return Ember.reduceComputed(dependentKey + '.@each.' + propertyKey, {
+  return reduceComputed(dependentKey + '.@each.' + propertyKey, {
     initialValue: 0.0,
 
     addedItem: function(accumulatedValue, item, changeMeta, instanceMeta){

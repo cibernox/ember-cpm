@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import {libraries} from 'ember';
 import among from './among';
 import encodeURIComponent from './encode-uri-component';
 import encodeURI from './encode-uri';
@@ -42,8 +42,8 @@ var VERSION = '1.0.1',
   install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-if (Ember.libraries)
-  Ember.libraries.register('Ember-CPM', VERSION);
+if (libraries)
+  libraries.register('Ember-CPM', VERSION);
 
 export {
   VERSION,

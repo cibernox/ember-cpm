@@ -1,12 +1,9 @@
-import Ember from 'ember';
-
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+import {get, computed} from 'ember';
 
 export default function EmberCPM_notAmong(dependentKey) {
-  var properties = a_slice.call(arguments, 1);
+  var properties = Array.prototype.slice.call(arguments, 1);
 
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey),
       i;
 

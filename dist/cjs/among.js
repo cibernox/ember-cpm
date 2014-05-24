@@ -1,13 +1,11 @@
 "use strict";
-var Ember = require("ember")["default"] || require("ember");
-
-var get   = Ember.get,
-  a_slice = Array.prototype.slice;
+var get = require("ember").get;
+var computed = require("ember").computed;
 
 exports["default"] = function EmberCPM_among(dependentKey) {
-  var properties = a_slice.call(arguments, 1);
+  var properties = Array.prototype.slice.call(arguments, 1);
 
-  return Ember.computed(dependentKey, function(){
+  return computed(dependentKey, function(){
     var value = get(this, dependentKey),
       i;
 

@@ -2,15 +2,13 @@ define(
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-
-    var get   = Ember.get,
-      a_slice = Array.prototype.slice;
+    var get = __dependency1__.get;
+    var computed = __dependency1__.computed;
 
     __exports__["default"] = function EmberCPM_notAmong(dependentKey) {
-      var properties = a_slice.call(arguments, 1);
+      var properties = Array.prototype.slice.call(arguments, 1);
 
-      return Ember.computed(dependentKey, function(){
+      return computed(dependentKey, function(){
         var value = get(this, dependentKey),
           i;
 
