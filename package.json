@@ -26,6 +26,7 @@
     "broccoli-static-compiler": "~0.1.4",
     "broccoli-uglify-js": "~0.1.3",
     "jshint": "~2.5.0",
-    "testem": "~0.6.15"
+    "testem": "~0.6.15",
+    "broccoli-file-mover": "~0.3.2"
   }
 }

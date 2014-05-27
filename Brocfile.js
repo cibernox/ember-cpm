@@ -3,6 +3,7 @@ var pickFiles      = require('broccoli-static-compiler');
 var mergeTrees     = require('broccoli-merge-trees');
 var makeModules    = require('broccoli-dist-es6-module');
 var findBowerTrees = require('broccoli-bower');
+var moveFile       = require('broccoli-file-mover');
 
 var emberCPM = makeModules('src', {
   global: 'EmberCPM',
@@ -10,6 +11,13 @@ var emberCPM = makeModules('src', {
   main: 'ember-cpm',
   shim: {
     'ember': 'Ember'
+  }
+});
+
+emberCPM = moveFile(emberCPM, {
+  files: {
+    '/globals/main.js': '/globals/ember-cpm.js',
+    '/named-amd/main.js': '/named-amd/ember-cpm.js',
   }
 });
 
