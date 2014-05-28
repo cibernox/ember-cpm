@@ -1,4 +1,8 @@
-import {get, ArrayPolyfills, guidFor, arrayComputed} from 'ember';
+"use strict";
+var get = require("ember").get;
+var ArrayPolyfills = require("ember").ArrayPolyfills;
+var guidFor = require("ember").guidFor;
+var arrayComputed = require("ember").arrayComputed;
 
 var a_forEach = ArrayPolyfills.forEach,
   a_slice   = Array.prototype.slice;
@@ -65,7 +69,7 @@ function recomputeGuidIndexes(instanceMeta, keys, context) {
   obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
   ```
 */
-export default function EmberCPM_concat() {
+exports["default"] = function EmberCPM_concat() {
   var args = a_slice.call(arguments);
   args.push({
     initialize: function (array, changeMeta, instanceMeta) {

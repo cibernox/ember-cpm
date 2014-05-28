@@ -1,27 +1,27 @@
-var concat = require('broccoli-concat');
-var mergeTrees = require('broccoli-merge-trees');
+var concat         = require('broccoli-concat');
+var pickFiles      = require('broccoli-static-compiler');
+var mergeTrees     = require('broccoli-merge-trees');
+var makeModules    = require('broccoli-dist-es6-module');
 var findBowerTrees = require('broccoli-bower');
-var pickFiles = require('broccoli-static-compiler');
-var uglifyJavaScript = require('broccoli-uglify-js');
+var moveFile       = require('broccoli-file-mover');
 
-var src = 'src';
-
-var emberCPM = concat(src, {
-  inputFiles: [
-    'preamble.js',
-    'concat.js',
-    'index.js'
-  ],
-  outputFile: '/ember-cpm.js'
+var emberCPM = makeModules('src', {
+  global: 'EmberCPM',
+  packageName: 'ember-cpm',
+  main: 'ember-cpm',
+  shim: {
+    'ember': 'Ember'
+  }
 });
 
-var emberCPMmin = uglifyJavaScript(emberCPM, {compress: true});
-var minifiedFile = concat(emberCPMmin, {
-  inputFiles: ['*.js'],
-  outputFile: '/ember-cpm.min.js',
+emberCPM = moveFile(emberCPM, {
+  files: {
+    '/globals/main.js': '/globals/ember-cpm.js',
+    '/named-amd/main.js': '/named-amd/ember-cpm.js',
+  }
 });
 
-var outTrees = [emberCPM, minifiedFile];
+var outTrees = [emberCPM];
 
 if (process.argv[2] !== 'build') {
   var testDeps = pickFiles('node_modules/testem/public/testem/', {
@@ -30,19 +30,21 @@ if (process.argv[2] !== 'build') {
     destDir: '/'
   });
 
-  var specs = concat('spec', {
-    inputFiles: ['**/*.js'],
-    outputFile: '/ember-cpm-specs.js'
-  });
-
   var html = pickFiles('spec', {
     srcDir: '/',
     files: ['index.html'],
     destDir: '/'
   });
 
-  outTrees = outTrees.concat(findBowerTrees()).concat([testDeps, specs, html]);
-}
+  var specs = concat('spec', {
+    inputFiles: ['test_helper.js','**/*.js'],
+    outputFile: '/ember-cpm-specs.js'
+  });
 
+  outTrees = outTrees.concat(findBowerTrees());
+  outTrees.push(specs);
+  outTrees.push(testDeps);
+  outTrees.push(html);
+}
 
 module.exports = mergeTrees(outTrees);

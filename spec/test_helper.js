@@ -1,2 +1,2 @@
 Ember.testing = true;
-expect = chai.expect;
+window.expect = chai.expect;

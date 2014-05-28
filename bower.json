@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Computed Propery Macros for Ember.js",
   "main": [
-    "dist/ember-cpm.js"
+    "dist/globals/ember-cpm.js"
   ],
   "dependencies": {
     "ember": "1.2.0",
