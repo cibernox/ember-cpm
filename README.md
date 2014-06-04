@@ -47,6 +47,7 @@ breaking changes and make the period of instability as short as possible.
    (testing using `===`)
  * `encodeURIComponent` -- calls `encodeURIComponent` on the original value
  * `encodeURI` -- calls `encodeURI` on the original value
+ * `firstOf` -- returns the first non-empty property
  * `fmt` -- pass the original values into a format-string
  * `htmlEscape` -- escapes the original value with
    `Handlebars.Utils.escapeExpression` *and* wraps the result in a
