@@ -1,4 +1,4 @@
-import {get, isEmpty, computed} from 'ember';
+import {get, isBlank, computed} from 'ember';
 
 var a_slice = Array.prototype.slice;
 
@@ -9,7 +9,7 @@ export default function EmberCPM_firstPresent() {
   computedArgs.push(function() {
     var that = this;
     var property = properties.find(function(key) {
-      return ! isEmpty(get(that, key));
+      return ! isBlank(get(that, key));
     });
 
     if (property) { return get(that, property); }
