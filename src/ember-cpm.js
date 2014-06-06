@@ -2,7 +2,7 @@ import {libraries} from 'ember';
 import among from './among';
 import encodeURIComponent from './encode-uri-component';
 import encodeURI from './encode-uri';
-import firstOf from './first-of';
+import firstPresent from './first-present';
 import fmt from './fmt';
 import htmlEscape from './html-escape';
 import ifNull from './if-null';
@@ -28,7 +28,7 @@ var VERSION = '1.0.1',
     among: among,
     encodeURIComponent: encodeURIComponent,
     encodeURI: encodeURI,
-    firstOf: firstOf,
+    firstPresent: firstPresent,
     fmt: fmt,
     htmlEscape: htmlEscape,
     ifNull: ifNull,

@@ -2,7 +2,7 @@ import {get, isEmpty, computed} from 'ember';
 
 var a_slice = Array.prototype.slice;
 
-export default function EmberCPM_firstOf() {
+export default function EmberCPM_firstPresent() {
   var properties = a_slice.call(arguments);
   var computedArgs = a_slice.call(properties);
 

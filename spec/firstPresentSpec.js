@@ -1,13 +1,13 @@
-describe('firstOf', function() {
+describe('firstPresent', function() {
   var Obj = Ember.Object.extend({
     nickname: '',
     name: 'Jean-Luc',
     email: 'jean@starship-enterprise.space',
-    displayName: EmberCPM.Macros.firstOf('nickname', 'name', 'email')
+    displayName: EmberCPM.Macros.firstPresent('nickname', 'name', 'email')
   });
 
   it('exists', function() {
-    expect(EmberCPM.Macros).to.have.property('firstOf');
+    expect(EmberCPM.Macros).to.have.property('firstPresent');
   });
 
   it('returns the first value that is not empty', function() {
