@@ -2,15 +2,25 @@ import {A, get, isBlank, isEmpty, computed} from 'ember';
 
 var a_slice = Array.prototype.slice;
 
+// isBlank was introduced in Ember 1.5, backport if necessary.
+if (!isBlank) {
+  isBlank = function(obj) {
+    return Ember.isEmpty(obj) || (typeof obj === 'string' && obj.match(/\S/) === null);
+  };
+}
+
+var isPresent = function(value) {
+  return ! isBlank(value);
+};
+
 export default function EmberCPM_firstPresent() {
   var properties = a_slice.call(arguments);
   var computedArgs = a_slice.call(properties);
-  var checker = isBlank || isEmpty; // isBlank was introduced in Ember 1.5
 
   computedArgs.push(function() {
     var that = this;
     var property = A(properties).find(function(key) {
-      return ! checker(get(that, key));
+      return isPresent(get(that, key));
     });
 
     if (property) { return get(that, property); }
