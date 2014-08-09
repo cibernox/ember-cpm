@@ -4,9 +4,9 @@
   "description": "Computed Propery Macros for Ember.js",
   "main": "dist/named-amd/ember-cpm.js",
   "dependencies": {
-    "ember": "1.2.0",
-    "jquery": "~>1.10",
-    "handlebars": "1.1.2"
+    "ember": ">=1.2.0",
+    "jquery": ">=1.10",
+    "handlebars": ">=1.1.2"
   },
   "scripts": {
     "test": "make test"
@@ -20,7 +20,7 @@
     "emberjs"
   ],
   "author": "James A. Rosen",
-  "license": "APLv2",
+  "license": "MIT/APLv2",
   "homepage": "https://github.com/jamesarosen/ember-cpm",
   "authors": [
     "James Alexander Rosen"
@@ -30,6 +30,7 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "spec"
   ]
 }
