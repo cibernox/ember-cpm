@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.1, 2014-08-10
+Feature: Use testem as automates test tool.
+Feature: Migrate to a build process based on broccoli.
+Feature: Converted code to ES6 packages transpiled to global, AMD and CJS.
+Feature: Add `firstPresent` macro.
+Feature: Add `sumBy` macro.
+Feature: Prepare library to be published via bower.
+
 ## v1.1.0, 2013-09-10
 
 Feature: Add `join` macro
