@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.2, 2014-09-21
+Bugfix: Change exports to make AMD build compatible with ember-cli.
+
 ## v1.1.1, 2014-08-10
 Feature: Use testem as automates test tool.
 Feature: Migrate to a build process based on broccoli.

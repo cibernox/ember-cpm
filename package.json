@@ -1,6 +1,6 @@
 {
   "name": "ember-cpm",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "licence": "APLv2 / MIT",
   "description": "Computed Propery Macros for Ember.js",
   "keywords": [
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git://github.com/jamesarosen/ember-cpm.git"
   },
-  "main": "dist/ember-cpm.js",
+  "main": "dist/named-amd/ember-cpm.js",
   "scripts": {
     "test": "make test-ci"
   },
