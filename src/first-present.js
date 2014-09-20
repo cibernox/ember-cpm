@@ -1,4 +1,10 @@
-import {A, get, isBlank, isEmpty, computed} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var computed = Ember.computed;
+var A = Ember.A;
+var isBlank = Ember.isBlank;
+var isEmpty = Ember.isEmpty;
 
 var a_slice = Array.prototype.slice;
 

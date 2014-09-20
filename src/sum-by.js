@@ -1,4 +1,7 @@
-import {get, reduceComputed} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var reduceComputed = Ember.reduceComputed;
 
 export default function EmberCPM_sumBy(dependentKey, propertyKey) {
   return reduceComputed(dependentKey + '.@each.' + propertyKey, {

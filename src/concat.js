@@ -1,6 +1,11 @@
-import {get, ArrayPolyfills, guidFor, arrayComputed} from 'ember';
+import Ember from 'ember';
 
-var a_forEach = ArrayPolyfills.forEach,
+var get = Ember.get;
+var computed = Ember.computed;
+var guidFor = Ember.guidFor;
+var arrayComputed = Ember.arrayComputed;
+
+var a_forEach = Ember.ArrayPolyfills.forEach,
   a_slice   = Array.prototype.slice;
 
 /*

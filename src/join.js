@@ -1,5 +1,7 @@
-import {get, computed} from 'ember';
+import Ember from 'ember';
 
+var get = Ember.get;
+var computed = Ember.computed;
 var a_slice = Array.prototype.slice;
 
 export default function EmberCPM_join() {

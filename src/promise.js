@@ -1,4 +1,8 @@
-import {get, computed, $} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var computed = Ember.computed;
+var $ = Ember.$;
 
 // TODO: Use RSVP?
 export default function EmberCPM_promise(dependentKey) {
