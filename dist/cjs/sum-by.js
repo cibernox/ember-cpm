@@ -1,6 +1,8 @@
 "use strict";
-var get = require("ember").get;
-var reduceComputed = require("ember").reduceComputed;
+var Ember = require("ember")["default"] || require("ember");
+
+var get = Ember.get;
+var reduceComputed = Ember.reduceComputed;
 
 exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
   return reduceComputed(dependentKey + '.@each.' + propertyKey, {

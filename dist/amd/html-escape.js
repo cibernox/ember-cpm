@@ -2,9 +2,11 @@ define(
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var get = __dependency1__.get;
-    var computed = __dependency1__.computed;
-    var Handlebars = __dependency1__.Handlebars;
+    var Ember = __dependency1__["default"] || __dependency1__;
+
+    var get = Ember.get;
+    var computed = Ember.computed;
+    var EmberHandlebars = Ember.Handlebars;
 
     __exports__["default"] = function EmberCPM_htmlEscape(dependentKey) {
       return computed(dependentKey, function(){
@@ -12,8 +14,8 @@ define(
 
         if (value == null) return value;
 
-        var escapedExpression = Handlebars.Utils.escapeExpression(value);
-        return new Handlebars.SafeString(escapedExpression);
+        var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
+        return new EmberHandlebars.SafeString(escapedExpression);
       });
 
     }

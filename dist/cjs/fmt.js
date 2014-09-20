@@ -1,7 +1,9 @@
 "use strict";
-var get = require("ember").get;
-var computed = require("ember").computed;
-var String = require("ember").String;
+var Ember = require("ember")["default"] || require("ember");
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberString = Ember.String;
 
 var a_slice = Array.prototype.slice;
 
@@ -19,6 +21,6 @@ exports["default"] = function EmberCPM_fmt() {
       values.push(value);
     }
 
-    return String.fmt(formatString, values);
+    return EmberString.fmt(formatString, values);
   });
 }

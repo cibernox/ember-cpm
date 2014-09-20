@@ -1,10 +1,12 @@
 "use strict";
-var get = require("ember").get;
-var ArrayPolyfills = require("ember").ArrayPolyfills;
-var guidFor = require("ember").guidFor;
-var arrayComputed = require("ember").arrayComputed;
+var Ember = require("ember")["default"] || require("ember");
 
-var a_forEach = ArrayPolyfills.forEach,
+var get = Ember.get;
+var computed = Ember.computed;
+var guidFor = Ember.guidFor;
+var arrayComputed = Ember.arrayComputed;
+
+var a_forEach = Ember.ArrayPolyfills.forEach,
   a_slice   = Array.prototype.slice;
 
 /*

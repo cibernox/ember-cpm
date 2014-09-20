@@ -1,7 +1,9 @@
 "use strict";
-var get = require("ember").get;
-var computed = require("ember").computed;
-var Handlebars = require("ember").Handlebars;
+var Ember = require("ember")["default"] || require("ember");
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberHandlebars = Ember.Handlebars;
 
 exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
   return computed(dependentKey, function(){
@@ -9,8 +11,8 @@ exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
 
     if (value == null) return value;
 
-    var escapedExpression = Handlebars.Utils.escapeExpression(value);
-    return new Handlebars.SafeString(escapedExpression);
+    var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
+    return new EmberHandlebars.SafeString(escapedExpression);
   });
 
 }

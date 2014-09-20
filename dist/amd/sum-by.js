@@ -2,8 +2,10 @@ define(
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var get = __dependency1__.get;
-    var reduceComputed = __dependency1__.reduceComputed;
+    var Ember = __dependency1__["default"] || __dependency1__;
+
+    var get = Ember.get;
+    var reduceComputed = Ember.reduceComputed;
 
     __exports__["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
       return reduceComputed(dependentKey + '.@each.' + propertyKey, {

@@ -1,7 +1,9 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.EmberCPM=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_among(dependentKey) {
   var properties = Array.prototype.slice.call(arguments, 1);
@@ -18,12 +20,14 @@ exports["default"] = function EmberCPM_among(dependentKey) {
 }
 },{}],2:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var ArrayPolyfills = window.Ember.ArrayPolyfills;
-var guidFor = window.Ember.guidFor;
-var arrayComputed = window.Ember.arrayComputed;
+var Ember = window.Ember["default"] || window.Ember;
 
-var a_forEach = ArrayPolyfills.forEach,
+var get = Ember.get;
+var computed = Ember.computed;
+var guidFor = Ember.guidFor;
+var arrayComputed = Ember.arrayComputed;
+
+var a_forEach = Ember.ArrayPolyfills.forEach,
   a_slice   = Array.prototype.slice;
 
 /*
@@ -118,10 +122,11 @@ exports["default"] = function EmberCPM_concat() {
 }
 },{}],3:[function(_dereq_,module,exports){
 "use strict";
-var libraries = window.Ember.libraries;
+var Ember = window.Ember["default"] || window.Ember;
 var among = _dereq_("./among")["default"] || _dereq_("./among");
 var encodeURIComponent = _dereq_("./encode-uri-component")["default"] || _dereq_("./encode-uri-component");
 var encodeURI = _dereq_("./encode-uri")["default"] || _dereq_("./encode-uri");
+var firstPresent = _dereq_("./first-present")["default"] || _dereq_("./first-present");
 var fmt = _dereq_("./fmt")["default"] || _dereq_("./fmt");
 var htmlEscape = _dereq_("./html-escape")["default"] || _dereq_("./html-escape");
 var ifNull = _dereq_("./if-null")["default"] || _dereq_("./if-null");
@@ -147,6 +152,7 @@ var VERSION = '1.0.1',
     among: among,
     encodeURIComponent: encodeURIComponent,
     encodeURI: encodeURI,
+    firstPresent: firstPresent,
     fmt: fmt,
     htmlEscape: htmlEscape,
     ifNull: ifNull,
@@ -162,16 +168,24 @@ var VERSION = '1.0.1',
   install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-if (libraries)
-  libraries.register('Ember-CPM', VERSION);
+if (Ember.libraries)
+  Ember.libraries.register('Ember-CPM', VERSION);
 
 exports.VERSION = VERSION;
 exports.Macros = Macros;
 exports.install = install;
-},{"./among":1,"./concat":2,"./encode-uri":5,"./encode-uri-component":4,"./fmt":6,"./html-escape":7,"./if-null":8,"./join":9,"./not-among":10,"./not-equal":11,"./not-match":12,"./promise":13,"./safe-string":14,"./sum-by":15}],4:[function(_dereq_,module,exports){
+
+exports["default"] = {
+  VERSION: VERSION,
+  Macros: Macros,
+  install: install
+};
+},{"./among":1,"./concat":2,"./encode-uri":5,"./encode-uri-component":4,"./first-present":6,"./fmt":7,"./html-escape":8,"./if-null":9,"./join":10,"./not-among":11,"./not-equal":12,"./not-match":13,"./promise":14,"./safe-string":15,"./sum-by":16}],4:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
   return computed(dependentKey, function(){
@@ -182,8 +196,10 @@ exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
 }
 },{}],5:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_encodeURI(dependentKey) {
   return computed(dependentKey, function(){
@@ -194,9 +210,49 @@ exports["default"] = function EmberCPM_encodeURI(dependentKey) {
 }
 },{}],6:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
-var String = window.Ember.String;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
+var A = Ember.A;
+var isBlank = Ember.isBlank;
+var isEmpty = Ember.isEmpty;
+
+var a_slice = Array.prototype.slice;
+
+// isBlank was introduced in Ember 1.5, backport if necessary.
+if (!isBlank) {
+  isBlank = function(obj) {
+    return Ember.isEmpty(obj) || (typeof obj === 'string' && obj.match(/\S/) === null);
+  };
+}
+
+var isPresent = function(value) {
+  return ! isBlank(value);
+};
+
+exports["default"] = function EmberCPM_firstPresent() {
+  var properties = a_slice.call(arguments);
+  var computedArgs = a_slice.call(properties);
+
+  computedArgs.push(function() {
+    var that = this;
+    var property = A(properties).find(function(key) {
+      return isPresent(get(that, key));
+    });
+
+    if (property) { return get(that, property); }
+  });
+
+  return computed.apply(this, computedArgs);
+}
+},{}],7:[function(_dereq_,module,exports){
+"use strict";
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberString = Ember.String;
 
 var a_slice = Array.prototype.slice;
 
@@ -214,14 +270,16 @@ exports["default"] = function EmberCPM_fmt() {
       values.push(value);
     }
 
-    return String.fmt(formatString, values);
+    return EmberString.fmt(formatString, values);
   });
 }
-},{}],7:[function(_dereq_,module,exports){
+},{}],8:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
-var Handlebars = window.Ember.Handlebars;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberHandlebars = Ember.Handlebars;
 
 exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
   return computed(dependentKey, function(){
@@ -229,15 +287,17 @@ exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
 
     if (value == null) return value;
 
-    var escapedExpression = Handlebars.Utils.escapeExpression(value);
-    return new Handlebars.SafeString(escapedExpression);
+    var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
+    return new EmberHandlebars.SafeString(escapedExpression);
   });
 
 }
-},{}],8:[function(_dereq_,module,exports){
+},{}],9:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
   return computed(dependentKey, function(){
@@ -246,11 +306,12 @@ exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
     return value == null ? defaultValue : value;
   });
 }
-},{}],9:[function(_dereq_,module,exports){
+},{}],10:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
 
+var get = Ember.get;
+var computed = Ember.computed;
 var a_slice = Array.prototype.slice;
 
 exports["default"] = function EmberCPM_join() {
@@ -266,10 +327,12 @@ exports["default"] = function EmberCPM_join() {
 
   return cp.property.apply(cp, properties);
 }
-},{}],10:[function(_dereq_,module,exports){
+},{}],11:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_notAmong(dependentKey) {
   var properties = Array.prototype.slice.call(arguments, 1);
@@ -285,20 +348,24 @@ exports["default"] = function EmberCPM_notAmong(dependentKey) {
     return true;
   });
 }
-},{}],11:[function(_dereq_,module,exports){
+},{}],12:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
   return computed(dependentKey, function(){
     return get(this, dependentKey) !== targetValue;
   });
 }
-},{}],12:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
   return computed(dependentKey, function(){
@@ -307,11 +374,13 @@ exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
     return typeof value === 'string' ? !value.match(regexp) : true;
   });
 }
-},{}],13:[function(_dereq_,module,exports){
+},{}],14:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
-var $ = window.Ember.$;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
+var $ = Ember.$;
 
 // TODO: Use RSVP?
 exports["default"] = function EmberCPM_promise(dependentKey) {
@@ -321,25 +390,29 @@ exports["default"] = function EmberCPM_promise(dependentKey) {
     return $.when(value);
   });
 }
-},{}],14:[function(_dereq_,module,exports){
+},{}],15:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var computed = window.Ember.computed;
-var Handlebars = window.Ember.Handlebars;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberHandlebars = Ember.Handlebars;
 
 exports["default"] = function EmberCPM_safeString(dependentKey) {
 
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
-    return value && new Handlebars.SafeString(value);
+    return value && new EmberHandlebars.SafeString(value);
   });
 
 }
-},{}],15:[function(_dereq_,module,exports){
+},{}],16:[function(_dereq_,module,exports){
 "use strict";
-var get = window.Ember.get;
-var reduceComputed = window.Ember.reduceComputed;
+var Ember = window.Ember["default"] || window.Ember;
+
+var get = Ember.get;
+var reduceComputed = Ember.reduceComputed;
 
 exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
   return reduceComputed(dependentKey + '.@each.' + propertyKey, {

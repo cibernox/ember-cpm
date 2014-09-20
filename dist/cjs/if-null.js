@@ -1,6 +1,8 @@
 "use strict";
-var get = require("ember").get;
-var computed = require("ember").computed;
+var Ember = require("ember")["default"] || require("ember");
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
   return computed(dependentKey, function(){

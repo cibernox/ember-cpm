@@ -1,7 +1,9 @@
 "use strict";
-var get = require("ember").get;
-var computed = require("ember").computed;
-var $ = require("ember").$;
+var Ember = require("ember")["default"] || require("ember");
+
+var get = Ember.get;
+var computed = Ember.computed;
+var $ = Ember.$;
 
 // TODO: Use RSVP?
 exports["default"] = function EmberCPM_promise(dependentKey) {
