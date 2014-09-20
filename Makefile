@@ -24,7 +24,7 @@ ensure_phantomjs:
 	@which phantomjs > /dev/null || (echo "Couldn't find phantomjs" && false)
 
 jshint: $(jshint_bin)
-	@jshint Brocfile.js src/*.js spec/*Spec.js
+	@$(jshint_bin) Brocfile.js src/*.js spec/*Spec.js
 	@echo "JSHint OK"
 
 pristine: clean
