@@ -1,4 +1,7 @@
-import {get, computed} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var computed = Ember.computed;
 
 export default function EmberCPM_encodeURIComponent(dependentKey) {
   return computed(dependentKey, function(){

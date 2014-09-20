@@ -2,12 +2,14 @@ define(
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var get = __dependency1__.get;
-    var ArrayPolyfills = __dependency1__.ArrayPolyfills;
-    var guidFor = __dependency1__.guidFor;
-    var arrayComputed = __dependency1__.arrayComputed;
+    var Ember = __dependency1__["default"] || __dependency1__;
 
-    var a_forEach = ArrayPolyfills.forEach,
+    var get = Ember.get;
+    var computed = Ember.computed;
+    var guidFor = Ember.guidFor;
+    var arrayComputed = Ember.arrayComputed;
+
+    var a_forEach = Ember.ArrayPolyfills.forEach,
       a_slice   = Array.prototype.slice;
 
     /*

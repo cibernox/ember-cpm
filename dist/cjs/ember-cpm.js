@@ -1,8 +1,9 @@
 "use strict";
-var libraries = require("ember").libraries;
+var Ember = require("ember")["default"] || require("ember");
 var among = require("./among")["default"] || require("./among");
 var encodeURIComponent = require("./encode-uri-component")["default"] || require("./encode-uri-component");
 var encodeURI = require("./encode-uri")["default"] || require("./encode-uri");
+var firstPresent = require("./first-present")["default"] || require("./first-present");
 var fmt = require("./fmt")["default"] || require("./fmt");
 var htmlEscape = require("./html-escape")["default"] || require("./html-escape");
 var ifNull = require("./if-null")["default"] || require("./if-null");
@@ -28,6 +29,7 @@ var VERSION = '1.0.1',
     among: among,
     encodeURIComponent: encodeURIComponent,
     encodeURI: encodeURI,
+    firstPresent: firstPresent,
     fmt: fmt,
     htmlEscape: htmlEscape,
     ifNull: ifNull,
@@ -43,9 +45,15 @@ var VERSION = '1.0.1',
   install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-if (libraries)
-  libraries.register('Ember-CPM', VERSION);
+if (Ember.libraries)
+  Ember.libraries.register('Ember-CPM', VERSION);
 
 exports.VERSION = VERSION;
 exports.Macros = Macros;
 exports.install = install;
+
+exports["default"] = {
+  VERSION: VERSION,
+  Macros: Macros,
+  install: install
+};

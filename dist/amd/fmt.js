@@ -2,9 +2,11 @@ define(
   ["ember","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var get = __dependency1__.get;
-    var computed = __dependency1__.computed;
-    var String = __dependency1__.String;
+    var Ember = __dependency1__["default"] || __dependency1__;
+
+    var get = Ember.get;
+    var computed = Ember.computed;
+    var EmberString = Ember.String;
 
     var a_slice = Array.prototype.slice;
 
@@ -22,7 +24,7 @@ define(
           values.push(value);
         }
 
-        return String.fmt(formatString, values);
+        return EmberString.fmt(formatString, values);
       });
     }
   });

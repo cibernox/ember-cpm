@@ -1,4 +1,5 @@
-import Ember from 'ember';
+"use strict";
+var Ember = require("ember")["default"] || require("ember");
 
 var get = Ember.get;
 var computed = Ember.computed;
@@ -19,7 +20,7 @@ var isPresent = function(value) {
   return ! isBlank(value);
 };
 
-export default function EmberCPM_firstPresent() {
+exports["default"] = function EmberCPM_firstPresent() {
   var properties = a_slice.call(arguments);
   var computedArgs = a_slice.call(properties);
 

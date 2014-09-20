@@ -1,4 +1,8 @@
-import {get, computed, String} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberString = Ember.String;
 
 var a_slice = Array.prototype.slice;
 
@@ -16,6 +20,6 @@ export default function EmberCPM_fmt() {
       values.push(value);
     }
 
-    return String.fmt(formatString, values);
+    return EmberString.fmt(formatString, values);
   });
 }

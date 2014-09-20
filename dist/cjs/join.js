@@ -1,7 +1,8 @@
 "use strict";
-var get = require("ember").get;
-var computed = require("ember").computed;
+var Ember = require("ember")["default"] || require("ember");
 
+var get = Ember.get;
+var computed = Ember.computed;
 var a_slice = Array.prototype.slice;
 
 exports["default"] = function EmberCPM_join() {

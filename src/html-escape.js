@@ -1,4 +1,8 @@
-import {get, computed, Handlebars} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberHandlebars = Ember.Handlebars;
 
 export default function EmberCPM_htmlEscape(dependentKey) {
   return computed(dependentKey, function(){
@@ -6,8 +10,8 @@ export default function EmberCPM_htmlEscape(dependentKey) {
 
     if (value == null) return value;
 
-    var escapedExpression = Handlebars.Utils.escapeExpression(value);
-    return new Handlebars.SafeString(escapedExpression);
+    var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
+    return new EmberHandlebars.SafeString(escapedExpression);
   });
 
 }

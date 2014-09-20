@@ -1,11 +1,15 @@
-import {get, computed, Handlebars} from 'ember';
+import Ember from 'ember';
+
+var get = Ember.get;
+var computed = Ember.computed;
+var EmberHandlebars = Ember.Handlebars;
 
 export default function EmberCPM_safeString(dependentKey) {
 
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
-    return value && new Handlebars.SafeString(value);
+    return value && new EmberHandlebars.SafeString(value);
   });
 
 }
