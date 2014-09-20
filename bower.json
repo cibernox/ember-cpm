@@ -6,7 +6,7 @@
   "dependencies": {
     "ember": ">=1.2.0",
     "jquery": ">=1.10",
-    "handlebars": ">=1.1.2"
+    "handlebars": ">=1.1.2 <2.0.0"
   },
   "scripts": {
     "test": "make test"
