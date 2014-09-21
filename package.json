@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git://github.com/jamesarosen/ember-cpm.git"
   },
-  "main": "dist/named-amd/ember-cpm.js",
+  "main": "dist/cjs/ember-cpm.js",
   "scripts": {
     "test": "make test-ci"
   },
