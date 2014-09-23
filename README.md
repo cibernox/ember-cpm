@@ -13,7 +13,11 @@ has them.)
 
 ### Installation
 
-Just add `ember-cpm.js` to your page after Ember but before your app.
+If you are using [Ember CLI](https://github.com/stefanpenner/ember-cli), you can install ember-cpm as
+an addon with `npm install ember-cpm --save-dev` and you will be able to import native ES modules from
+within your app.
+
+If not, just add `ember-cpm.js` to your page after Ember but before your app.
 
 ### Build from source
 

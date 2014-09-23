@@ -24,25 +24,25 @@ function reverseMerge(dest, source) {
   }
 }
 
-var VERSION = '1.1.2',
-  Macros = {
-    among: among,
-    encodeURIComponent: encodeURIComponent,
-    encodeURI: encodeURI,
-    firstPresent: firstPresent,
-    fmt: fmt,
-    htmlEscape: htmlEscape,
-    ifNull: ifNull,
-    notAmong: notAmong,
-    notEqual: notEqual,
-    notMatch: notMatch,
-    promise: promise,
-    safeString: safeString,
-    join: join,
-    sumBy: sumBy,
-    concat: concat,
-  },
-  install = function(){ reverseMerge(Ember.computed, Macros); };
+var VERSION = '1.1.3';
+var Macros = {
+  among: among,
+  encodeURIComponent: encodeURIComponent,
+  encodeURI: encodeURI,
+  firstPresent: firstPresent,
+  fmt: fmt,
+  htmlEscape: htmlEscape,
+  ifNull: ifNull,
+  notAmong: notAmong,
+  notEqual: notEqual,
+  notMatch: notMatch,
+  promise: promise,
+  safeString: safeString,
+  join: join,
+  sumBy: sumBy,
+  concat: concat,
+};
+var install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
 if (Ember.libraries)
