@@ -4,7 +4,8 @@
   "licence": "APLv2 / MIT",
   "description": "Computed Propery Macros for Ember.js",
   "keywords": [
-    "ember"
+    "ember",
+    "ember-addon"
   ],
   "author": "James A. Rosen <james.a.rosen@gmail.com>",
   "repository": {
@@ -14,6 +15,9 @@
   "main": "dist/cjs/ember-cpm.js",
   "scripts": {
     "test": "make test-ci"
+  },
+  "ember-addon": {
+    "main": "ember-addon-main.js"
   },
   "devDependencies": {
     "bower": "~1.3.3",
