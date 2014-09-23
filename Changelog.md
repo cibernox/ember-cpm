@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.3, 2014-09-23
+Feature: Ember-cpm works out of the box with ember-cli as an addon.
+
 ## v1.1.2, 2014-09-21
 Bugfix: Change exports to make AMD build compatible with ember-cli.
 
