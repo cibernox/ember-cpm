@@ -1,10 +1,6 @@
 describe('product', function () {
 
 	var MyType = Ember.Object.extend({
-		a: 6,
-		b: 7,
-		g: 12,
-		h: 4,
 		c: EmberCPM.Macros.product('a', 'b'),
 		d: EmberCPM.Macros.product('a', 'c'),
 		e: EmberCPM.Macros.product('a'),
@@ -12,7 +8,12 @@ describe('product', function () {
 		i: EmberCPM.Macros.product('a', 'b', 'g', 'h'),
 		j: EmberCPM.Macros.product('a', 'b', 'g', 'h', 2)
 	});
-	var myObj = MyType.create();
+	var myObj = MyType.create({
+		a: 6,
+		b: 7,
+		g: 12,
+		h: 4
+	});
 
 	it('is properly registered', function () {
 		expect(!!EmberCPM.Macros.product).to.equal(true);

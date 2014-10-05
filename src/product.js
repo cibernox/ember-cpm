@@ -28,11 +28,11 @@ export default function EmberCPM_product () {
 		}
 
 		var prod = 1;
-		mainArguments.forEach(function (arg) {
+		for (var i = 0; i < mainArguments.length; i += 1) {
 			// handle either constants or numeric properties.
 			// Assumption: all non-string arguments to the macro are numeric constants
-			prod *= Ember.typeOf(arg) === 'string' ? this.get(arg) : arg;
-		}.bind(this));
+			prod *= Ember.typeOf(mainArguments[i]) === 'string' ? this.get(mainArguments[i]) : mainArguments[i];
+		}
 
 		return prod;
 	});
