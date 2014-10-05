@@ -7,73 +7,26 @@ import Ember from 'ember';
  *      // A simple true/false check on a property
  *      var MyType = Ember.Object.extend({
  *          a: true,
- *          b: EmberCPM.Macros.ifThenElse('a', null, null, 'yes', 'no')
+ *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
  *      });
  *
- *      // Comparing two properties
+ *      // Composable computed properties
+ *      var lt = Ember.computed.lt; // "less than"
  *      var MyType = Ember.Object.extend({
- *          a: true,
- *          b: false,
- *          // make sure to bind this to 'a' and 'b', since it only binds to 'a' by default
- *          c: EmberCPM.Macros.ifThenElse('a', '===', 'b', 'yes', 'no').property('a', 'b')
+ *          a: 15,
+ *          b: EmberCPM.Macros.ifThenElse(lt('a', 57), 'yes', 'no')
  *      });
- *
- *      Supported operations
- *          ==, !=, ===, !==, >=, <=, <, >, &&, ||
- *
  */
 
-export default function EmberCPM_ifThenElse(prop1, comparator, prop2, thenValue, elseValue) {
+export default function EmberCPM_ifThenElse(condition, valIfTrue, valIfFalse) {
+	var isConditionComputed = Ember.Descriptor === condition.constructor,
+		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
 
-	return Ember.computed(prop1, function () {
+	propertyArguments.push(function (key, value, oldValue) {
+		var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
 
-		var val1 = this.get(prop1),
-			comparisonResult = val1;
-
-		if (prop2 !== null) {
-
-			var isProp2AProperty = Ember.typeOf(prop2) !== 'string' ? false : Ember.typeOf(Ember.get(this, prop2)) !==
-				'undefined',
-				val2 = isProp2AProperty ? Ember.get(this, prop2) : prop2;
-
-			switch (comparator) {
-				/*jshint eqeqeq:false*/
-			case '==':
-				comparisonResult = val1 == val2;
-				break;
-			case '!=':
-				comparisonResult = val1 != val2;
-				break;
-				/*jshint eqeqeq:true*/
-			case '===':
-				comparisonResult = val1 === val2;
-				break;
-			case '!==':
-				comparisonResult = val1 !== val2;
-				break;
-			case '>=':
-				comparisonResult = val1 >= val2;
-				break;
-			case '>':
-				comparisonResult = val1 > val2;
-				break;
-			case '<=':
-				comparisonResult = val1 <= val2;
-				break;
-			case '<':
-				comparisonResult = val1 < val2;
-				break;
-			case '&&':
-				comparisonResult = val1 && val2;
-				break;
-			case '||':
-				comparisonResult = val1 || val2;
-				break;
-			default:
-				Ember.assert('EmberCPM.Macros.ifThenElse - Unknown operator: %@'.fmt(comparator));
-				break;
-			}
-		}
-		return comparisonResult ? thenValue : elseValue;
+		return conditionEvaluation ? valIfTrue : valIfFalse;
 	});
+
+	return Ember.computed.apply(this, propertyArguments);
 }

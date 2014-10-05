@@ -1,3 +1,15 @@
+var gt = Ember.computed.gt,
+	gte = Ember.computed.gte,
+	lt = Ember.computed.lt,
+	lte = Ember.computed.lte,
+	and = Ember.computed.and,
+	any = Ember.computed.any,
+	equal = Ember.computed.equal,
+	empty = Ember.computed.empty,
+	ifThenElse = EmberCPM.Macros.ifThenElse;
+
+
+
 describe('ifThenElse', function() {
 
 	it('exists', function() {
@@ -8,7 +20,7 @@ describe('ifThenElse', function() {
 	it('handles a boolean conditional properly', function() {
 		var MyType = Ember.Object.extend({
 			a: true,
-			b: EmberCPM.Macros.ifThenElse('a', null, null, 'yes', 'no')
+			b: ifThenElse('a', 'yes', 'no')
 		});
 
 		var myObj = MyType.create();
@@ -16,116 +28,111 @@ describe('ifThenElse', function() {
 		expect(myObj.get('b')).to.equal('yes');
 		myObj.set('a', false);
 		expect(myObj.get('b')).to.equal('no');
-
 	});
 
-	it('handles a numeric prop compared to a numeric constant', function () {
+	function simpleComputedPropertyMacroTest(name, fn, tests) {
+		it('handles composed "%@" computed proerty'.fmt(name), function () {
+			var MyType = Ember.Object.extend({
+				a: -1,
+				mac: ifThenElse(fn('a', 15), 'yes', 'no')
+			});
+
+			var myObj = MyType.create();
+
+			for (var i = 0; i < tests.length; i += 1) {
+				myObj.set('a', tests[i].value);
+				expect(myObj.get('mac')).to.equal(tests[i].testResult);
+			}
+		});
+	}
+
+	simpleComputedPropertyMacroTest('equal', equal, [
+		{value: 12, testResult: 'no'},
+		{value: 15, testResult: 'yes'},
+		{value: 13, testResult: 'no'}
+	]);
+	simpleComputedPropertyMacroTest('lt', lt, [
+		{value: 12, testResult: 'yes'},
+		{value: 16, testResult: 'no'},
+		{value: 15, testResult: 'no'},
+		{value: 13, testResult: 'yes'}
+	]);
+	simpleComputedPropertyMacroTest('lte', lte, [
+		{value: 12, testResult: 'yes'},
+		{value: 16, testResult: 'no'},
+		{value: 15, testResult: 'yes'},
+		{value: 13, testResult: 'yes'}
+	]);
+	simpleComputedPropertyMacroTest('gt', gt, [
+		{value: 12, testResult: 'no'},
+		{value: 16, testResult: 'yes'},
+		{value: 15, testResult: 'no'},
+		{value: 13, testResult: 'no'}
+	]);
+	simpleComputedPropertyMacroTest('gte', gte, [
+		{value: 12, testResult: 'no'},
+		{value: 16, testResult: 'yes'},
+		{value: 15, testResult: 'yes'},
+		{value: 13, testResult: 'no'}
+	]);
+
+	it('handles "and" composable computed property macro', function () {
 		var MyType = Ember.Object.extend({
-			a: 5,
-			agt5: EmberCPM.Macros.ifThenElse('a', '>', 5, 'yes', 'no'),
-			agte5: EmberCPM.Macros.ifThenElse('a', '>=', 5, 'yes', 'no'),
-			alt5: EmberCPM.Macros.ifThenElse('a', '<', 5, 'yes', 'no'),
-			alte5: EmberCPM.Macros.ifThenElse('a', '<=', 5, 'yes', 'no'),
-			eqeq5: EmberCPM.Macros.ifThenElse('a', '==', 5, 'yes', 'no'),
-			eqeqs5: EmberCPM.Macros.ifThenElse('a', '==', '5', 'yes', 'no'),
-			eqeqeq5: EmberCPM.Macros.ifThenElse('a', '===', 5, 'yes', 'no'),
-			eqeqeqs5: EmberCPM.Macros.ifThenElse('a', '===', '5', 'yes', 'no'),
+			hasTent: true,
+			hasBackpack: false,
+			readyForCampString: ifThenElse(and('hasTent', 'hasBackpack'), 'ready', 'not ready')
 		});
 
 		var myObj = MyType.create();
-
-		expect(myObj.get('agt5')).to.equal('no');
-		expect(myObj.get('agte5')).to.equal('yes');
-
-		expect(myObj.get('alt5')).to.equal('no');
-		expect(myObj.get('alte5')).to.equal('yes');
-
-		expect(myObj.get('eqeq5')).to.equal('yes');
-		expect(myObj.get('eqeqs5')).to.equal('yes');
-		expect(myObj.get('eqeqeq5')).to.equal('yes');
-		expect(myObj.get('eqeqeqs5')).to.equal('no');
-
-		myObj.set('a', 7);
-
-		expect(myObj.get('agt5')).to.equal('yes');
-		expect(myObj.get('agte5')).to.equal('yes');
-		expect(myObj.get('alt5'), 'no');
-		expect(myObj.get('alte5'), 'no');
-
-		expect(myObj.get('eqeq5')).to.equal('no');
-		expect(myObj.get('eqeqs5')).to.equal('no');
-		expect(myObj.get('eqeqeq5')).to.equal('no');
-		expect(myObj.get('eqeqeqs5')).to.equal('no');
+		expect(myObj.get('readyForCampString')).to.equal('not ready');
+		myObj.set('hasBackpack', true);
+		expect(myObj.get('readyForCampString')).to.equal('ready');
+		myObj.set('hasTent', false);
+		expect(myObj.get('readyForCampString')).to.equal('not ready');
 	});
 
-	it('handles a numeric property compared to another numeric property', function () {
+	it('handles "any" composable computed property macro', function () {
 		var MyType = Ember.Object.extend({
-			a: 5,
-			b: 7,
-			agtb: EmberCPM.Macros.ifThenElse('a', '>', 'b', 'yes', 'no').property('a', 'b'),
-			altb: EmberCPM.Macros.ifThenElse('a', '<', 'b', 'yes', 'no').property('a', 'b'),
+			hasTent: false,
+			hasBackpack: false,
+			readyForCampString: ifThenElse(any('hasTent', 'hasBackpack'), 'started getting ready', 'did not start yet')
 		});
 
 		var myObj = MyType.create();
-
-		expect(myObj.get('agtb')).to.equal('no');
-		expect(myObj.get('altb')).to.equal('yes');
-
-		myObj.set('a', 8);
-
-		expect(myObj.get('agtb')).to.equal('yes');
-		expect(myObj.get('altb')).to.equal('no');
-
-		myObj.set('b', 9);
-
-		expect(myObj.get('agtb')).to.equal('no');
-		expect(myObj.get('altb')).to.equal('yes');
+		expect(myObj.get('readyForCampString')).to.equal('did not start yet');
+		myObj.set('hasBackpack', true);
+		expect(myObj.get('readyForCampString')).to.equal('started getting ready');
+		myObj.set('hasBackpack', false);
+		expect(myObj.get('readyForCampString')).to.equal('did not start yet');
+		myObj.setProperties({hasBackpack: true, hasTesnt: true});
+		expect(myObj.get('readyForCampString')).to.equal('started getting ready');
 	});
 
-	it('handles string property compared to another string property', function () {
+	it('handles "empty" composable computed property macro', function () {
 		var MyType = Ember.Object.extend({
-			a: 'mike',
-			b: 'mike',
-			aeqeqb: EmberCPM.Macros.ifThenElse('a', '==', 'b', 'yes', 'no').property('a', 'b')
+			attendees: ['Charlie', 'Dennis', 'Mac'],
+			paddysPubStatus: ifThenElse(empty('attendees'), 'closed', 'open')
 		});
 
 		var myObj = MyType.create();
-
-		expect(myObj.get('aeqeqb')).to.equal('yes');
-
-		myObj.set('a', 'ember');
-
-		expect(myObj.get('aeqeqb')).to.equal('no');
-		myObj.set('b', 'ember');
-
-		expect(myObj.get('aeqeqb')).to.equal('yes');
+		expect(myObj.get('paddysPubStatus')).to.equal('open');
+		myObj.get('attendees').clear();
+		expect(myObj.get('paddysPubStatus')).to.equal('closed');
+		myObj.get('attendees').addObject('frank');
+		expect(myObj.get('paddysPubStatus')).to.equal('open');
 	});
 
-	it('handles boolean propes compared with boolean operators', function () {
+	it('handles nested ifThenElse computed properties', function () {
 		var MyType = Ember.Object.extend({
-			a: false,
-			b: true,
-			aorb: EmberCPM.Macros.ifThenElse('a', '||', 'b', 'yes', 'no').property('a', 'b'),
-			aandb: EmberCPM.Macros.ifThenElse('a', '&&', 'b', 'yes', 'no').property('a', 'b')
+			a: 14,
+			b: ifThenElse(ifThenElse(equal('a', 15), 'yes', null), 'good', 'bad')
 		});
 
 		var myObj = MyType.create();
-
-		expect(myObj.get('aorb')).to.equal('yes');
-		expect(myObj.get('aandb')).to.equal('no');
-
-		myObj.set('b', false);
-
-		expect(myObj.get('aorb')).to.equal('no');
-		expect(myObj.get('aandb')).to.equal('no');
-
-		myObj.setProperties({
-			a: true,
-			b: true
-		});
-
-		expect(myObj.get('aorb')).to.equal('yes');
-		expect(myObj.get('aandb')).to.equal('yes');
+		expect(myObj.get('b')).to.equal('bad');
+		myObj.set('a', 15);
+		expect(myObj.get('b')).to.equal('good');
+		myObj.set('a', 16);
+		expect(myObj.get('b')).to.equal('bad');
 	});
-
 });
