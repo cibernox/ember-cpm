@@ -6,11 +6,11 @@ var gt = Ember.computed.gt,
 	any = Ember.computed.any,
 	equal = Ember.computed.equal,
 	empty = Ember.computed.empty,
-	ifThenElse = EmberCPM.Macros.conditional;
+	computed = EmberCPM.Macros.conditional;
 
 
 
-describe('ifThenElse', function() {
+describe('computed', function() {
 
 	it('exists', function() {
 
@@ -20,7 +20,7 @@ describe('ifThenElse', function() {
 	it('handles a boolean conditional properly', function() {
 		var MyType = Ember.Object.extend({
 			a: true,
-			b: ifThenElse('a', 'yes', 'no')
+			b: computed('a', 'yes', 'no')
 		});
 
 		var myObj = MyType.create();
@@ -34,7 +34,7 @@ describe('ifThenElse', function() {
 		it('handles composed "%@" computed proerty'.fmt(name), function () {
 			var MyType = Ember.Object.extend({
 				a: -1,
-				mac: ifThenElse(fn('a', 15), 'yes', 'no')
+				mac: computed(fn('a', 15), 'yes', 'no')
 			});
 
 			var myObj = MyType.create();
@@ -80,7 +80,7 @@ describe('ifThenElse', function() {
 		var MyType = Ember.Object.extend({
 			hasTent: true,
 			hasBackpack: false,
-			readyForCampString: ifThenElse(and('hasTent', 'hasBackpack'), 'ready', 'not ready')
+			readyForCampString: computed(and('hasTent', 'hasBackpack'), 'ready', 'not ready')
 		});
 
 		var myObj = MyType.create();
@@ -95,7 +95,7 @@ describe('ifThenElse', function() {
 		var MyType = Ember.Object.extend({
 			hasTent: false,
 			hasBackpack: false,
-			readyForCampString: ifThenElse(any('hasTent', 'hasBackpack'), 'started getting ready', 'did not start yet')
+			readyForCampString: computed(any('hasTent', 'hasBackpack'), 'started getting ready', 'did not start yet')
 		});
 
 		var myObj = MyType.create();
@@ -111,7 +111,7 @@ describe('ifThenElse', function() {
 	it('handles "empty" composable computed property macro', function () {
 		var MyType = Ember.Object.extend({
 			attendees: ['Charlie', 'Dennis', 'Mac'],
-			paddysPubStatus: ifThenElse(empty('attendees'), 'closed', 'open')
+			paddysPubStatus: computed(empty('attendees'), 'closed', 'open')
 		});
 
 		var myObj = MyType.create();
@@ -122,10 +122,10 @@ describe('ifThenElse', function() {
 		expect(myObj.get('paddysPubStatus')).to.equal('open');
 	});
 
-	it('handles nested ifThenElse computed properties', function () {
+	it('handles nested computed computed properties', function () {
 		var MyType = Ember.Object.extend({
 			a: 14,
-			b: ifThenElse(ifThenElse(equal('a', 15), 'yes', null), 'good', 'bad')
+			b: computed(computed(equal('a', 15), 'yes', null), 'good', 'bad')
 		});
 
 		var myObj = MyType.create();
