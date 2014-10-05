@@ -14,7 +14,7 @@ import safeString from './safe-string';
 import join from './join';
 import sumBy from './sum-by';
 import concat from './concat';
-import ifThenElse from './ifThenElse';
+import conditional from './conditional';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -41,7 +41,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
-  ifThenElse: ifThenElse
+  conditional: conditional
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 

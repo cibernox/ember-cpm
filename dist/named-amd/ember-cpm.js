@@ -126,8 +126,45 @@ define("ember-cpm/concat",
       return arrayComputed.apply(null, args);
     }
   });
+define("ember-cpm/conditional",
+  ["ember","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+    /**
+     * Conditional computed property
+     *
+     * Usage:
+     *
+     *      // A simple true/false check on a property
+     *      var MyType = Ember.Object.extend({
+     *          a: true,
+     *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
+     *      });
+     *
+     *      // Composable computed properties
+     *      var lt = Ember.computed.lt; // "less than"
+     *      var MyType = Ember.Object.extend({
+     *          a: 15,
+     *          b: EmberCPM.Macros.conditional(lt('a', 57), 'yes', 'no')
+     *      });
+     */
+
+    __exports__["default"] = function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
+    	var isConditionComputed = Ember.Descriptor === condition.constructor,
+    		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
+
+    	propertyArguments.push(function (key, value, oldValue) {
+    		var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
+
+    		return conditionEvaluation ? valIfTrue : valIfFalse;
+    	});
+
+    	return Ember.computed.apply(this, propertyArguments);
+    }
+  });
 define("ember-cpm",
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./ifThenElse","exports"],
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./conditional","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
@@ -146,7 +183,7 @@ define("ember-cpm",
     var join = __dependency14__["default"] || __dependency14__;
     var sumBy = __dependency15__["default"] || __dependency15__;
     var concat = __dependency16__["default"] || __dependency16__;
-    var ifThenElse = __dependency17__["default"] || __dependency17__;
+    var conditional = __dependency17__["default"] || __dependency17__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -173,7 +210,7 @@ define("ember-cpm",
       join: join,
       sumBy: sumBy,
       concat: concat,
-      ifThenElse: ifThenElse
+      conditional: conditional
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -333,43 +370,6 @@ define("ember-cpm/if-null",
 
         return value == null ? defaultValue : value;
       });
-    }
-  });
-define("ember-cpm/ifThenElse",
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"] || __dependency1__;
-    /**
-     * If-then-else computed property
-     *
-     * Usage:
-     *
-     *      // A simple true/false check on a property
-     *      var MyType = Ember.Object.extend({
-     *          a: true,
-     *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
-     *      });
-     *
-     *      // Composable computed properties
-     *      var lt = Ember.computed.lt; // "less than"
-     *      var MyType = Ember.Object.extend({
-     *          a: 15,
-     *          b: EmberCPM.Macros.ifThenElse(lt('a', 57), 'yes', 'no')
-     *      });
-     */
-
-    __exports__["default"] = function EmberCPM_ifThenElse(condition, valIfTrue, valIfFalse) {
-    	var isConditionComputed = Ember.Descriptor === condition.constructor,
-    		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
-
-    	propertyArguments.push(function (key, value, oldValue) {
-    		var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
-
-    		return conditionEvaluation ? valIfTrue : valIfFalse;
-    	});
-
-    	return Ember.computed.apply(this, propertyArguments);
     }
   });
 define("ember-cpm/join",

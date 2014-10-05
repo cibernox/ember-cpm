@@ -1,7 +1,7 @@
 "use strict";
 var Ember = require("ember")["default"] || require("ember");
 /**
- * If-then-else computed property
+ * Conditional computed property
  *
  * Usage:
  *
@@ -15,11 +15,11 @@ var Ember = require("ember")["default"] || require("ember");
  *      var lt = Ember.computed.lt; // "less than"
  *      var MyType = Ember.Object.extend({
  *          a: 15,
- *          b: EmberCPM.Macros.ifThenElse(lt('a', 57), 'yes', 'no')
+ *          b: EmberCPM.Macros.conditional(lt('a', 57), 'yes', 'no')
  *      });
  */
 
-exports["default"] = function EmberCPM_ifThenElse(condition, valIfTrue, valIfFalse) {
+exports["default"] = function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
 	var isConditionComputed = Ember.Descriptor === condition.constructor,
 		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
 

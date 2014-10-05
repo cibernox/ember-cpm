@@ -123,6 +123,40 @@ exports["default"] = function EmberCPM_concat() {
 },{}],3:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
+/**
+ * Conditional computed property
+ *
+ * Usage:
+ *
+ *      // A simple true/false check on a property
+ *      var MyType = Ember.Object.extend({
+ *          a: true,
+ *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
+ *      });
+ *
+ *      // Composable computed properties
+ *      var lt = Ember.computed.lt; // "less than"
+ *      var MyType = Ember.Object.extend({
+ *          a: 15,
+ *          b: EmberCPM.Macros.conditional(lt('a', 57), 'yes', 'no')
+ *      });
+ */
+
+exports["default"] = function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
+	var isConditionComputed = Ember.Descriptor === condition.constructor,
+		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
+
+	propertyArguments.push(function (key, value, oldValue) {
+		var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
+
+		return conditionEvaluation ? valIfTrue : valIfFalse;
+	});
+
+	return Ember.computed.apply(this, propertyArguments);
+}
+},{}],4:[function(_dereq_,module,exports){
+"use strict";
+var Ember = window.Ember["default"] || window.Ember;
 var among = _dereq_("./among")["default"] || _dereq_("./among");
 var encodeURIComponent = _dereq_("./encode-uri-component")["default"] || _dereq_("./encode-uri-component");
 var encodeURI = _dereq_("./encode-uri")["default"] || _dereq_("./encode-uri");
@@ -138,7 +172,7 @@ var safeString = _dereq_("./safe-string")["default"] || _dereq_("./safe-string")
 var join = _dereq_("./join")["default"] || _dereq_("./join");
 var sumBy = _dereq_("./sum-by")["default"] || _dereq_("./sum-by");
 var concat = _dereq_("./concat")["default"] || _dereq_("./concat");
-var ifThenElse = _dereq_("./ifThenElse")["default"] || _dereq_("./ifThenElse");
+var conditional = _dereq_("./conditional")["default"] || _dereq_("./conditional");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -165,7 +199,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
-  ifThenElse: ifThenElse
+  conditional: conditional
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -182,7 +216,7 @@ exports["default"] = {
   Macros: Macros,
   install: install
 };
-},{"./among":1,"./concat":2,"./encode-uri":5,"./encode-uri-component":4,"./first-present":6,"./fmt":7,"./html-escape":8,"./if-null":9,"./ifThenElse":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./promise":15,"./safe-string":16,"./sum-by":17}],4:[function(_dereq_,module,exports){
+},{"./among":1,"./concat":2,"./conditional":3,"./encode-uri":6,"./encode-uri-component":5,"./first-present":7,"./fmt":8,"./html-escape":9,"./if-null":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./promise":15,"./safe-string":16,"./sum-by":17}],5:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -196,7 +230,7 @@ exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
     return encodeURIComponent(value);
   });
 }
-},{}],5:[function(_dereq_,module,exports){
+},{}],6:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -210,7 +244,7 @@ exports["default"] = function EmberCPM_encodeURI(dependentKey) {
     return encodeURI(value);
   });
 }
-},{}],6:[function(_dereq_,module,exports){
+},{}],7:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -248,7 +282,7 @@ exports["default"] = function EmberCPM_firstPresent() {
 
   return computed.apply(this, computedArgs);
 }
-},{}],7:[function(_dereq_,module,exports){
+},{}],8:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -275,7 +309,7 @@ exports["default"] = function EmberCPM_fmt() {
     return EmberString.fmt(formatString, values);
   });
 }
-},{}],8:[function(_dereq_,module,exports){
+},{}],9:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -294,7 +328,7 @@ exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
   });
 
 }
-},{}],9:[function(_dereq_,module,exports){
+},{}],10:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -307,40 +341,6 @@ exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
 
     return value == null ? defaultValue : value;
   });
-}
-},{}],10:[function(_dereq_,module,exports){
-"use strict";
-var Ember = window.Ember["default"] || window.Ember;
-/**
- * If-then-else computed property
- *
- * Usage:
- *
- *      // A simple true/false check on a property
- *      var MyType = Ember.Object.extend({
- *          a: true,
- *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
- *      });
- *
- *      // Composable computed properties
- *      var lt = Ember.computed.lt; // "less than"
- *      var MyType = Ember.Object.extend({
- *          a: 15,
- *          b: EmberCPM.Macros.ifThenElse(lt('a', 57), 'yes', 'no')
- *      });
- */
-
-exports["default"] = function EmberCPM_ifThenElse(condition, valIfTrue, valIfFalse) {
-	var isConditionComputed = Ember.Descriptor === condition.constructor,
-		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
-
-	propertyArguments.push(function (key, value, oldValue) {
-		var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
-
-		return conditionEvaluation ? valIfTrue : valIfFalse;
-	});
-
-	return Ember.computed.apply(this, propertyArguments);
 }
 },{}],11:[function(_dereq_,module,exports){
 "use strict";
@@ -463,6 +463,6 @@ exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
     }
   });
 }
-},{}]},{},[3])
-(3)
+},{}]},{},[4])
+(4)
 });

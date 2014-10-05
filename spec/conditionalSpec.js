@@ -6,7 +6,7 @@ var gt = Ember.computed.gt,
 	any = Ember.computed.any,
 	equal = Ember.computed.equal,
 	empty = Ember.computed.empty,
-	ifThenElse = EmberCPM.Macros.ifThenElse;
+	ifThenElse = EmberCPM.Macros.conditional;
 
 
 
@@ -14,7 +14,7 @@ describe('ifThenElse', function() {
 
 	it('exists', function() {
 
-		expect(EmberCPM.Macros).to.have.property('ifThenElse');
+		expect(EmberCPM.Macros).to.have.property('conditional');
 	});
 
 	it('handles a boolean conditional properly', function() {
