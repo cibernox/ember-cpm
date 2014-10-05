@@ -1,6 +1,6 @@
 define(
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __exports__) {
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./product","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -18,6 +18,7 @@ define(
     var join = __dependency14__["default"] || __dependency14__;
     var sumBy = __dependency15__["default"] || __dependency15__;
     var concat = __dependency16__["default"] || __dependency16__;
+    var product = __dependency17__["default"] || __dependency17__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -44,6 +45,7 @@ define(
       join: join,
       sumBy: sumBy,
       concat: concat,
+      product: product
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };
 
