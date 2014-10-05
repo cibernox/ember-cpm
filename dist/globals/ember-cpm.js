@@ -143,16 +143,16 @@ var Ember = window.Ember["default"] || window.Ember;
  */
 
 exports["default"] = function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
-	var isConditionComputed = Ember.Descriptor === condition.constructor,
-		propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
+  var isConditionComputed = Ember.Descriptor === condition.constructor,
+    propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
 
-	propertyArguments.push(function (key, value, oldValue) {
-		var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
+  propertyArguments.push(function (key, value, oldValue) {
+    var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
 
-		return conditionEvaluation ? valIfTrue : valIfFalse;
-	});
+    return conditionEvaluation ? valIfTrue : valIfFalse;
+  });
 
-	return Ember.computed.apply(this, propertyArguments);
+  return Ember.computed.apply(this, propertyArguments);
 }
 },{}],4:[function(_dereq_,module,exports){
 "use strict";
