@@ -138,6 +138,7 @@ var safeString = _dereq_("./safe-string")["default"] || _dereq_("./safe-string")
 var join = _dereq_("./join")["default"] || _dereq_("./join");
 var sumBy = _dereq_("./sum-by")["default"] || _dereq_("./sum-by");
 var concat = _dereq_("./concat")["default"] || _dereq_("./concat");
+var ifThenElse = _dereq_("./ifThenElse")["default"] || _dereq_("./ifThenElse");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -164,6 +165,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
+  ifThenElse: ifThenElse
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -180,7 +182,7 @@ exports["default"] = {
   Macros: Macros,
   install: install
 };
-},{"./among":1,"./concat":2,"./encode-uri":5,"./encode-uri-component":4,"./first-present":6,"./fmt":7,"./html-escape":8,"./if-null":9,"./join":10,"./not-among":11,"./not-equal":12,"./not-match":13,"./promise":14,"./safe-string":15,"./sum-by":16}],4:[function(_dereq_,module,exports){
+},{"./among":1,"./concat":2,"./encode-uri":5,"./encode-uri-component":4,"./first-present":6,"./fmt":7,"./html-escape":8,"./if-null":9,"./ifThenElse":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./promise":15,"./safe-string":16,"./sum-by":17}],4:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -309,6 +311,87 @@ exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
 },{}],10:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
+/**
+ * If-then-else computed property
+ *
+ * Usage:
+ *
+ *      // A simple true/false check on a property
+ *      var MyType = Ember.Object.extend({
+ *          a: true,
+ *          b: EmberCPM.Macros.ifThenElse('a', null, null, 'yes', 'no')
+ *      });
+ *
+ *      // Comparing two properties
+ *      var MyType = Ember.Object.extend({
+ *          a: true,
+ *          b: false,
+ *          // make sure to bind this to 'a' and 'b', since it only binds to 'a' by default
+ *          c: EmberCPM.Macros.ifThenElse('a', '===', 'b', 'yes', 'no').property('a', 'b')
+ *      });
+ *
+ *      Supported operations
+ *          ==, !=, ===, !==, >=, <=, <, >, &&, ||
+ *
+ */
+
+exports["default"] = function EmberCPM_ifThenElse(prop1, comparator, prop2, thenValue, elseValue) {
+
+	return Ember.computed(prop1, function () {
+
+		var val1 = this.get(prop1),
+			comparisonResult = val1;
+
+		if (prop2 !== null) {
+
+			var isProp2AProperty = Ember.typeOf(prop2) !== 'string' ? false : Ember.typeOf(Ember.get(this, prop2)) !==
+				'undefined',
+				val2 = isProp2AProperty ? Ember.get(this, prop2) : prop2;
+
+			switch (comparator) {
+				/*jshint eqeqeq:false*/
+			case '==':
+				comparisonResult = val1 == val2;
+				break;
+			case '!=':
+				comparisonResult = val1 != val2;
+				break;
+				/*jshint eqeqeq:true*/
+			case '===':
+				comparisonResult = val1 === val2;
+				break;
+			case '!==':
+				comparisonResult = val1 !== val2;
+				break;
+			case '>=':
+				comparisonResult = val1 >= val2;
+				break;
+			case '>':
+				comparisonResult = val1 > val2;
+				break;
+			case '<=':
+				comparisonResult = val1 <= val2;
+				break;
+			case '<':
+				comparisonResult = val1 < val2;
+				break;
+			case '&&':
+				comparisonResult = val1 && val2;
+				break;
+			case '||':
+				comparisonResult = val1 || val2;
+				break;
+			default:
+				Ember.assert('EmberCPM.Macros.ifThenElse - Unknown operator: %@'.fmt(comparator));
+				break;
+			}
+		}
+		return comparisonResult ? thenValue : elseValue;
+	});
+}
+},{}],11:[function(_dereq_,module,exports){
+"use strict";
+var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 var computed = Ember.computed;
@@ -327,7 +410,7 @@ exports["default"] = function EmberCPM_join() {
 
   return cp.property.apply(cp, properties);
 }
-},{}],11:[function(_dereq_,module,exports){
+},{}],12:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -348,7 +431,7 @@ exports["default"] = function EmberCPM_notAmong(dependentKey) {
     return true;
   });
 }
-},{}],12:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -360,7 +443,7 @@ exports["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
     return get(this, dependentKey) !== targetValue;
   });
 }
-},{}],13:[function(_dereq_,module,exports){
+},{}],14:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -374,7 +457,7 @@ exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
     return typeof value === 'string' ? !value.match(regexp) : true;
   });
 }
-},{}],14:[function(_dereq_,module,exports){
+},{}],15:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -390,7 +473,7 @@ exports["default"] = function EmberCPM_promise(dependentKey) {
     return $.when(value);
   });
 }
-},{}],15:[function(_dereq_,module,exports){
+},{}],16:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -407,7 +490,7 @@ exports["default"] = function EmberCPM_safeString(dependentKey) {
   });
 
 }
-},{}],16:[function(_dereq_,module,exports){
+},{}],17:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 

@@ -15,6 +15,7 @@ var safeString = require("./safe-string")["default"] || require("./safe-string")
 var join = require("./join")["default"] || require("./join");
 var sumBy = require("./sum-by")["default"] || require("./sum-by");
 var concat = require("./concat")["default"] || require("./concat");
+var ifThenElse = require("./ifThenElse")["default"] || require("./ifThenElse");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -41,6 +42,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
+  ifThenElse: ifThenElse
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 

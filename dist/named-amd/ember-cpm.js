@@ -127,8 +127,8 @@ define("ember-cpm/concat",
     }
   });
 define("ember-cpm",
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __exports__) {
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./ifThenElse","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -146,6 +146,7 @@ define("ember-cpm",
     var join = __dependency14__["default"] || __dependency14__;
     var sumBy = __dependency15__["default"] || __dependency15__;
     var concat = __dependency16__["default"] || __dependency16__;
+    var ifThenElse = __dependency17__["default"] || __dependency17__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -172,6 +173,7 @@ define("ember-cpm",
       join: join,
       sumBy: sumBy,
       concat: concat,
+      ifThenElse: ifThenElse
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -331,6 +333,90 @@ define("ember-cpm/if-null",
 
         return value == null ? defaultValue : value;
       });
+    }
+  });
+define("ember-cpm/ifThenElse",
+  ["ember","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+    /**
+     * If-then-else computed property
+     *
+     * Usage:
+     *
+     *      // A simple true/false check on a property
+     *      var MyType = Ember.Object.extend({
+     *          a: true,
+     *          b: EmberCPM.Macros.ifThenElse('a', null, null, 'yes', 'no')
+     *      });
+     *
+     *      // Comparing two properties
+     *      var MyType = Ember.Object.extend({
+     *          a: true,
+     *          b: false,
+     *          // make sure to bind this to 'a' and 'b', since it only binds to 'a' by default
+     *          c: EmberCPM.Macros.ifThenElse('a', '===', 'b', 'yes', 'no').property('a', 'b')
+     *      });
+     *
+     *      Supported operations
+     *          ==, !=, ===, !==, >=, <=, <, >, &&, ||
+     *
+     */
+
+    __exports__["default"] = function EmberCPM_ifThenElse(prop1, comparator, prop2, thenValue, elseValue) {
+
+    	return Ember.computed(prop1, function () {
+
+    		var val1 = this.get(prop1),
+    			comparisonResult = val1;
+
+    		if (prop2 !== null) {
+
+    			var isProp2AProperty = Ember.typeOf(prop2) !== 'string' ? false : Ember.typeOf(Ember.get(this, prop2)) !==
+    				'undefined',
+    				val2 = isProp2AProperty ? Ember.get(this, prop2) : prop2;
+
+    			switch (comparator) {
+    				/*jshint eqeqeq:false*/
+    			case '==':
+    				comparisonResult = val1 == val2;
+    				break;
+    			case '!=':
+    				comparisonResult = val1 != val2;
+    				break;
+    				/*jshint eqeqeq:true*/
+    			case '===':
+    				comparisonResult = val1 === val2;
+    				break;
+    			case '!==':
+    				comparisonResult = val1 !== val2;
+    				break;
+    			case '>=':
+    				comparisonResult = val1 >= val2;
+    				break;
+    			case '>':
+    				comparisonResult = val1 > val2;
+    				break;
+    			case '<=':
+    				comparisonResult = val1 <= val2;
+    				break;
+    			case '<':
+    				comparisonResult = val1 < val2;
+    				break;
+    			case '&&':
+    				comparisonResult = val1 && val2;
+    				break;
+    			case '||':
+    				comparisonResult = val1 || val2;
+    				break;
+    			default:
+    				Ember.assert('EmberCPM.Macros.ifThenElse - Unknown operator: %@'.fmt(comparator));
+    				break;
+    			}
+    		}
+    		return comparisonResult ? thenValue : elseValue;
+    	});
     }
   });
 define("ember-cpm/join",
