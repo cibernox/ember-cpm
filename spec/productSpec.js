@@ -6,7 +6,8 @@ describe('product', function () {
     e: EmberCPM.Macros.product('a'),
     f: EmberCPM.Macros.product(),
     i: EmberCPM.Macros.product('a', 'b', 'g', 'h'),
-    j: EmberCPM.Macros.product('a', 'b', 'g', 'h', 2)
+    j: EmberCPM.Macros.product('a', 'b', 'g', 'h', 2),
+    k: EmberCPM.Macros.product(EmberCPM.Macros.product('a', 'b'), 'h')
   });
   var myObj = MyType.create({
     a: 6,
@@ -44,7 +45,11 @@ describe('product', function () {
     expect(myObj.get('e')).to.equal(5);
   });
 
-  it('given no arguments, returns null', function () {
-    expect(myObj.get('f')).to.equal(null);
+  it('given no arguments, returns 0', function () {
+    expect(myObj.get('f')).to.equal(0);
+  });
+
+  it('product of product', function () {
+    expect(myObj.get('k')).to.equal(140);
   });
 });

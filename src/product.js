@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import {reduceComputedPropertyMacro} from './utils';
+
 /**
 *  Returns the product of some numeric properties and numeric constants
 *
@@ -12,29 +14,10 @@ import Ember from 'ember';
 *    e: product('a', 'b', 'c', 2) // 168
 */
 
+var EmberCPM_product = reduceComputedPropertyMacro(
+  function (prev, item) {
+    return prev * item;
+  }
+);
 
-export default function EmberCPM_product () {
-  var mainArguments = Array.prototype.slice.call(arguments), // all arguments
-    propertyArguments = mainArguments.reject( // dependent properties
-      function (x) {
-        return Ember.typeOf(x) !== 'string';
-      }
-    );
-
-  propertyArguments.push(function () {
-
-    if (Ember.isEmpty(mainArguments)) {
-      return null;
-    }
-
-    var prod = 1;
-    for (var i = 0; i < mainArguments.length; i += 1) {
-      // handle either constants or numeric properties.
-      // Assumption: all non-string arguments to the macro are numeric constants
-      prod *= Ember.typeOf(mainArguments[i]) === 'string' ? this.get(mainArguments[i]) : mainArguments[i];
-    }
-
-    return prod;
-  });
-  return Ember.computed.apply(this, propertyArguments);
-}
+export default EmberCPM_product;
