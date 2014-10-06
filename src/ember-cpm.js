@@ -14,6 +14,7 @@ import safeString from './safe-string';
 import join from './join';
 import sumBy from './sum-by';
 import concat from './concat';
+import _utils from './utils';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -50,7 +51,8 @@ if (Ember.libraries)
 export {
   VERSION,
   Macros,
-  install
+  install,
+  _utils
 };
 
 export default {
