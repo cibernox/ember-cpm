@@ -164,8 +164,8 @@ define("ember-cpm/conditional",
     }
   });
 define("ember-cpm",
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./conditional","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __exports__) {
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./conditional","./product","./utils","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -184,6 +184,8 @@ define("ember-cpm",
     var sumBy = __dependency15__["default"] || __dependency15__;
     var concat = __dependency16__["default"] || __dependency16__;
     var conditional = __dependency17__["default"] || __dependency17__;
+    var product = __dependency18__["default"] || __dependency18__;
+    var _utils = __dependency19__["default"] || __dependency19__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -210,7 +212,8 @@ define("ember-cpm",
       join: join,
       sumBy: sumBy,
       concat: concat,
-      conditional: conditional
+      conditional: conditional,
+      product: product
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -221,6 +224,7 @@ define("ember-cpm",
     __exports__.VERSION = VERSION;
     __exports__.Macros = Macros;
     __exports__.install = install;
+    __exports__._utils = _utils;
 
     __exports__["default"] = {
       VERSION: VERSION,
@@ -452,6 +456,34 @@ define("ember-cpm/not-match",
       });
     }
   });
+define("ember-cpm/product",
+  ["ember","./utils","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+    var reduceComputedPropertyMacro = __dependency2__.reduceComputedPropertyMacro;
+
+    /**
+    *  Returns the product of some numeric properties and numeric constants
+    *
+    *  Example: 6 * 7 * 2 = 84
+    *
+    *  Usage:
+    *    a: 6,
+    *    b: 7,
+    *    c: 2,
+    *    d: product('a', 'b', 'c'), // 84
+    *    e: product('a', 'b', 'c', 2) // 168
+    */
+
+    var EmberCPM_product = reduceComputedPropertyMacro(
+      function (prev, item) {
+        return prev * item;
+      }
+    );
+
+    __exports__["default"] = EmberCPM_product;
+  });
 define("ember-cpm/promise",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
@@ -513,4 +545,92 @@ define("ember-cpm/sum-by",
         }
       });
     }
+  });
+define("ember-cpm/utils",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    /**
+     * Retain items in an array based on type
+     * @param {array} arr  array to iterate over
+     * @param {string} type string representation of type
+     *
+     * Example:
+     * var x = ['a', 'b', 123, {hello: 'world'}];
+     *
+     * retainByType(x, 'string'); // ['a', 'b']
+     * retainByType(x, 'number'); // [123]
+     * retainByType(x, 'object'); // [{hello: 'world'}]
+     *
+     */
+    function retainByType(arr, type) {
+      return arr.reject(
+        function (item) {
+          return Ember.typeOf(item) !== type;
+        }
+      );
+    }
+
+    __exports__.retainByType = retainByType;/**
+     * Evaluate a value, which could either be a property key or a literal
+     * @param val value to evaluate
+     *
+     * if the value is a string, the object that the computed property is installed
+     * on will be checked for a property of the same name. If one is found, it will
+     * be evaluated, and the result will be returned. Otherwise the string value its
+     * self will be returned
+     *
+     * All non-string values pass straight through, and are returned unaltered
+     */
+    function getVal(val) {
+      if (Ember.typeOf(val) === 'string') {
+        return Ember.get(this, val) || val;
+      } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
+        return val.func.apply(this);
+      } else {
+        return val;
+      }
+    }
+
+    __exports__.getVal = getVal;/**
+     * Return a computed property macro
+     * @param {[type]} reducingFunction [description]
+     */
+    function reduceComputedPropertyMacro(reducingFunction) {
+      return function () {
+        var mainArguments = Array.prototype.slice.call(arguments), // all arguments
+          propertyArguments = retainByType(mainArguments, 'string');
+
+        propertyArguments.push(function () {
+          var self = this;
+          switch (mainArguments.length) {
+
+            case 0:   // Handle zero-argument case
+              return 0;
+
+            case 1:   // Handle one-argument case
+              return getVal.call(this, mainArguments[0]);
+
+            default:  // Handle multi-argument case
+              return mainArguments.reduce(
+                function (prev, item, idx, enumerable) {
+                  // Evaluate "prev" value if this is the first time the reduce callback is called
+                  var prevValue = idx === 1 ? getVal.call(self, prev) : prev,
+
+                    // Evaluate the "item" value
+                    itemValue = getVal.call(self, item);
+
+                  // Call the reducing function, replacing "prev" and "item" arguments with
+                  // their respective evaluated values
+                  return reducingFunction.apply(self, [prevValue, itemValue, idx, enumerable]);
+
+                }
+              );
+          }
+        });
+        return Ember.computed.apply(this, propertyArguments);
+      };
+    }
+
+    __exports__.reduceComputedPropertyMacro = reduceComputedPropertyMacro;
   });

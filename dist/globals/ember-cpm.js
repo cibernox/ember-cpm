@@ -173,6 +173,8 @@ var join = _dereq_("./join")["default"] || _dereq_("./join");
 var sumBy = _dereq_("./sum-by")["default"] || _dereq_("./sum-by");
 var concat = _dereq_("./concat")["default"] || _dereq_("./concat");
 var conditional = _dereq_("./conditional")["default"] || _dereq_("./conditional");
+var product = _dereq_("./product")["default"] || _dereq_("./product");
+var _utils = _dereq_("./utils")["default"] || _dereq_("./utils");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -199,7 +201,8 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
-  conditional: conditional
+  conditional: conditional,
+  product: product
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -210,13 +213,14 @@ if (Ember.libraries)
 exports.VERSION = VERSION;
 exports.Macros = Macros;
 exports.install = install;
+exports._utils = _utils;
 
 exports["default"] = {
   VERSION: VERSION,
   Macros: Macros,
   install: install
 };
-},{"./among":1,"./concat":2,"./conditional":3,"./encode-uri":6,"./encode-uri-component":5,"./first-present":7,"./fmt":8,"./html-escape":9,"./if-null":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./promise":15,"./safe-string":16,"./sum-by":17}],5:[function(_dereq_,module,exports){
+},{"./among":1,"./concat":2,"./conditional":3,"./encode-uri":6,"./encode-uri-component":5,"./first-present":7,"./fmt":8,"./html-escape":9,"./if-null":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./product":15,"./promise":16,"./safe-string":17,"./sum-by":18,"./utils":19}],5:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -413,6 +417,31 @@ exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
 },{}],15:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
+var reduceComputedPropertyMacro = _dereq_("./utils").reduceComputedPropertyMacro;
+
+/**
+*  Returns the product of some numeric properties and numeric constants
+*
+*  Example: 6 * 7 * 2 = 84
+*
+*  Usage:
+*    a: 6,
+*    b: 7,
+*    c: 2,
+*    d: product('a', 'b', 'c'), // 84
+*    e: product('a', 'b', 'c', 2) // 168
+*/
+
+var EmberCPM_product = reduceComputedPropertyMacro(
+  function (prev, item) {
+    return prev * item;
+  }
+);
+
+exports["default"] = EmberCPM_product;
+},{"./utils":19}],16:[function(_dereq_,module,exports){
+"use strict";
+var Ember = window.Ember["default"] || window.Ember;
 
 var get = Ember.get;
 var computed = Ember.computed;
@@ -426,7 +455,7 @@ exports["default"] = function EmberCPM_promise(dependentKey) {
     return $.when(value);
   });
 }
-},{}],16:[function(_dereq_,module,exports){
+},{}],17:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -443,7 +472,7 @@ exports["default"] = function EmberCPM_safeString(dependentKey) {
   });
 
 }
-},{}],17:[function(_dereq_,module,exports){
+},{}],18:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -463,6 +492,91 @@ exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
     }
   });
 }
+},{}],19:[function(_dereq_,module,exports){
+"use strict";
+/**
+ * Retain items in an array based on type
+ * @param {array} arr  array to iterate over
+ * @param {string} type string representation of type
+ *
+ * Example:
+ * var x = ['a', 'b', 123, {hello: 'world'}];
+ *
+ * retainByType(x, 'string'); // ['a', 'b']
+ * retainByType(x, 'number'); // [123]
+ * retainByType(x, 'object'); // [{hello: 'world'}]
+ *
+ */
+function retainByType(arr, type) {
+  return arr.reject(
+    function (item) {
+      return Ember.typeOf(item) !== type;
+    }
+  );
+}
+
+exports.retainByType = retainByType;/**
+ * Evaluate a value, which could either be a property key or a literal
+ * @param val value to evaluate
+ *
+ * if the value is a string, the object that the computed property is installed
+ * on will be checked for a property of the same name. If one is found, it will
+ * be evaluated, and the result will be returned. Otherwise the string value its
+ * self will be returned
+ *
+ * All non-string values pass straight through, and are returned unaltered
+ */
+function getVal(val) {
+  if (Ember.typeOf(val) === 'string') {
+    return Ember.get(this, val) || val;
+  } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
+    return val.func.apply(this);
+  } else {
+    return val;
+  }
+}
+
+exports.getVal = getVal;/**
+ * Return a computed property macro
+ * @param {[type]} reducingFunction [description]
+ */
+function reduceComputedPropertyMacro(reducingFunction) {
+  return function () {
+    var mainArguments = Array.prototype.slice.call(arguments), // all arguments
+      propertyArguments = retainByType(mainArguments, 'string');
+
+    propertyArguments.push(function () {
+      var self = this;
+      switch (mainArguments.length) {
+
+        case 0:   // Handle zero-argument case
+          return 0;
+
+        case 1:   // Handle one-argument case
+          return getVal.call(this, mainArguments[0]);
+
+        default:  // Handle multi-argument case
+          return mainArguments.reduce(
+            function (prev, item, idx, enumerable) {
+              // Evaluate "prev" value if this is the first time the reduce callback is called
+              var prevValue = idx === 1 ? getVal.call(self, prev) : prev,
+
+                // Evaluate the "item" value
+                itemValue = getVal.call(self, item);
+
+              // Call the reducing function, replacing "prev" and "item" arguments with
+              // their respective evaluated values
+              return reducingFunction.apply(self, [prevValue, itemValue, idx, enumerable]);
+
+            }
+          );
+      }
+    });
+    return Ember.computed.apply(this, propertyArguments);
+  };
+}
+
+exports.reduceComputedPropertyMacro = reduceComputedPropertyMacro;
 },{}]},{},[4])
 (4)
 });

@@ -1,6 +1,6 @@
 define(
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./conditional","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __exports__) {
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./conditional","./product","./utils","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -19,6 +19,8 @@ define(
     var sumBy = __dependency15__["default"] || __dependency15__;
     var concat = __dependency16__["default"] || __dependency16__;
     var conditional = __dependency17__["default"] || __dependency17__;
+    var product = __dependency18__["default"] || __dependency18__;
+    var _utils = __dependency19__["default"] || __dependency19__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -45,7 +47,8 @@ define(
       join: join,
       sumBy: sumBy,
       concat: concat,
-      conditional: conditional
+      conditional: conditional,
+      product: product
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -56,6 +59,7 @@ define(
     __exports__.VERSION = VERSION;
     __exports__.Macros = Macros;
     __exports__.install = install;
+    __exports__._utils = _utils;
 
     __exports__["default"] = {
       VERSION: VERSION,

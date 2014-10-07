@@ -15,6 +15,8 @@ import join from './join';
 import sumBy from './sum-by';
 import concat from './concat';
 import conditional from './conditional';
+import product from './product';
+import _utils from './utils';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -41,7 +43,8 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
-  conditional: conditional
+  conditional: conditional,
+  product: product
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 
@@ -52,7 +55,8 @@ if (Ember.libraries)
 export {
   VERSION,
   Macros,
-  install
+  install,
+  _utils
 };
 
 export default {
