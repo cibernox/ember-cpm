@@ -19,25 +19,17 @@ within your app.
 
 If not, just add `ember-cpm.js` to your page after Ember but before your app.
 
-### Build from source
+### Contributing
 
-You will need to install the dependencies first. Run `make install_dependencies` to do it.
+If you are used to ember-cli projects, everything works as expected:
 
-Then run `make` to generate `ember-cpm.js` from source in the `dist` folder.
+* Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode.
+* Run `ember test` to run all tests once (requires phantomjs).
+* Run `ember build` to build from source.
 
-### Run tests
+You will need to install the dependencies first with `npm install`.
 
-To run the rest suite in interactive mode execute `make test` and enter `http://localhost:4200`.
-
-To run the test suite just once and exit run `make test-ci`.
-
-You can also run the test suite in watch mode with `broccoli serve`.
-
-### Run tests
-
-For run the tests once in just type `make test`.
-
-You can also run the tests in interactive mode by typing `testem`.
+Visit [http://www.ember-cli.com/](http://www.ember-cli.com/) for further guidance.
 
 ### Change Warning
 
@@ -91,7 +83,7 @@ Person = Ember.Object.extend({
 });
 ```
 ### Composable Computed Property Macros
-`sum` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
+`sum`, `difference` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
 
 ```javascript
 var product = EmberCPM.Macros.product,

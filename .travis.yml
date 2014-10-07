@@ -1,8 +1,16 @@
-language: "node_js"
-node_js:
-  - "0.10"
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-install: "make install_dependencies"
-script: "make test-ci"
+---
+language: node_js
+
+sudo: false
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install -g bower
+  - npm install
+  - bower install
+
+script:
+  - npm test
