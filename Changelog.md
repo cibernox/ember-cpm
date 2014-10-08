@@ -1,5 +1,9 @@
 # Changelog
 
+Feature: Added `product` CP.
+Feature: Added `conditional` CP.
+Feature: Added `sum`, backwards compatible with ember's sum, but the ability of handle several arguments.
+
 ## v1.1.3, 2014-09-23
 Feature: Ember-cpm works out of the box with ember-cli as an addon.
 
