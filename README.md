@@ -64,6 +64,9 @@ breaking changes and make the period of instability as short as possible.
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
  * `sumBy` -- sums a property from an array of objects
+ * `product` -- multiplies numeric properties and literals together
+ * `sum` -- sums numeric properties and literals together
+ * `conditional` -- returns values based on a boolean property (good replacement for ternary operator)
 
 ### Examples
 
@@ -86,6 +89,33 @@ Person = Ember.Object.extend({
 
 });
 ```
+### Composable Computed Property Macros
+`sum` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
+
+```javascript
+var product = EmberCPM.Macros.product,
+   sum = EmberCPM.Macros.sum,
+   mapBy = Ember.computed.mapBy,
+   sumArray = Ember.computed.sum;
+
+RestaurantCheck = Ember.Object.extend({
+  items: [],
+  taxPercent: 0.05,
+  discount: 5.00,
+
+  itemPrices: mapBy('items', 'price'),
+  subTotal: sumArray('itemPrices'), // sums over array
+
+  grandTotal: sum(
+    product('taxPercent', 'subTotal'), // tax
+    'subTotal', // main bill
+    product('subTotal', 0.17), // tip your waiter
+    product(-1, 'discount') // discount
+  )
+});
+
+```
+
 ### `Ember.computed`
 
 If you would prefer to use `Ember.computed.{macro}` instead of
