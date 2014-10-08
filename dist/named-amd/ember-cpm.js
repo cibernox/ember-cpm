@@ -164,8 +164,8 @@ define("ember-cpm/conditional",
     }
   });
 define("ember-cpm",
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./concat","./conditional","./product","./utils","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __exports__) {
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./sum","./concat","./conditional","./product","./utils","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -182,10 +182,11 @@ define("ember-cpm",
     var safeString = __dependency13__["default"] || __dependency13__;
     var join = __dependency14__["default"] || __dependency14__;
     var sumBy = __dependency15__["default"] || __dependency15__;
-    var concat = __dependency16__["default"] || __dependency16__;
-    var conditional = __dependency17__["default"] || __dependency17__;
-    var product = __dependency18__["default"] || __dependency18__;
-    var _utils = __dependency19__["default"] || __dependency19__;
+    var sum = __dependency16__["default"] || __dependency16__;
+    var concat = __dependency17__["default"] || __dependency17__;
+    var conditional = __dependency18__["default"] || __dependency18__;
+    var product = __dependency19__["default"] || __dependency19__;
+    var _utils = __dependency20__["default"] || __dependency20__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -211,6 +212,7 @@ define("ember-cpm",
       safeString: safeString,
       join: join,
       sumBy: sumBy,
+      sum: sum,
       concat: concat,
       conditional: conditional,
       product: product
@@ -546,6 +548,50 @@ define("ember-cpm/sum-by",
       });
     }
   });
+define("ember-cpm/sum",
+  ["ember","./utils","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+    var reduceComputedPropertyMacro = __dependency2__.reduceComputedPropertyMacro;
+    var getVal = __dependency2__.getVal;
+    /**
+    *  Returns the sum of some numeric properties and numeric constants
+    *
+    *  Example: 6 + 7 + 2 = 84
+    *
+    *  Usage:
+    *    a: 6,
+    *    b: 7,
+    *    c: 2,
+    *    d: [1, 2, 3, 4],
+    *    e: sum('a', 'b', 'c'), // 15
+    *    f: sum('a', 'b', 'c', 2) // 17,
+    *    g: sum('d') // 10
+    */
+
+    function singleValueOrArraySum(val) {
+      if (Ember.isArray(val)) {
+        return val.reduce(function (prev, item) {return prev + item;});
+      }
+      else {
+        return val;
+      }
+    }
+
+    var EmberCPM_sum = reduceComputedPropertyMacro(
+      function (prev, item) {
+        return singleValueOrArraySum(prev) + singleValueOrArraySum(item);
+      },
+      {
+        singleItemCallback: function (item) {
+          return singleValueOrArraySum(getVal.call(this, item));
+        }
+      }
+    );
+
+    __exports__["default"] = EmberCPM_sum;
+  });
 define("ember-cpm/utils",
   ["exports"],
   function(__exports__) {
@@ -596,7 +642,10 @@ define("ember-cpm/utils",
      * Return a computed property macro
      * @param {[type]} reducingFunction [description]
      */
-    function reduceComputedPropertyMacro(reducingFunction) {
+    function reduceComputedPropertyMacro(reducingFunction, options) {
+      var opts = options || {},
+        singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
+
       return function () {
         var mainArguments = Array.prototype.slice.call(arguments), // all arguments
           propertyArguments = retainByType(mainArguments, 'string');
@@ -609,7 +658,7 @@ define("ember-cpm/utils",
               return 0;
 
             case 1:   // Handle one-argument case
-              return getVal.call(this, mainArguments[0]);
+              return singleItemCallback.call(this, mainArguments[0]);
 
             default:  // Handle multi-argument case
               return mainArguments.reduce(

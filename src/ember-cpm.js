@@ -13,6 +13,7 @@ import promise from './promise';
 import safeString from './safe-string';
 import join from './join';
 import sumBy from './sum-by';
+import sum from './sum';
 import concat from './concat';
 import conditional from './conditional';
 import product from './product';
@@ -42,6 +43,7 @@ var Macros = {
   safeString: safeString,
   join: join,
   sumBy: sumBy,
+  sum: sum,
   concat: concat,
   conditional: conditional,
   product: product

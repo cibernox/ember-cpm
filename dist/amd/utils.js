@@ -48,7 +48,10 @@ define(
      * Return a computed property macro
      * @param {[type]} reducingFunction [description]
      */
-    function reduceComputedPropertyMacro(reducingFunction) {
+    function reduceComputedPropertyMacro(reducingFunction, options) {
+      var opts = options || {},
+        singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
+
       return function () {
         var mainArguments = Array.prototype.slice.call(arguments), // all arguments
           propertyArguments = retainByType(mainArguments, 'string');
@@ -61,7 +64,7 @@ define(
               return 0;
 
             case 1:   // Handle one-argument case
-              return getVal.call(this, mainArguments[0]);
+              return singleItemCallback.call(this, mainArguments[0]);
 
             default:  // Handle multi-argument case
               return mainArguments.reduce(

@@ -171,6 +171,7 @@ var promise = _dereq_("./promise")["default"] || _dereq_("./promise");
 var safeString = _dereq_("./safe-string")["default"] || _dereq_("./safe-string");
 var join = _dereq_("./join")["default"] || _dereq_("./join");
 var sumBy = _dereq_("./sum-by")["default"] || _dereq_("./sum-by");
+var sum = _dereq_("./sum")["default"] || _dereq_("./sum");
 var concat = _dereq_("./concat")["default"] || _dereq_("./concat");
 var conditional = _dereq_("./conditional")["default"] || _dereq_("./conditional");
 var product = _dereq_("./product")["default"] || _dereq_("./product");
@@ -200,6 +201,7 @@ var Macros = {
   safeString: safeString,
   join: join,
   sumBy: sumBy,
+  sum: sum,
   concat: concat,
   conditional: conditional,
   product: product
@@ -220,7 +222,7 @@ exports["default"] = {
   Macros: Macros,
   install: install
 };
-},{"./among":1,"./concat":2,"./conditional":3,"./encode-uri":6,"./encode-uri-component":5,"./first-present":7,"./fmt":8,"./html-escape":9,"./if-null":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./product":15,"./promise":16,"./safe-string":17,"./sum-by":18,"./utils":19}],5:[function(_dereq_,module,exports){
+},{"./among":1,"./concat":2,"./conditional":3,"./encode-uri":6,"./encode-uri-component":5,"./first-present":7,"./fmt":8,"./html-escape":9,"./if-null":10,"./join":11,"./not-among":12,"./not-equal":13,"./not-match":14,"./product":15,"./promise":16,"./safe-string":17,"./sum":19,"./sum-by":18,"./utils":20}],5:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -439,7 +441,7 @@ var EmberCPM_product = reduceComputedPropertyMacro(
 );
 
 exports["default"] = EmberCPM_product;
-},{"./utils":19}],16:[function(_dereq_,module,exports){
+},{"./utils":20}],16:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -494,6 +496,47 @@ exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
 }
 },{}],19:[function(_dereq_,module,exports){
 "use strict";
+var Ember = window.Ember["default"] || window.Ember;
+var reduceComputedPropertyMacro = _dereq_("./utils").reduceComputedPropertyMacro;
+var getVal = _dereq_("./utils").getVal;
+/**
+*  Returns the sum of some numeric properties and numeric constants
+*
+*  Example: 6 + 7 + 2 = 84
+*
+*  Usage:
+*    a: 6,
+*    b: 7,
+*    c: 2,
+*    d: [1, 2, 3, 4],
+*    e: sum('a', 'b', 'c'), // 15
+*    f: sum('a', 'b', 'c', 2) // 17,
+*    g: sum('d') // 10
+*/
+
+function singleValueOrArraySum(val) {
+  if (Ember.isArray(val)) {
+    return val.reduce(function (prev, item) {return prev + item;});
+  }
+  else {
+    return val;
+  }
+}
+
+var EmberCPM_sum = reduceComputedPropertyMacro(
+  function (prev, item) {
+    return singleValueOrArraySum(prev) + singleValueOrArraySum(item);
+  },
+  {
+    singleItemCallback: function (item) {
+      return singleValueOrArraySum(getVal.call(this, item));
+    }
+  }
+);
+
+exports["default"] = EmberCPM_sum;
+},{"./utils":20}],20:[function(_dereq_,module,exports){
+"use strict";
 /**
  * Retain items in an array based on type
  * @param {array} arr  array to iterate over
@@ -540,7 +583,10 @@ exports.getVal = getVal;/**
  * Return a computed property macro
  * @param {[type]} reducingFunction [description]
  */
-function reduceComputedPropertyMacro(reducingFunction) {
+function reduceComputedPropertyMacro(reducingFunction, options) {
+  var opts = options || {},
+    singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
+
   return function () {
     var mainArguments = Array.prototype.slice.call(arguments), // all arguments
       propertyArguments = retainByType(mainArguments, 'string');
@@ -553,7 +599,7 @@ function reduceComputedPropertyMacro(reducingFunction) {
           return 0;
 
         case 1:   // Handle one-argument case
-          return getVal.call(this, mainArguments[0]);
+          return singleItemCallback.call(this, mainArguments[0]);
 
         default:  // Handle multi-argument case
           return mainArguments.reduce(
