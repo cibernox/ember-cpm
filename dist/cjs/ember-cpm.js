@@ -18,6 +18,7 @@ var sum = require("./sum")["default"] || require("./sum");
 var concat = require("./concat")["default"] || require("./concat");
 var conditional = require("./conditional")["default"] || require("./conditional");
 var product = require("./product")["default"] || require("./product");
+var difference = require("./difference")["default"] || require("./difference");
 var _utils = require("./utils")["default"] || require("./utils");
 
 function reverseMerge(dest, source) {
@@ -45,6 +46,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   sum: sum,
+  difference: difference,
   concat: concat,
   conditional: conditional,
   product: product

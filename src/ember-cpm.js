@@ -17,6 +17,7 @@ import sum from './sum';
 import concat from './concat';
 import conditional from './conditional';
 import product from './product';
+import difference from './difference';
 import _utils from './utils';
 
 function reverseMerge(dest, source) {
@@ -44,6 +45,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   sum: sum,
+  difference: difference,
   concat: concat,
   conditional: conditional,
   product: product

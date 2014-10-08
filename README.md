@@ -64,6 +64,7 @@ breaking changes and make the period of instability as short as possible.
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
  * `sumBy` -- sums a property from an array of objects
+ * `difference` -- subtracts one numeric property or literal from another
  * `product` -- multiplies numeric properties and literals together
  * `sum` -- sums numeric properties and literals together
  * `conditional` -- returns values based on a boolean property (good replacement for ternary operator)
