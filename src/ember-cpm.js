@@ -14,6 +14,7 @@ import safeString from './safe-string';
 import join from './join';
 import sumBy from './sum-by';
 import concat from './concat';
+import conditional from './conditional';
 import product from './product';
 import _utils from './utils';
 
@@ -42,6 +43,7 @@ var Macros = {
   join: join,
   sumBy: sumBy,
   concat: concat,
+  conditional: conditional,
   product: product
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
