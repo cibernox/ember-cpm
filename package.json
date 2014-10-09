@@ -1,6 +1,6 @@
 {
   "name": "ember-cpm",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "licence": "APLv2 / MIT",
   "description": "Computed Propery Macros for Ember.js",
   "keywords": [
