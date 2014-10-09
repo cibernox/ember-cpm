@@ -17,6 +17,7 @@ import sum from './sum';
 import concat from './concat';
 import conditional from './conditional';
 import product from './product';
+import quotient from './quotient';
 import difference from './difference';
 import _utils from './utils';
 
@@ -48,6 +49,7 @@ var Macros = {
   difference: difference,
   concat: concat,
   conditional: conditional,
+  quotient: quotient,
   product: product
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };

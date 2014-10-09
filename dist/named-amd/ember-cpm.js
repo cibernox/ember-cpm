@@ -191,8 +191,8 @@ define("ember-cpm/difference",
     }
   });
 define("ember-cpm",
-  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./sum","./concat","./conditional","./product","./difference","./utils","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __exports__) {
+  ["ember","./among","./encode-uri-component","./encode-uri","./first-present","./fmt","./html-escape","./if-null","./not-among","./not-equal","./not-match","./promise","./safe-string","./join","./sum-by","./sum","./concat","./conditional","./product","./quotient","./difference","./utils","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __dependency22__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -213,8 +213,9 @@ define("ember-cpm",
     var concat = __dependency17__["default"] || __dependency17__;
     var conditional = __dependency18__["default"] || __dependency18__;
     var product = __dependency19__["default"] || __dependency19__;
-    var difference = __dependency20__["default"] || __dependency20__;
-    var _utils = __dependency21__["default"] || __dependency21__;
+    var quotient = __dependency20__["default"] || __dependency20__;
+    var difference = __dependency21__["default"] || __dependency21__;
+    var _utils = __dependency22__["default"] || __dependency22__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -244,6 +245,7 @@ define("ember-cpm",
       difference: difference,
       concat: concat,
       conditional: conditional,
+      quotient: quotient,
       product: product
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };
@@ -534,6 +536,33 @@ define("ember-cpm/promise",
       });
     }
   });
+define("ember-cpm/quotient",
+  ["ember","./utils","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+    var retainByType = __dependency2__.retainByType;
+    var getVal = __dependency2__.getVal;
+    var getDependentPropertyKeys = __dependency2__.getDependentPropertyKeys;
+
+    __exports__["default"] = function EmberCPM_quotient() {
+      var mainArguments = Array.prototype.slice.call(arguments), // all arguments
+        propertyArguments = getDependentPropertyKeys(mainArguments);
+
+      propertyArguments.push(function () {
+        switch (mainArguments.length) {
+          case 0:
+            return 0;
+          case 1:
+            return getVal.call(this, mainArguments[0]);
+          default:
+            return getVal.call(this, mainArguments[0]) / getVal.call(this, mainArguments[1]);
+        }
+      });
+
+      return Ember.computed.apply(this, propertyArguments);
+    }
+  });
 define("ember-cpm/safe-string",
   ["ember","exports"],
   function(__dependency1__, __exports__) {
@@ -646,7 +675,30 @@ define("ember-cpm/utils",
       );
     }
 
-    __exports__.retainByType = retainByType;/**
+    __exports__.retainByType = retainByType;
+    function getDependentPropertyKeys(argumentArr) {
+
+      return argumentArr.reduce(
+        function (prev, item) {
+          switch (Ember.typeOf(item)) {
+            case 'string':
+              prev.push(item);
+              break;
+            case 'number':
+              break;
+            default:
+              if (item.constructor === Ember.Descriptor) {
+                prev.pushObjects(item._dependentKeys);
+              }
+              break;
+          }
+          return prev;
+        },
+        []
+      );
+    }
+
+    __exports__.getDependentPropertyKeys = getDependentPropertyKeys;/**
      * Evaluate a value, which could either be a property key or a literal
      * @param val value to evaluate
      *
@@ -661,7 +713,12 @@ define("ember-cpm/utils",
       if (Ember.typeOf(val) === 'string') {
         return Ember.get(this, val) || val;
       } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
-        return val.func.apply(this);
+        if (val.altKey) {
+          return this.get(val.altKey);
+        }
+        else {
+          return val.func.apply(this);
+        }
       } else {
         return val;
       }
@@ -677,7 +734,7 @@ define("ember-cpm/utils",
 
       return function () {
         var mainArguments = Array.prototype.slice.call(arguments), // all arguments
-          propertyArguments = retainByType(mainArguments, 'string');
+          propertyArguments = getDependentPropertyKeys(mainArguments);
 
         propertyArguments.push(function () {
           var self = this;

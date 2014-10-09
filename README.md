@@ -64,6 +64,7 @@ breaking changes and make the period of instability as short as possible.
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
  * `sumBy` -- sums a property from an array of objects
+ * `quotient` -- divides one numeric property or literal by another
  * `difference` -- subtracts one numeric property or literal from another
  * `product` -- multiplies numeric properties and literals together
  * `sum` -- sums numeric properties and literals together
@@ -91,7 +92,7 @@ Person = Ember.Object.extend({
 });
 ```
 ### Composable Computed Property Macros
-`sum` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
+`conditional`, `sum`, `quotient` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
 
 ```javascript
 var product = EmberCPM.Macros.product,

@@ -18,6 +18,7 @@ var sum = require("./sum")["default"] || require("./sum");
 var concat = require("./concat")["default"] || require("./concat");
 var conditional = require("./conditional")["default"] || require("./conditional");
 var product = require("./product")["default"] || require("./product");
+var quotient = require("./quotient")["default"] || require("./quotient");
 var difference = require("./difference")["default"] || require("./difference");
 var _utils = require("./utils")["default"] || require("./utils");
 
@@ -49,6 +50,7 @@ var Macros = {
   difference: difference,
   concat: concat,
   conditional: conditional,
+  quotient: quotient,
   product: product
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };

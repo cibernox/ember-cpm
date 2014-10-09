@@ -23,7 +23,30 @@ define(
       );
     }
 
-    __exports__.retainByType = retainByType;/**
+    __exports__.retainByType = retainByType;
+    function getDependentPropertyKeys(argumentArr) {
+
+      return argumentArr.reduce(
+        function (prev, item) {
+          switch (Ember.typeOf(item)) {
+            case 'string':
+              prev.push(item);
+              break;
+            case 'number':
+              break;
+            default:
+              if (item.constructor === Ember.Descriptor) {
+                prev.pushObjects(item._dependentKeys);
+              }
+              break;
+          }
+          return prev;
+        },
+        []
+      );
+    }
+
+    __exports__.getDependentPropertyKeys = getDependentPropertyKeys;/**
      * Evaluate a value, which could either be a property key or a literal
      * @param val value to evaluate
      *
@@ -38,7 +61,12 @@ define(
       if (Ember.typeOf(val) === 'string') {
         return Ember.get(this, val) || val;
       } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
-        return val.func.apply(this);
+        if (val.altKey) {
+          return this.get(val.altKey);
+        }
+        else {
+          return val.func.apply(this);
+        }
       } else {
         return val;
       }
@@ -54,7 +82,7 @@ define(
 
       return function () {
         var mainArguments = Array.prototype.slice.call(arguments), // all arguments
-          propertyArguments = retainByType(mainArguments, 'string');
+          propertyArguments = getDependentPropertyKeys(mainArguments);
 
         propertyArguments.push(function () {
           var self = this;
