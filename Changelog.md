@@ -1,5 +1,8 @@
 # Changelog
 
+Enhalcement: Use ember-cli as build tool, like other regular addons.
+
+## 1.1.4 2014-10-09
 Feature: Added `product` CP.
 Feature: Added `conditional` CP.
 Feature: Added `sum`, backwards compatible with ember's sum, but the ability of handle several arguments.

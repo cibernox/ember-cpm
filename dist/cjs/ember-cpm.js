@@ -1,25 +1,24 @@
 "use strict";
 var Ember = require("ember")["default"] || require("ember");
-var among = require("./among")["default"] || require("./among");
-var encodeURIComponent = require("./encode-uri-component")["default"] || require("./encode-uri-component");
-var encodeURI = require("./encode-uri")["default"] || require("./encode-uri");
-var firstPresent = require("./first-present")["default"] || require("./first-present");
-var fmt = require("./fmt")["default"] || require("./fmt");
-var htmlEscape = require("./html-escape")["default"] || require("./html-escape");
-var ifNull = require("./if-null")["default"] || require("./if-null");
-var notAmong = require("./not-among")["default"] || require("./not-among");
-var notEqual = require("./not-equal")["default"] || require("./not-equal");
-var notMatch = require("./not-match")["default"] || require("./not-match");
-var promise = require("./promise")["default"] || require("./promise");
-var safeString = require("./safe-string")["default"] || require("./safe-string");
-var join = require("./join")["default"] || require("./join");
-var sumBy = require("./sum-by")["default"] || require("./sum-by");
-var sum = require("./sum")["default"] || require("./sum");
-var concat = require("./concat")["default"] || require("./concat");
-var conditional = require("./conditional")["default"] || require("./conditional");
-var product = require("./product")["default"] || require("./product");
-var difference = require("./difference")["default"] || require("./difference");
-var _utils = require("./utils")["default"] || require("./utils");
+var among = require("./macros/among")["default"] || require("./macros/among");
+var encodeURIComponent = require("./macros/encode-uri-component")["default"] || require("./macros/encode-uri-component");
+var encodeURI = require("./macros/encode-uri")["default"] || require("./macros/encode-uri");
+var firstPresent = require("./macros/first-present")["default"] || require("./macros/first-present");
+var fmt = require("./macros/fmt")["default"] || require("./macros/fmt");
+var htmlEscape = require("./macros/html-escape")["default"] || require("./macros/html-escape");
+var ifNull = require("./macros/if-null")["default"] || require("./macros/if-null");
+var notAmong = require("./macros/not-among")["default"] || require("./macros/not-among");
+var notEqual = require("./macros/not-equal")["default"] || require("./macros/not-equal");
+var notMatch = require("./macros/not-match")["default"] || require("./macros/not-match");
+var promise = require("./macros/promise")["default"] || require("./macros/promise");
+var safeString = require("./macros/safe-string")["default"] || require("./macros/safe-string");
+var join = require("./macros/join")["default"] || require("./macros/join");
+var sumBy = require("./macros/sum-by")["default"] || require("./macros/sum-by");
+var sum = require("./macros/sum")["default"] || require("./macros/sum");
+var concat = require("./macros/concat")["default"] || require("./macros/concat");
+var conditional = require("./macros/conditional")["default"] || require("./macros/conditional");
+var product = require("./macros/product")["default"] || require("./macros/product");
+var difference = require("./macros/difference")["default"] || require("./macros/difference");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -54,13 +53,13 @@ var Macros = {
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
-if (Ember.libraries)
+if (Ember.libraries) {
   Ember.libraries.register('Ember-CPM', VERSION);
+}
 
 exports.VERSION = VERSION;
 exports.Macros = Macros;
 exports.install = install;
-exports._utils = _utils;
 
 exports["default"] = {
   VERSION: VERSION,

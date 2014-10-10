@@ -1,7 +1,9 @@
 define(
-  ["exports"],
-  function(__exports__) {
+  ["ember","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var Ember = __dependency1__["default"] || __dependency1__;
+
     /**
      * Retain items in an array based on type
      * @param {array} arr  array to iterate over
@@ -23,7 +25,28 @@ define(
       );
     }
 
-    __exports__.retainByType = retainByType;/**
+    __exports__.retainByType = retainByType;function getDependentPropertyKeys(argumentArr) {
+      return argumentArr.reduce(
+        function (prev, item) {
+          switch (Ember.typeOf(item)) {
+            case 'string':
+              prev.push(item);
+              break;
+            case 'number':
+              break;
+            default:
+              if (item.constructor === Ember.Descriptor) {
+                prev.pushObjects(item._dependentKeys);
+              }
+              break;
+          }
+          return prev;
+        },
+        []
+      );
+    }
+
+    __exports__.getDependentPropertyKeys = getDependentPropertyKeys;/**
      * Evaluate a value, which could either be a property key or a literal
      * @param val value to evaluate
      *
@@ -38,7 +61,7 @@ define(
       if (Ember.typeOf(val) === 'string') {
         return Ember.get(this, val) || val;
       } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
-        return val.func.apply(this);
+        return val.altKey ? this.get(val.altKey) : val.func.apply(this);
       } else {
         return val;
       }
@@ -49,12 +72,12 @@ define(
      * @param {[type]} reducingFunction [description]
      */
     function reduceComputedPropertyMacro(reducingFunction, options) {
-      var opts = options || {},
-        singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
+      var opts = options || {};
+      var singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
 
       return function () {
-        var mainArguments = Array.prototype.slice.call(arguments), // all arguments
-          propertyArguments = retainByType(mainArguments, 'string');
+        var mainArguments = Array.prototype.slice.call(arguments); // all arguments
+        var propertyArguments = retainByType(mainArguments, 'string');
 
         propertyArguments.push(function () {
           var self = this;
