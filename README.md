@@ -41,21 +41,13 @@ Person = Ember.Object.extend({
 
 ### Contributing
 
-If you are used to ember-cli projects, everything works as expected:
+You have to install Ember CLI to build this library. If you don't have it, visit [www.ember-cli.com/](http://www.ember-cli.com/) for further guidance about how to install it. 
+
+After running `npm install` to get all the dependencies you can:
 
 * Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode.
 * Run `ember test` to run all tests once (requires phantomjs).
 * Run `ember build` to build from source.
-
-You will need to install the dependencies first with `npm install`.
-
-Visit [http://www.ember-cli.com/](http://www.ember-cli.com/) for further guidance.
-
-### Change Warning
-
-Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its
-scope and structure change. We will, of course, bump the major version when making
-breaking changes and make the period of instability as short as possible.
 
 ### Provided Macros
 
@@ -113,3 +105,9 @@ RestaurantCheck = Ember.Object.extend({
 If you would prefer to use `Ember.computed.{macro}` instead of
 `EmberCPM.Macros.{macro}` (for the sake of uniform access), simply call
 `EmberCPM.install()` before your application code.
+
+### Change Warning
+
+Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its
+scope and structure change. We will, of course, bump the major version when making
+breaking changes and make the period of instability as short as possible.
