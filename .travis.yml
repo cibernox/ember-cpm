@@ -14,3 +14,13 @@ install:
 
 script:
   - npm test
+
+after_success:
+  - npm build
+  - "./s3-publish.js"
+
+env:
+  global:
+    - S3_BUCKET_NAME=ember-cpm-builds
+
+
