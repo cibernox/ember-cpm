@@ -31,7 +31,7 @@ define(
       }
     }
 
-    var VERSION = '1.1.4';
+    var VERSION = '1.2.0';
     var Macros = {
       among: among,
       encodeURIComponent: encodeURIComponent,

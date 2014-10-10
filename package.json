@@ -2,7 +2,7 @@
   "name": "ember-cpm",
   "description": "Computed Propery Macros for Ember.js",
   "author": "James A. Rosen <james.a.rosen@gmail.com>",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "licence": "APLv2 / MIT",
   "directories": {
     "doc": "doc",

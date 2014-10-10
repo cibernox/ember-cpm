@@ -1,5 +1,6 @@
 # Changelog
 
+## 1.2.0 2014-10-10
 Enhalcement: Use ember-cli as build tool, like other regular addons.
 
 ## 1.1.4 2014-10-09
