@@ -19,6 +19,26 @@ within your app.
 
 If not, just add `ember-cpm.js` to your page after Ember but before your app.
 
+### Usage
+
+In Ember CLI:
+
+```js
+// Import only one macros
+import ifNull from "ember-cpm/macros/if-null";
+// or alternatively import all macros
+import EmberCPM from "ember-cpm/ember-cpm";
+```
+
+In any other scenario, include `ember-cpm.js` after ember but before your app, and a gobal will be available:
+
+```js
+Person = Ember.Object.extend({
+  name: null,
+  handle: EmberCPM.Macros.ifNull('name', 'Anonymous'),
+});
+```
+
 ### Contributing
 
 If you are used to ember-cli projects, everything works as expected:
@@ -61,27 +81,6 @@ breaking changes and make the period of instability as short as possible.
  * `sum` -- sums numeric properties and literals together
  * `conditional` -- returns values based on a boolean property (good replacement for ternary operator)
 
-### Examples
-
-```javascript
-Person = Ember.Object.extend({
-
-  name: null,
-
-  handedness: null,
-
-  greeting: null,
-
-  handle: EmberCPM.Macros.ifNull('name', 'Anonymous'),
-
-  greeting: EmberCPM.Macros.fmt('name', 'greeting', '%@ says, "%@!"'),
-
-  canUseLeftHand: EmberCPM.Macros.among('handedness', 'left', 'ambidextrous'),
-
-  notNamedJohn: EmberCPM.Macros.notMatch('name', /\bJohn\b/)
-
-});
-```
 ### Composable Computed Property Macros
 `sum`, `difference` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
 
