@@ -14,13 +14,27 @@
 // along with the exports of each module as its value.
 
 if (process.argv[2] === 'build') {
-  var dist = require('broccoli-dist-es6-module');
+  var dist    = require('broccoli-dist-es6-module');
+  var mover   = require('broccoli-file-mover');
+  var merger  = require('broccoli-merge-trees');
+  var remover = require('broccoli-file-remover');
 
-  var emberCPM = dist('addon', {
+  var transpiled = dist('addon', {
     global: 'EmberCPM',
     packageName: 'ember-cpm',
     main: 'ember-cpm',
     shim: { 'ember': 'Ember' }
+  });
+
+  var renamedFiles = mover(transpiled, {
+    files: {
+      '/globals/main.js': '/globals/ember-cpm.js',
+      '/named-amd/main.js': '/named-amd/ember-cpm.js',
+    }
+  });
+
+  var emberCPM = remover(merger([transpiled, renamedFiles]), {
+    files: ['/globals/main.js', '/named-amd/main.js']
   });
 
   module.exports = emberCPM;

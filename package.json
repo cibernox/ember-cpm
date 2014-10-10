@@ -25,8 +25,11 @@
   "devDependencies": {
     "body-parser": "^1.2.0",
     "broccoli-asset-rev": "0.3.0",
-    "broccoli-ember-hbs-template-compiler": "^1.6.1",
     "broccoli-dist-es6-module": "0.2.1",
+    "broccoli-ember-hbs-template-compiler": "^1.6.1",
+    "broccoli-file-mover": "0.4.1",
+    "broccoli-file-remover": "^0.3.1",
+    "broccoli-merge-trees": "0.2.0",
     "ember-cli": "0.1.1",
     "ember-cli-content-security-policy": "0.2.0",
     "ember-cli-ic-ajax": "0.1.1",
