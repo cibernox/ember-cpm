@@ -19,31 +19,35 @@ within your app.
 
 If not, just add `ember-cpm.js` to your page after Ember but before your app.
 
-### Build from source
+### Usage
 
-You will need to install the dependencies first. Run `make install_dependencies` to do it.
+In Ember CLI:
 
-Then run `make` to generate `ember-cpm.js` from source in the `dist` folder.
+```js
+// Import only one macros
+import ifNull from "ember-cpm/macros/if-null";
+// or alternatively import all macros
+import EmberCPM from "ember-cpm/ember-cpm";
+```
 
-### Run tests
+In any other scenario, include `ember-cpm.js` after ember but before your app, and a gobal will be available:
 
-To run the rest suite in interactive mode execute `make test` and enter `http://localhost:4200`.
+```js
+Person = Ember.Object.extend({
+  name: null,
+  handle: EmberCPM.Macros.ifNull('name', 'Anonymous'),
+});
+```
 
-To run the test suite just once and exit run `make test-ci`.
+### Contributing
 
-You can also run the test suite in watch mode with `broccoli serve`.
+You have to install Ember CLI to build this library. If you don't have it, visit [www.ember-cli.com/](http://www.ember-cli.com/) for further guidance about how to install it.
 
-### Run tests
+After running `npm install` to get all the dependencies you can:
 
-For run the tests once in just type `make test`.
-
-You can also run the tests in interactive mode by typing `testem`.
-
-### Change Warning
-
-Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its
-scope and structure change. We will, of course, bump the major version when making
-breaking changes and make the period of instability as short as possible.
+* Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode.
+* Run `ember test` to run all tests once (requires phantomjs).
+* Run `ember build` to build from source.
 
 ### Provided Macros
 
@@ -70,27 +74,6 @@ breaking changes and make the period of instability as short as possible.
  * `sum` -- sums numeric properties and literals together
  * `conditional` -- returns values based on a boolean property (good replacement for ternary operator)
 
-### Examples
-
-```javascript
-Person = Ember.Object.extend({
-
-  name: null,
-
-  handedness: null,
-
-  greeting: null,
-
-  handle: EmberCPM.Macros.ifNull('name', 'Anonymous'),
-
-  greeting: EmberCPM.Macros.fmt('name', 'greeting', '%@ says, "%@!"'),
-
-  canUseLeftHand: EmberCPM.Macros.among('handedness', 'left', 'ambidextrous'),
-
-  notNamedJohn: EmberCPM.Macros.notMatch('name', /\bJohn\b/)
-
-});
-```
 ### Composable Computed Property Macros
 `conditional`, `sum`, `quotient` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
 
@@ -123,3 +106,9 @@ RestaurantCheck = Ember.Object.extend({
 If you would prefer to use `Ember.computed.{macro}` instead of
 `EmberCPM.Macros.{macro}` (for the sake of uniform access), simply call
 `EmberCPM.install()` before your application code.
+
+### Change Warning
+
+Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its
+scope and structure change. We will, of course, bump the major version when making
+breaking changes and make the period of instability as short as possible.

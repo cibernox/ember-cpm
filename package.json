@@ -1,36 +1,49 @@
 {
   "name": "ember-cpm",
-  "version": "1.1.3",
-  "licence": "APLv2 / MIT",
   "description": "Computed Propery Macros for Ember.js",
-  "keywords": [
-    "ember",
-    "ember-addon"
-  ],
   "author": "James A. Rosen <james.a.rosen@gmail.com>",
+  "version": "1.2.0",
+  "licence": "APLv2 / MIT",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "main": "dist/cjs/ember-cpm.js",
+  "scripts": {
+    "start": "ember server",
+    "build": "ember build",
+    "test": "ember test"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/jamesarosen/ember-cpm.git"
   },
-  "main": "dist/cjs/ember-cpm.js",
-  "scripts": {
-    "test": "make test-ci"
+  "engines": {
+    "node": ">= 0.10.0"
   },
-  "ember-addon": {
-    "main": "ember-addon-main.js"
-  },
+  "license": "MIT",
   "devDependencies": {
-    "bower": "~1.3.3",
-    "broccoli": "^0.12.0",
-    "broccoli-bower": "~0.2.1",
-    "broccoli-cli": "0.0.1",
-    "broccoli-concat": "0.0.6",
-    "broccoli-dist-es6-module": "~0.2.0",
-    "broccoli-merge-trees": "~0.1.3",
-    "broccoli-static-compiler": "~0.1.4",
-    "broccoli-uglify-js": "~0.1.3",
-    "jshint": "~2.5.0",
-    "testem": "~0.6.15",
-    "broccoli-file-mover": "~0.3.2"
+    "body-parser": "^1.2.0",
+    "broccoli-asset-rev": "0.3.0",
+    "broccoli-dist-es6-module": "0.2.1",
+    "broccoli-ember-hbs-template-compiler": "^1.6.1",
+    "broccoli-file-mover": "0.4.1",
+    "broccoli-file-remover": "^0.3.1",
+    "broccoli-merge-trees": "0.2.0",
+    "ember-cli": "0.1.1",
+    "ember-cli-content-security-policy": "0.2.0",
+    "ember-cli-ic-ajax": "0.1.1",
+    "ember-cli-inject-live-reload": "^1.2.2",
+    "ember-cli-qunit": "0.1.0",
+    "ember-data": "1.0.0-beta.10",
+    "express": "^4.8.5",
+    "glob": "^4.0.5"
+  },
+  "keywords": [
+    "ember",
+    "ember-addon"
+  ],
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
   }
 }

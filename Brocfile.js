@@ -1,50 +1,45 @@
-var concat         = require('broccoli-concat');
-var pickFiles      = require('broccoli-static-compiler');
-var mergeTrees     = require('broccoli-merge-trees');
-var makeModules    = require('broccoli-dist-es6-module');
-var findBowerTrees = require('broccoli-bower');
-var moveFile       = require('broccoli-file-mover');
+/* global require, module */
 
-var emberCPM = makeModules('src', {
-  global: 'EmberCPM',
-  packageName: 'ember-cpm',
-  main: 'ember-cpm',
-  shim: {
-    'ember': 'Ember'
-  }
-});
+// Use `app.import` to add additional libraries to the generated
+// output files.
+//
+// If you need to use different assets in different
+// environments, specify an object as the first parameter. That
+// object's keys should be the environment name and the values
+// should be the asset to use in that environment.
+//
+// If the library that you are including contains AMD or ES6
+// modules that you would like to import into your application
+// please specify an object with the list of modules as keys
+// along with the exports of each module as its value.
 
-emberCPM = moveFile(emberCPM, {
-  files: {
-    '/globals/main.js': '/globals/ember-cpm.js',
-    '/named-amd/main.js': '/named-amd/ember-cpm.js',
-  }
-});
+if (process.argv[2] === 'build') {
+  var dist    = require('broccoli-dist-es6-module');
+  var mover   = require('broccoli-file-mover');
+  var merger  = require('broccoli-merge-trees');
+  var remover = require('broccoli-file-remover');
 
-var outTrees = [emberCPM];
-
-if (process.argv[2] !== 'build') {
-  var testDeps = pickFiles('node_modules/testem/public/testem/', {
-    srcDir: '/',
-    files: ['mocha.css', 'mocha.js', 'chai.js'],
-    destDir: '/'
+  var transpiled = dist('addon', {
+    global: 'EmberCPM',
+    packageName: 'ember-cpm',
+    main: 'ember-cpm',
+    shim: { 'ember': 'Ember' }
   });
 
-  var html = pickFiles('spec', {
-    srcDir: '/',
-    files: ['index.html'],
-    destDir: '/'
+  var renamedFiles = mover(transpiled, {
+    files: {
+      '/globals/main.js': '/globals/ember-cpm.js',
+      '/named-amd/main.js': '/named-amd/ember-cpm.js',
+    }
   });
 
-  var specs = concat('spec', {
-    inputFiles: ['test_helper.js','**/*.js'],
-    outputFile: '/ember-cpm-specs.js'
+  var emberCPM = remover(merger([transpiled, renamedFiles]), {
+    files: ['/globals/main.js', '/named-amd/main.js']
   });
 
-  outTrees = outTrees.concat(findBowerTrees());
-  outTrees.push(specs);
-  outTrees.push(testDeps);
-  outTrees.push(html);
+  module.exports = emberCPM;
+} else {
+  var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+  var app = new EmberAddon();
+  module.exports = app.toTree();
 }
-
-module.exports = mergeTrees(outTrees);

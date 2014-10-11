@@ -1,4 +1,6 @@
 "use strict";
+var Ember = require("ember")["default"] || require("ember");
+
 /**
  * Retain items in an array based on type
  * @param {array} arr  array to iterate over
@@ -20,9 +22,7 @@ function retainByType(arr, type) {
   );
 }
 
-exports.retainByType = retainByType;
-function getDependentPropertyKeys(argumentArr) {
-
+exports.retainByType = retainByType;function getDependentPropertyKeys(argumentArr) {
   return argumentArr.reduce(
     function (prev, item) {
       switch (Ember.typeOf(item)) {
@@ -74,8 +74,8 @@ exports.getVal = getVal;/**
  * @param {[type]} reducingFunction [description]
  */
 function reduceComputedPropertyMacro(reducingFunction, options) {
-  var opts = options || {},
-    singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
+  var opts = options || {};
+  var singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
 
   return function () {
     var mainArguments = Array.prototype.slice.call(arguments), // all arguments

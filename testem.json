@@ -1,10 +1,11 @@
 {
-  "framework": "mocha+chai",
-  "src_files": [
-    "bower_components/jquery/dist/jquery.js",
-    "bower_components/handlebars/handlebars.js",
-    "bower_components/ember/ember.js",
-    "tmp/testem_build/globals/ember-cpm.js",
-    "spec/*.js"
+  "framework": "qunit",
+  "test_page": "tests/index.html",
+  "launch_in_ci": [
+    "PhantomJS"
+  ],
+  "launch_in_dev": [
+    "PhantomJS",
+    "Chrome"
   ]
 }
