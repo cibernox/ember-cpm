@@ -40,6 +40,9 @@ test('injects multiple values into the format-string', function() {
 
 test('recomputes', function() {
   var o = MyObj.create({ label: 'Name', value: "Kaylee" });
-  Ember.run(function() { o.set('label', 'First Name'); });
+  Ember.run(function() {o.set('label', 'First Name'); });
   equal(o.get('labeled'), 'First Name: Kaylee');
+  Ember.run(function() {o.set('value', 'Mike');});
+  equal(o.get('labeled'), 'First Name: Mike');
+  
 });

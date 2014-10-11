@@ -353,9 +353,10 @@ define("ember-cpm/macros/fmt",
 
     __exports__["default"] = function EmberCPM_fmt() {
       var formatString = '' + a_slice.call(arguments, -1),
-          properties   = a_slice.call(arguments, 0, -1);
+          properties   = a_slice.call(arguments, 0, -1),
+          propertyArguments = a_slice.call(arguments, 0 , -1);
 
-      return computed(function(){
+      propertyArguments.push(function(){
         var values = [], i, value;
 
         for (i = 0; i < properties.length; ++i) {
@@ -367,6 +368,9 @@ define("ember-cpm/macros/fmt",
 
         return EmberString.fmt(formatString, values);
       });
+
+      return computed.apply(this, propertyArguments);
+
     }
   });
 define("ember-cpm/macros/html-escape",
