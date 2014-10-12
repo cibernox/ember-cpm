@@ -41,7 +41,7 @@ Person = Ember.Object.extend({
 
 ### Contributing
 
-You have to install Ember CLI to build this library. If you don't have it, visit [www.ember-cli.com/](http://www.ember-cli.com/) for further guidance about how to install it. 
+You have to install Ember CLI to build this library. If you don't have it, visit [www.ember-cli.com/](http://www.ember-cli.com/) for further guidance about how to install it.
 
 After running `npm install` to get all the dependencies you can:
 
@@ -68,13 +68,14 @@ After running `npm install` to get all the dependencies you can:
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
  * `sumBy` -- sums a property from an array of objects
+ * `quotient` -- divides one numeric property or literal by another
  * `difference` -- subtracts one numeric property or literal from another
  * `product` -- multiplies numeric properties and literals together
  * `sum` -- sums numeric properties and literals together
  * `conditional` -- returns values based on a boolean property (good replacement for ternary operator)
 
 ### Composable Computed Property Macros
-`sum`, `difference` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
+`conditional`, `sum`, `quotient` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
 
 ```javascript
 var product = EmberCPM.Macros.product,

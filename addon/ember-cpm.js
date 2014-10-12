@@ -17,6 +17,7 @@ import sum from './macros/sum';
 import concat from './macros/concat';
 import conditional from './macros/conditional';
 import product from './macros/product';
+import quotient from './macros/quotient';
 import difference from './macros/difference';
 
 function reverseMerge(dest, source) {
@@ -47,6 +48,7 @@ var Macros = {
   difference: difference,
   concat: concat,
   conditional: conditional,
+  quotient: quotient,
   product: product
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };

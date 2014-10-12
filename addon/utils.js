@@ -21,6 +21,7 @@ export function retainByType(arr, type) {
   );
 }
 
+
 export function getDependentPropertyKeys(argumentArr) {
   return argumentArr.reduce(
     function (prev, item) {
@@ -73,7 +74,7 @@ export function reduceComputedPropertyMacro(reducingFunction, options) {
 
   return function () {
     var mainArguments = Array.prototype.slice.call(arguments); // all arguments
-    var propertyArguments = retainByType(mainArguments, 'string');
+    var propertyArguments = getDependentPropertyKeys(mainArguments);
 
     propertyArguments.push(function () {
       var self = this;

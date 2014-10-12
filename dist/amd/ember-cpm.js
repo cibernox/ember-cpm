@@ -1,6 +1,6 @@
 define(
-  ["ember","./macros/among","./macros/encode-uri-component","./macros/encode-uri","./macros/first-present","./macros/fmt","./macros/html-escape","./macros/if-null","./macros/not-among","./macros/not-equal","./macros/not-match","./macros/promise","./macros/safe-string","./macros/join","./macros/sum-by","./macros/sum","./macros/concat","./macros/conditional","./macros/product","./macros/difference","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __exports__) {
+  ["ember","./macros/among","./macros/encode-uri-component","./macros/encode-uri","./macros/first-present","./macros/fmt","./macros/html-escape","./macros/if-null","./macros/not-among","./macros/not-equal","./macros/not-match","./macros/promise","./macros/safe-string","./macros/join","./macros/sum-by","./macros/sum","./macros/concat","./macros/conditional","./macros/product","./macros/quotient","./macros/difference","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -21,7 +21,8 @@ define(
     var concat = __dependency17__["default"] || __dependency17__;
     var conditional = __dependency18__["default"] || __dependency18__;
     var product = __dependency19__["default"] || __dependency19__;
-    var difference = __dependency20__["default"] || __dependency20__;
+    var quotient = __dependency20__["default"] || __dependency20__;
+    var difference = __dependency21__["default"] || __dependency21__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -51,6 +52,7 @@ define(
       difference: difference,
       concat: concat,
       conditional: conditional,
+      quotient: quotient,
       product: product
     };
     var install = function(){ reverseMerge(Ember.computed, Macros); };

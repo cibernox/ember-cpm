@@ -25,7 +25,8 @@ define(
       );
     }
 
-    __exports__.retainByType = retainByType;function getDependentPropertyKeys(argumentArr) {
+    __exports__.retainByType = retainByType;
+    function getDependentPropertyKeys(argumentArr) {
       return argumentArr.reduce(
         function (prev, item) {
           switch (Ember.typeOf(item)) {
@@ -77,7 +78,7 @@ define(
 
       return function () {
         var mainArguments = Array.prototype.slice.call(arguments); // all arguments
-        var propertyArguments = retainByType(mainArguments, 'string');
+        var propertyArguments = getDependentPropertyKeys(mainArguments);
 
         propertyArguments.push(function () {
           var self = this;
