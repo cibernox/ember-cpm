@@ -1,6 +1,7 @@
 "use strict";
 var Ember = require("ember")["default"] || require("ember");
 var among = require("./macros/among")["default"] || require("./macros/among");
+var allEqual = require("./macros/all-equal")["default"] || require("./macros/all-equal");
 var encodeURIComponent = require("./macros/encode-uri-component")["default"] || require("./macros/encode-uri-component");
 var encodeURI = require("./macros/encode-uri")["default"] || require("./macros/encode-uri");
 var firstPresent = require("./macros/first-present")["default"] || require("./macros/first-present");
@@ -32,6 +33,7 @@ function reverseMerge(dest, source) {
 var VERSION = '1.2.0';
 var Macros = {
   among: among,
+  allEqual: allEqual,
   encodeURIComponent: encodeURIComponent,
   encodeURI: encodeURI,
   firstPresent: firstPresent,
