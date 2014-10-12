@@ -22,7 +22,8 @@ function retainByType(arr, type) {
   );
 }
 
-exports.retainByType = retainByType;function getDependentPropertyKeys(argumentArr) {
+exports.retainByType = retainByType;
+function getDependentPropertyKeys(argumentArr) {
   return argumentArr.reduce(
     function (prev, item) {
       switch (Ember.typeOf(item)) {
@@ -58,12 +59,7 @@ function getVal(val) {
   if (Ember.typeOf(val) === 'string') {
     return Ember.get(this, val) || val;
   } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
-    if (val.altKey) {
-      return this.get(val.altKey);
-    }
-    else {
-      return val.func.apply(this);
-    }
+    return val.altKey ? this.get(val.altKey) : val.func.apply(this);
   } else {
     return val;
   }
@@ -78,8 +74,8 @@ function reduceComputedPropertyMacro(reducingFunction, options) {
   var singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
 
   return function () {
-    var mainArguments = Array.prototype.slice.call(arguments), // all arguments
-      propertyArguments = getDependentPropertyKeys(mainArguments);
+    var mainArguments = Array.prototype.slice.call(arguments); // all arguments
+    var propertyArguments = getDependentPropertyKeys(mainArguments);
 
     propertyArguments.push(function () {
       var self = this;

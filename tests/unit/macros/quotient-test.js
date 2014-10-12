@@ -18,10 +18,6 @@ var myObj = MyType.create({
 
 module('quotient');
 
-test('is properly registered', function () {
-  equal(!!quotient, true);
-});
-
 test('calculates the quotient of two basic numeric properties', function () {
   equal(myObj.get('c'), 3);
   myObj.set('a', 8);
