@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import among from './macros/among';
+import allEqual from './macros/all-equal';
 import encodeURIComponent from './macros/encode-uri-component';
 import encodeURI from './macros/encode-uri';
 import firstPresent from './macros/first-present';
@@ -31,6 +32,7 @@ function reverseMerge(dest, source) {
 var VERSION = '1.2.0';
 var Macros = {
   among: among,
+  allEqual: allEqual,
   encodeURIComponent: encodeURIComponent,
   encodeURI: encodeURI,
   firstPresent: firstPresent,
