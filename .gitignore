@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-# /dist Ignore this file again once publishing builds to s3 is working
+/dist
 /tmp
 
 # dependencies
