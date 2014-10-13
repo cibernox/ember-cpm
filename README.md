@@ -17,7 +17,11 @@ If you are using [Ember CLI](https://github.com/stefanpenner/ember-cli), you can
 an addon with `npm install ember-cpm --save-dev` and you will be able to import native ES modules from
 within your app.
 
-If not, just add `ember-cpm.js` to your page after Ember but before your app.
+If not, you need to add `ember-cpm.js` manually to your project. 
+
+You can find the latest versions of ember-cpm in [the S3 bucket](http://ember-cpm-builds.s3-website-us-east-1.amazonaws.com/) in two flavours: globals or AMD.
+Alternatively, you can also build from source. See [Contributing](https://github.com/jamesarosen/ember-cpm#contributing) for more info about how to build from source.
+If you use the global build, an `EmberCPM` global should be available.
 
 ### Usage
 

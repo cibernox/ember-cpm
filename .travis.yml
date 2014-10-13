@@ -16,11 +16,13 @@ script:
   - npm test
 
 after_success:
-  - npm build
-  - "./s3-publish.js"
+  - ember build
+  - "./bin/s3-publish.js"
+  - "./bin/bower_ember_build"
 
 env:
   global:
     - S3_BUCKET_NAME=ember-cpm-builds
+    - secure: "XzWXDClclsPkxVhHAETuKPHSxocCpWDIpE12IzNcH6aHVHJTAQs7esUf+iA9cADwm7hSVitoG6AdVbz5cILH+ZvZrQBYe9YUnfIE7oMrmtux11YpIkwJUUWn9xAen8Yd4wG83bSJh5wy4ZexuMtvD92zo4BSG+MPDBeA0gvQC8Y="
 
 
