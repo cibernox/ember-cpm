@@ -130,9 +130,7 @@ exports["default"] = function EmberCPM_among(dependentKey) {
 "use strict";
 var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
 
-exports["default"] = parseComputedPropertyMacro(function (raw) {
-  return parseFloat(raw);
-});
+exports["default"] = parseComputedPropertyMacro (parseFloat);
 },{"../utils":25}],5:[function(_dereq_,module,exports){
 "use strict";
 var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
@@ -755,7 +753,7 @@ exports.getVal = getVal;
  * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
  */
 function parseComputedPropertyMacro (parseFunction) {
-  return function EmberCPM_parseFloat (dependantKey) {
+  return function parseMacro (dependantKey) {
     var args = [];
     if (dependantKey) {
       args.push(dependantKey);

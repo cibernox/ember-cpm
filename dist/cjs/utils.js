@@ -76,7 +76,7 @@ exports.getVal = getVal;
  * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
  */
 function parseComputedPropertyMacro (parseFunction) {
-  return function EmberCPM_parseFloat (dependantKey) {
+  return function parseMacro (dependantKey) {
     var args = [];
     if (dependantKey) {
       args.push(dependantKey);

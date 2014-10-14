@@ -4,7 +4,5 @@ define(
     "use strict";
     var parseComputedPropertyMacro = __dependency1__.parseComputedPropertyMacro;
 
-    __exports__["default"] = parseComputedPropertyMacro(function (raw) {
-      return parseFloat(raw);
-    });
+    __exports__["default"] = parseComputedPropertyMacro (parseFloat);
   });

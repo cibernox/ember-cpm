@@ -141,9 +141,7 @@ define("ember-cpm/macros/asFloat",
     "use strict";
     var parseComputedPropertyMacro = __dependency1__.parseComputedPropertyMacro;
 
-    __exports__["default"] = parseComputedPropertyMacro(function (raw) {
-      return parseFloat(raw);
-    });
+    __exports__["default"] = parseComputedPropertyMacro (parseFloat);
   });
 define("ember-cpm/macros/asInt",
   ["../utils","exports"],
@@ -874,7 +872,7 @@ define("ember-cpm/utils",
      * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
      */
     function parseComputedPropertyMacro (parseFunction) {
-      return function EmberCPM_parseFloat (dependantKey) {
+      return function parseMacro (dependantKey) {
         var args = [];
         if (dependantKey) {
           args.push(dependantKey);
