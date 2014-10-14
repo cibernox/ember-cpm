@@ -32,7 +32,7 @@ export function getDependentPropertyKeys(argumentArr) {
         case 'number':
           break;
         default:
-          if (item.constructor === Ember.Descriptor) {
+          if (item && item.constructor === Ember.Descriptor) {
             prev.pushObjects(item._dependentKeys);
           }
           break;

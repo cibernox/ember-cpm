@@ -27,14 +27,6 @@ exports["default"] = function EmberCPM_mean () {
           sum += v.reduce(function (p, i) { return p + i;}, 0); // sum of array
           count += v.length;
           break;
-        case 'string': // String case
-          // Check to see if this is something we should be parseFloat'ing
-          if (!/[0-9\.\-]+/.test(v)) {
-            throw 'Unsupported string value';
-          }
-          sum += parseFloat(v);
-          count += 1;
-          break;
         case 'undefined':
         case 'null':
           break;

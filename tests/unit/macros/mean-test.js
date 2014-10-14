@@ -12,8 +12,6 @@ var MyType = Ember.Object.extend({
   i: mean('a'),
   j_data: [6, 2, 1, 3],
   j: mean('j_data'),
-  k: mean('a', 'b', 'c', '3'),
-  k_err: mean('a', 'b', 'c', 'ffffff'),
   l: mean('a', 'b', 'c', null),
   m: mean('a', 'b', 'c', undefined),
   n_data: [{id: 1, val: 30}, {id: 2, val: 20}],
@@ -65,16 +63,6 @@ test('array case', function () {
 
 test('array w/ mapBy case', function () {
   equal(myObj.get('n'), 25);
-});
-
-test('numeric string case', function () {
-  expect(2);
-  equal(myObj.get('k'), 3);
-
-  throws(function () {
-    myObj.get('k_err');
-  }, 'Unsupported string value');
-
 });
 
 test('null case', function () {
