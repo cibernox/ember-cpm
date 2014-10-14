@@ -17,7 +17,7 @@ script:
 
 after_success:
   - npm build
-  - "./s3-publish.js"
+  - "./bin/s3-publish.js"
 
 env:
   global:
