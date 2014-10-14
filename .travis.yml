@@ -18,6 +18,7 @@ script:
 after_success:
   - npm build
   - "./bin/s3-publish.js"
+  - "./bin/bower_ember_build"
 
 env:
   global:
