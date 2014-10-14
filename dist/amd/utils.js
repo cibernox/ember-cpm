@@ -68,7 +68,65 @@ define(
       }
     }
 
-    __exports__.getVal = getVal;/**
+    __exports__.getVal = getVal;
+    /**
+     * Generate a "parse-like" computed property macro
+     * @param {function} parseFunction single-argument function that
+     *  transforms a raw value into a "parsed" value
+     *
+     * i.e.,
+     *
+     * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
+     */
+    function parseComputedPropertyMacro (parseFunction) {
+      return function EmberCPM_parseFloat (dependantKey) {
+        var args = [];
+        if (dependantKey) {
+          args.push(dependantKey);
+        }
+        args.push(function (propKey, val) {
+          if (['undefined', 'null'].indexOf(Ember.typeOf(dependantKey)) !== -1) {
+            return NaN; // same as parseInt, parseFloat return for null or undefined
+          }
+          if (arguments.length === 1) {
+            //getter
+            var rawValue = this.get(dependantKey);
+            // Have to check again for null/undefined values, since the first check
+            // could have just been non-null property keys
+            if (['undefined', 'null'].indexOf(Ember.typeOf(rawValue)) !== -1) {
+              return NaN;
+            }
+            else {
+              // Handle some unexpected behavior for empty-string property keys
+              // related:
+              //  https://github.com/emberjs/ember.js/commit/b7e82f43c3475ee7b166a2570b061f08c6c6c0f3#diff-22c6caff03531b3e718e9a8d82180833R31
+              if ('string' === typeof rawValue && rawValue.length === 0) {
+                return NaN;
+              }
+              else {
+                return parseFunction(rawValue);
+              }
+            }
+          }
+          else {
+            //setter
+            //respect the type of the dependent property
+            switch (Ember.typeOf(this.get(dependantKey))) {
+              case 'number':
+                this.set(dependantKey, parseFunction(val));
+                break;
+              default:
+                this.set(dependantKey, val.toString());
+                break;
+            }
+            return val;
+          }
+        });
+        return Ember.computed.apply(this, args);
+      };
+    }
+
+    __exports__.parseComputedPropertyMacro = parseComputedPropertyMacro;/**
      * Return a computed property macro
      * @param {[type]} reducingFunction [description]
      */

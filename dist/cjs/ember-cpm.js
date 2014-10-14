@@ -21,6 +21,8 @@ var conditional = require("./macros/conditional")["default"] || require("./macro
 var product = require("./macros/product")["default"] || require("./macros/product");
 var quotient = require("./macros/quotient")["default"] || require("./macros/quotient");
 var difference = require("./macros/difference")["default"] || require("./macros/difference");
+var asFloat = require("./macros/asFloat")["default"] || require("./macros/asFloat");
+var asInt = require("./macros/asInt")["default"] || require("./macros/asInt");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -51,6 +53,8 @@ var Macros = {
   difference: difference,
   concat: concat,
   conditional: conditional,
+  asFloat: asFloat,
+  asInt: asInt,
   quotient: quotient,
   product: product
 };
