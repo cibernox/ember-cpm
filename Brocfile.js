@@ -24,6 +24,27 @@ if (process.argv[2] === 'build') {
     shim: { 'ember': 'Ember' }
   });
 
+  if (process.env.EMBER_ENV === 'production') {
+    var defeatureify = require('broccoli-defeatureify');
+
+    transpiled = defeatureify(transpiled, {
+      enableStripDebug: true,
+      debugStatements: [
+        "Ember.warn",
+        "emberWarn",
+        "Ember.assert",
+        "emberAssert",
+        "Ember.deprecate",
+        "emberDeprecate",
+        "Ember.debug",
+        "emberDebug",
+        "Ember.Logger.info",
+        "Ember.runInDebug",
+        "runInDebug"
+      ]
+    });
+  }
+
   var emberCPM = new Funnel(transpiled, {
     getDestinationPath: function(relativePath) {
       if (relativePath === 'globals/main.js') {
