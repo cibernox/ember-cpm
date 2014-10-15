@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1 2014-10-15
+Feature: Push all builds to shim repository on succesful builds.
+Feature: Upload builds globals and amd-builds to S3 on succesful builds.
+Feature: Added `quotient` CP.
+Feature: Added `allEqual` CP.
+Deprecate: Deprecate `sumBy`. Suggest a combination of `sum` and `mapBy`.
+
 ## 1.2.0 2014-10-10
 Enhalcement: Use ember-cli as build tool, like other regular addons.
 
