@@ -15,9 +15,7 @@
 
 if (process.argv[2] === 'build') {
   var dist    = require('broccoli-dist-es6-module');
-  var mover   = require('broccoli-file-mover');
-  var merger  = require('broccoli-merge-trees');
-  var remover = require('broccoli-file-remover');
+  var Funnel  = require('broccoli-funnel');
 
   var transpiled = dist('addon', {
     global: 'EmberCPM',
@@ -26,15 +24,15 @@ if (process.argv[2] === 'build') {
     shim: { 'ember': 'Ember' }
   });
 
-  var renamedFiles = mover(transpiled, {
-    files: {
-      '/globals/main.js': '/globals/ember-cpm.js',
-      '/named-amd/main.js': '/named-amd/ember-cpm.js',
+  var emberCPM = new Funnel(transpiled, {
+    getDestinationPath: function(relativePath) {
+      if (relativePath === 'globals/main.js') {
+        return 'globals/ember-cpm.js';
+      } else if (relativePath === 'named-amd/main.js') {
+        return 'named-amd/ember-cpm.js';
+      }
+      return relativePath;
     }
-  });
-
-  var emberCPM = remover(merger([transpiled, renamedFiles]), {
-    files: ['/globals/main.js', '/named-amd/main.js']
   });
 
   module.exports = emberCPM;
