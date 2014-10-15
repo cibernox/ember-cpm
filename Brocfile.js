@@ -13,6 +13,8 @@
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
+var emberCPM;
+
 if (process.argv[2] === 'build') {
   var dist    = require('broccoli-dist-es6-module');
   var Funnel  = require('broccoli-funnel');
@@ -24,28 +26,7 @@ if (process.argv[2] === 'build') {
     shim: { 'ember': 'Ember' }
   });
 
-  if (process.env.EMBER_ENV === 'production') {
-    var defeatureify = require('broccoli-defeatureify');
-
-    transpiled = defeatureify(transpiled, {
-      enableStripDebug: true,
-      debugStatements: [
-        "Ember.warn",
-        "emberWarn",
-        "Ember.assert",
-        "emberAssert",
-        "Ember.deprecate",
-        "emberDeprecate",
-        "Ember.debug",
-        "emberDebug",
-        "Ember.Logger.info",
-        "Ember.runInDebug",
-        "runInDebug"
-      ]
-    });
-  }
-
-  var emberCPM = new Funnel(transpiled, {
+  emberCPM = new Funnel(transpiled, {
     getDestinationPath: function(relativePath) {
       if (relativePath === 'globals/main.js') {
         return 'globals/ember-cpm.js';
@@ -55,10 +36,31 @@ if (process.argv[2] === 'build') {
       return relativePath;
     }
   });
-
-  module.exports = emberCPM;
 } else {
   var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
   var app = new EmberAddon();
-  module.exports = app.toTree();
+  emberCPM = app.toTree();
 }
+
+if (process.env.EMBER_ENV === 'production') {
+  var defeatureify = require('broccoli-defeatureify');
+
+  emberCPM = defeatureify(emberCPM, {
+    enableStripDebug: true,
+    debugStatements: [
+      "Ember.warn",
+      "emberWarn",
+      "Ember.assert",
+      "emberAssert",
+      "Ember.deprecate",
+      "emberDeprecate",
+      "Ember.debug",
+      "emberDebug",
+      "Ember.Logger.info",
+      "Ember.runInDebug",
+      "runInDebug"
+    ]
+  });
+}
+
+module.exports = emberCPM;
