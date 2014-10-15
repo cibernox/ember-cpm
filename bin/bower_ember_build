@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+git config --global user.email "miguel.camba@gmail.com"
+git config --global user.name "Miguel Camba"
+
+# This specifies the repository we are going to work with.  This will most likely be set to 'ember'
+COMPONENTS_EMBER_REPO_SLUG="cibernox/ember-cpm-bower-build"
+
+# This specifies the user who is associated to the GH_TOKEN
+USER="cibernox"
+
+# This ensure that no directories within dist will be copied when script is run.
+INCLUDED_FILES=`find dist -type f`
+
+echo -e "COMPONENTS_EMBER_REPO_SLUG: ${COMPONENTS_EMBER_REPO_SLUG}\n"
+echo -e "INCLUDED_FILES: ${INCLUDED_FILES}\n"
+echo -e "CURRENT_BRANCH: ${TRAVIS_BRANCH}\n"
+
+# Set channel to publish to.  If no suitable branch is found exit successfully.
+CHANNEL="master"
+echo -e "CHANNEL: ${CHANNEL}\n"
+
+# sending output to /dev/null to prevent GH_TOKEN leak on error
+git clone --branch ${CHANNEL} https://${USER}:${GH_TOKEN}@github.com/${COMPONENTS_EMBER_REPO_SLUG}.git bower_files &> /dev/null
+cd bower_files
+shopt -s extglob
+rm -rf !(README.md|bower.json|package.json|component.json|composer.json)
+shopt -u extglob
+cp -r ../dist/* .
+git remote rm origin
+
+# sending output to /dev/null to prevent GH_TOKEN leak on error
+echo -e "About to add remote origin: git remote add origin https://${USER}:GH_TOKEN@github.com/${COMPONENTS_EMBER_REPO_SLUG}.git"
+git remote add origin https://${USER}:${GH_TOKEN}@github.com/${COMPONENTS_EMBER_REPO_SLUG}.git &> /dev/null
+git add -A
+git commit -m "Ember Bower Auto build for https://github.com/jamesarosen/ember-cpm/commits/${TRAVIS_COMMIT}."
+
+# sending output to /dev/null to prevent GH_TOKEN leak on error
+echo -e "About to push to origin"
+git push -fq origin ${CHANNEL} &> /dev/null
+echo -e "Done\n"
+
