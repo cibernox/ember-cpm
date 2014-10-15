@@ -27,6 +27,7 @@ shopt -s extglob
 rm -rf !(README.md|bower.json|package.json|component.json|composer.json)
 shopt -u extglob
 cp -r ../dist/* .
+cp ../bower.json .
 git remote rm origin
 
 # sending output to /dev/null to prevent GH_TOKEN leak on error
