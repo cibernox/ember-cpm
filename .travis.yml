@@ -16,7 +16,7 @@ script:
   - npm test
 
 after_success:
-  - ember build
+  - ember build --environment=production
   - "./bin/s3-publish.js"
   - "./bin/bower_ember_build"
 

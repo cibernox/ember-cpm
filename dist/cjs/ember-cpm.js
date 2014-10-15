@@ -30,7 +30,7 @@ function reverseMerge(dest, source) {
   }
 }
 
-var VERSION = '1.2.0';
+var VERSION = '1.2.1';
 var Macros = {
   among: among,
   allEqual: allEqual,
