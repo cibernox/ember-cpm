@@ -20,6 +20,8 @@ import conditional from './macros/conditional';
 import product from './macros/product';
 import quotient from './macros/quotient';
 import difference from './macros/difference';
+import asFloat from './macros/asFloat';
+import asInt from './macros/asInt';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -50,6 +52,8 @@ var Macros = {
   difference: difference,
   concat: concat,
   conditional: conditional,
+  asFloat: asFloat,
+  asInt: asInt,
   quotient: quotient,
   product: product
 };

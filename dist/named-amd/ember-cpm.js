@@ -1,6 +1,6 @@
 define("ember-cpm",
-  ["ember","./macros/among","./macros/all-equal","./macros/encode-uri-component","./macros/encode-uri","./macros/first-present","./macros/fmt","./macros/html-escape","./macros/if-null","./macros/not-among","./macros/not-equal","./macros/not-match","./macros/promise","./macros/safe-string","./macros/join","./macros/sum-by","./macros/sum","./macros/concat","./macros/conditional","./macros/product","./macros/quotient","./macros/difference","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __dependency22__, __exports__) {
+  ["ember","./macros/among","./macros/all-equal","./macros/encode-uri-component","./macros/encode-uri","./macros/first-present","./macros/fmt","./macros/html-escape","./macros/if-null","./macros/not-among","./macros/not-equal","./macros/not-match","./macros/promise","./macros/safe-string","./macros/join","./macros/sum-by","./macros/sum","./macros/concat","./macros/conditional","./macros/product","./macros/quotient","./macros/difference","./macros/asFloat","./macros/asInt","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __dependency22__, __dependency23__, __dependency24__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
     var among = __dependency2__["default"] || __dependency2__;
@@ -24,6 +24,8 @@ define("ember-cpm",
     var product = __dependency20__["default"] || __dependency20__;
     var quotient = __dependency21__["default"] || __dependency21__;
     var difference = __dependency22__["default"] || __dependency22__;
+    var asFloat = __dependency23__["default"] || __dependency23__;
+    var asInt = __dependency24__["default"] || __dependency24__;
 
     function reverseMerge(dest, source) {
       for (var key in source) {
@@ -54,6 +56,8 @@ define("ember-cpm",
       difference: difference,
       concat: concat,
       conditional: conditional,
+      asFloat: asFloat,
+      asInt: asInt,
       quotient: quotient,
       product: product
     };
@@ -130,6 +134,24 @@ define("ember-cpm/macros/among",
         return false;
       });
     }
+  });
+define("ember-cpm/macros/asFloat",
+  ["../utils","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var parseComputedPropertyMacro = __dependency1__.parseComputedPropertyMacro;
+
+    __exports__["default"] = parseComputedPropertyMacro (parseFloat);
+  });
+define("ember-cpm/macros/asInt",
+  ["../utils","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var parseComputedPropertyMacro = __dependency1__.parseComputedPropertyMacro;
+
+    __exports__["default"] = parseComputedPropertyMacro(function (raw) {
+      return parseInt(raw, 10);
+    });
   });
 define("ember-cpm/macros/concat",
   ["ember","exports"],
@@ -820,7 +842,65 @@ define("ember-cpm/utils",
       }
     }
 
-    __exports__.getVal = getVal;/**
+    __exports__.getVal = getVal;
+    /**
+     * Generate a "parse-like" computed property macro
+     * @param {function} parseFunction single-argument function that
+     *  transforms a raw value into a "parsed" value
+     *
+     * i.e.,
+     *
+     * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
+     */
+    function parseComputedPropertyMacro (parseFunction) {
+      return function parseMacro (dependantKey) {
+        var args = [];
+        if (dependantKey) {
+          args.push(dependantKey);
+        }
+        args.push(function (propKey, val) {
+          if (['undefined', 'null'].indexOf(Ember.typeOf(dependantKey)) !== -1) {
+            return NaN; // same as parseInt, parseFloat return for null or undefined
+          }
+          if (arguments.length === 1) {
+            //getter
+            var rawValue = this.get(dependantKey);
+            // Have to check again for null/undefined values, since the first check
+            // could have just been non-null property keys
+            if (['undefined', 'null'].indexOf(Ember.typeOf(rawValue)) !== -1) {
+              return NaN;
+            }
+            else {
+              // Handle some unexpected behavior for empty-string property keys
+              // related:
+              //  https://github.com/emberjs/ember.js/commit/b7e82f43c3475ee7b166a2570b061f08c6c6c0f3#diff-22c6caff03531b3e718e9a8d82180833R31
+              if ('string' === typeof rawValue && rawValue.length === 0) {
+                return NaN;
+              }
+              else {
+                return parseFunction(rawValue);
+              }
+            }
+          }
+          else {
+            //setter
+            //respect the type of the dependent property
+            switch (Ember.typeOf(this.get(dependantKey))) {
+              case 'number':
+                this.set(dependantKey, parseFunction(val));
+                break;
+              default:
+                this.set(dependantKey, val.toString());
+                break;
+            }
+            return val;
+          }
+        });
+        return Ember.computed.apply(this, args);
+      };
+    }
+
+    __exports__.parseComputedPropertyMacro = parseComputedPropertyMacro;/**
      * Return a computed property macro
      * @param {[type]} reducingFunction [description]
      */

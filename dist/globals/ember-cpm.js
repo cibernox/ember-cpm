@@ -22,6 +22,8 @@ var conditional = _dereq_("./macros/conditional")["default"] || _dereq_("./macro
 var product = _dereq_("./macros/product")["default"] || _dereq_("./macros/product");
 var quotient = _dereq_("./macros/quotient")["default"] || _dereq_("./macros/quotient");
 var difference = _dereq_("./macros/difference")["default"] || _dereq_("./macros/difference");
+var asFloat = _dereq_("./macros/asFloat")["default"] || _dereq_("./macros/asFloat");
+var asInt = _dereq_("./macros/asInt")["default"] || _dereq_("./macros/asInt");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -52,6 +54,8 @@ var Macros = {
   difference: difference,
   concat: concat,
   conditional: conditional,
+  asFloat: asFloat,
+  asInt: asInt,
   quotient: quotient,
   product: product
 };
@@ -71,7 +75,7 @@ exports["default"] = {
   Macros: Macros,
   install: install
 };
-},{"./macros/all-equal":2,"./macros/among":3,"./macros/concat":4,"./macros/conditional":5,"./macros/difference":6,"./macros/encode-uri":8,"./macros/encode-uri-component":7,"./macros/first-present":9,"./macros/fmt":10,"./macros/html-escape":11,"./macros/if-null":12,"./macros/join":13,"./macros/not-among":14,"./macros/not-equal":15,"./macros/not-match":16,"./macros/product":17,"./macros/promise":18,"./macros/quotient":19,"./macros/safe-string":20,"./macros/sum":22,"./macros/sum-by":21}],2:[function(_dereq_,module,exports){
+},{"./macros/all-equal":2,"./macros/among":3,"./macros/asFloat":4,"./macros/asInt":5,"./macros/concat":6,"./macros/conditional":7,"./macros/difference":8,"./macros/encode-uri":10,"./macros/encode-uri-component":9,"./macros/first-present":11,"./macros/fmt":12,"./macros/html-escape":13,"./macros/if-null":14,"./macros/join":15,"./macros/not-among":16,"./macros/not-equal":17,"./macros/not-match":18,"./macros/product":19,"./macros/promise":20,"./macros/quotient":21,"./macros/safe-string":22,"./macros/sum":24,"./macros/sum-by":23}],2:[function(_dereq_,module,exports){
 "use strict";
 
 var Ember = window.Ember["default"] || window.Ember;
@@ -100,7 +104,7 @@ exports["default"] = function EmberCPM_allEqual() {
 
   return Ember.computed.apply(this, propertyArguments);
 }
-},{"../utils":23}],3:[function(_dereq_,module,exports){
+},{"../utils":25}],3:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -123,6 +127,18 @@ exports["default"] = function EmberCPM_among(dependentKey) {
   });
 }
 },{}],4:[function(_dereq_,module,exports){
+"use strict";
+var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
+
+exports["default"] = parseComputedPropertyMacro (parseFloat);
+},{"../utils":25}],5:[function(_dereq_,module,exports){
+"use strict";
+var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
+
+exports["default"] = parseComputedPropertyMacro(function (raw) {
+  return parseInt(raw, 10);
+});
+},{"../utils":25}],6:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -223,7 +239,7 @@ exports["default"] = function EmberCPM_concat() {
 
   return arrayComputed.apply(null, args);
 }
-},{}],5:[function(_dereq_,module,exports){
+},{}],7:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 /**
@@ -257,7 +273,7 @@ exports["default"] = function EmberCPM_conditional(condition, valIfTrue, valIfFa
 
   return Ember.computed.apply(this, propertyArguments);
 }
-},{}],6:[function(_dereq_,module,exports){
+},{}],8:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 var getVal = _dereq_("../utils").getVal;
@@ -280,7 +296,7 @@ exports["default"] = function EmberCPM_difference() {
 
   return Ember.computed.apply(this, propertyArguments);
 }
-},{"../utils":23}],7:[function(_dereq_,module,exports){
+},{"../utils":25}],9:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -296,7 +312,7 @@ exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
     return encodeURIComponent(value);
   });
 }
-},{}],8:[function(_dereq_,module,exports){
+},{}],10:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -312,7 +328,7 @@ exports["default"] = function EmberCPM_encodeURI(dependentKey) {
     return encodeURI(value);
   });
 }
-},{}],9:[function(_dereq_,module,exports){
+},{}],11:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -348,7 +364,7 @@ exports["default"] = function EmberCPM_firstPresent() {
 
   return computed.apply(this, computedArgs);
 }
-},{}],10:[function(_dereq_,module,exports){
+},{}],12:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -379,7 +395,7 @@ exports["default"] = function EmberCPM_fmt() {
   return computed.apply(this, propertyArguments);
 
 }
-},{}],11:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -400,7 +416,7 @@ exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
   });
 
 }
-},{}],12:[function(_dereq_,module,exports){
+},{}],14:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -414,7 +430,7 @@ exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
     return value == null ? defaultValue : value;
   });
 }
-},{}],13:[function(_dereq_,module,exports){
+},{}],15:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -435,7 +451,7 @@ exports["default"] = function EmberCPM_join() {
 
   return cp.property.apply(cp, properties);
 }
-},{}],14:[function(_dereq_,module,exports){
+},{}],16:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -457,7 +473,7 @@ exports["default"] = function EmberCPM_notAmong(dependentKey) {
     return true;
   });
 }
-},{}],15:[function(_dereq_,module,exports){
+},{}],17:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -469,7 +485,7 @@ exports["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
     return get(this, dependentKey) !== targetValue;
   });
 }
-},{}],16:[function(_dereq_,module,exports){
+},{}],18:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -483,7 +499,7 @@ exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
     return typeof value === 'string' ? !value.match(regexp) : true;
   });
 }
-},{}],17:[function(_dereq_,module,exports){
+},{}],19:[function(_dereq_,module,exports){
 "use strict";
 var reduceComputedPropertyMacro = _dereq_("../utils").reduceComputedPropertyMacro;
 
@@ -505,7 +521,7 @@ exports["default"] = reduceComputedPropertyMacro(
     return prev * item;
   }
 );
-},{"../utils":23}],18:[function(_dereq_,module,exports){
+},{"../utils":25}],20:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -520,7 +536,7 @@ exports["default"] = function EmberCPM_promise(dependentKey) {
     return Ember.$.when(value);
   });
 }
-},{}],19:[function(_dereq_,module,exports){
+},{}],21:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 var getVal = _dereq_("../utils").getVal;
@@ -543,7 +559,7 @@ exports["default"] = function EmberCPM_quotient() {
 
   return Ember.computed.apply(this, propertyArguments);
 }
-},{"../utils":23}],20:[function(_dereq_,module,exports){
+},{"../utils":25}],22:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -560,7 +576,7 @@ exports["default"] = function EmberCPM_safeString(dependentKey) {
   });
 
 }
-},{}],21:[function(_dereq_,module,exports){
+},{}],23:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -598,7 +614,7 @@ exports["default"] = function EmberCPM_sumBy(dependentKey, propertyKey) {
     }
   });
 }
-},{}],22:[function(_dereq_,module,exports){
+},{}],24:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 var reduceComputedPropertyMacro = _dereq_("../utils").reduceComputedPropertyMacro;
@@ -639,7 +655,7 @@ var EmberCPM_sum = reduceComputedPropertyMacro(
 );
 
 exports["default"] = EmberCPM_sum;
-},{"../utils":23}],23:[function(_dereq_,module,exports){
+},{"../utils":25}],25:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 
@@ -707,7 +723,65 @@ function getVal(val) {
   }
 }
 
-exports.getVal = getVal;/**
+exports.getVal = getVal;
+/**
+ * Generate a "parse-like" computed property macro
+ * @param {function} parseFunction single-argument function that
+ *  transforms a raw value into a "parsed" value
+ *
+ * i.e.,
+ *
+ * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
+ */
+function parseComputedPropertyMacro (parseFunction) {
+  return function parseMacro (dependantKey) {
+    var args = [];
+    if (dependantKey) {
+      args.push(dependantKey);
+    }
+    args.push(function (propKey, val) {
+      if (['undefined', 'null'].indexOf(Ember.typeOf(dependantKey)) !== -1) {
+        return NaN; // same as parseInt, parseFloat return for null or undefined
+      }
+      if (arguments.length === 1) {
+        //getter
+        var rawValue = this.get(dependantKey);
+        // Have to check again for null/undefined values, since the first check
+        // could have just been non-null property keys
+        if (['undefined', 'null'].indexOf(Ember.typeOf(rawValue)) !== -1) {
+          return NaN;
+        }
+        else {
+          // Handle some unexpected behavior for empty-string property keys
+          // related:
+          //  https://github.com/emberjs/ember.js/commit/b7e82f43c3475ee7b166a2570b061f08c6c6c0f3#diff-22c6caff03531b3e718e9a8d82180833R31
+          if ('string' === typeof rawValue && rawValue.length === 0) {
+            return NaN;
+          }
+          else {
+            return parseFunction(rawValue);
+          }
+        }
+      }
+      else {
+        //setter
+        //respect the type of the dependent property
+        switch (Ember.typeOf(this.get(dependantKey))) {
+          case 'number':
+            this.set(dependantKey, parseFunction(val));
+            break;
+          default:
+            this.set(dependantKey, val.toString());
+            break;
+        }
+        return val;
+      }
+    });
+    return Ember.computed.apply(this, args);
+  };
+}
+
+exports.parseComputedPropertyMacro = parseComputedPropertyMacro;/**
  * Return a computed property macro
  * @param {[type]} reducingFunction [description]
  */
