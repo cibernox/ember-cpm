@@ -39,7 +39,8 @@
     "ember-data": "1.0.0-beta.10",
     "ember-publisher": "0.0.7",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "glob": "^4.0.5",
+    "inflection": "^1.5.1"
   },
   "keywords": [
     "ember",
