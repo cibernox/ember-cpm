@@ -1,18 +1,5 @@
 /* global require, module */
 
-// Use `app.import` to add additional libraries to the generated
-// output files.
-//
-// If you need to use different assets in different
-// environments, specify an object as the first parameter. That
-// object's keys should be the environment name and the values
-// should be the asset to use in that environment.
-//
-// If the library that you are including contains AMD or ES6
-// modules that you would like to import into your application
-// please specify an object with the list of modules as keys
-// along with the exports of each module as its value.
-
 var emberCPM;
 
 if (process.argv[2] === 'build') {
@@ -36,31 +23,57 @@ if (process.argv[2] === 'build') {
       return relativePath;
     }
   });
+
+  if (process.env.EMBER_ENV === 'production') {
+    var mergeTrees = require('broccoli-merge-trees');
+    var defeatureify = require('broccoli-defeatureify');
+    var uglify = require('broccoli-uglify-js');
+    var defeatureifyOpts = {
+      enableStripDebug: true,
+      debugStatements: [
+        "Ember.warn",
+        "emberWarn",
+        "Ember.assert",
+        "emberAssert",
+        "Ember.deprecate",
+        "emberDeprecate",
+        "Ember.debug",
+        "emberDebug",
+        "Ember.Logger.info",
+        "Ember.runInDebug",
+        "runInDebug"
+      ]
+    };
+
+    var devBuild  = defeatureify(emberCPM, defeatureifyOpts);
+    var prodBuild = defeatureify(emberCPM, defeatureifyOpts);
+    var minBuild  = uglify(prodBuild);
+
+    prodBuild = new Funnel(prodBuild, {
+      getDestinationPath: function(relativePath) {
+        if (/(globals|named-amd)/.test(relativePath)) {
+          return relativePath.replace('ember-cpm.js', 'ember-cpm.prod.js');
+        }
+        return relativePath;
+      }
+    });
+
+    minBuild = new Funnel(minBuild, {
+      getDestinationPath: function(relativePath) {
+        if (/(globals|named-amd)/.test(relativePath)) {
+          return relativePath.replace('ember-cpm.js', 'ember-cpm.min.js');
+        }
+        return relativePath;
+      }
+    });
+
+
+    emberCPM = mergeTrees([devBuild, minBuild, prodBuild], { overwrite: true });
+  }
 } else {
   var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
   var app = new EmberAddon();
   emberCPM = app.toTree();
-}
-
-if (process.env.EMBER_ENV === 'production') {
-  var defeatureify = require('broccoli-defeatureify');
-
-  emberCPM = defeatureify(emberCPM, {
-    enableStripDebug: true,
-    debugStatements: [
-      "Ember.warn",
-      "emberWarn",
-      "Ember.assert",
-      "emberAssert",
-      "Ember.deprecate",
-      "emberDeprecate",
-      "Ember.debug",
-      "emberDebug",
-      "Ember.Logger.info",
-      "Ember.runInDebug",
-      "runInDebug"
-    ]
-  });
 }
 
 module.exports = emberCPM;
