@@ -21,7 +21,6 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.2.0",
     "broccoli-asset-rev": "0.3.0",
