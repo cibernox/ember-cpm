@@ -4,7 +4,7 @@ git config --global user.email "miguel.camba@gmail.com"
 git config --global user.name "Miguel Camba"
 
 # This specifies the repository we are going to work with.  This will most likely be set to 'ember'
-COMPONENTS_EMBER_REPO_SLUG="cibernox/ember-cpm-bower-build"
+COMPONENTS_EMBER_REPO_SLUG="cibernox/ember-cpm-shim"
 
 # This specifies the user who is associated to the GH_TOKEN
 USER="cibernox"
