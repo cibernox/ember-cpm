@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.2.2 2014-10-14
+Doc: Remove outdated warning in readme
+Feature: Use Ember.deprecate to warn about deprecations.
+Feature: Change build process to generate regular, production and minified builds for named-amd and globals.
+Feature: The addon and the npm package are also published to the shim repo.
+Feature: Replace broccoli-file-mover with broccoli-funnel
+
 ## 1.2.1 2014-10-15
 Feature: Push all builds to shim repository on succesful builds.
 Feature: Upload builds globals and amd-builds to S3 on succesful builds.
