@@ -110,9 +110,3 @@ RestaurantCheck = Ember.Object.extend({
 If you would prefer to use `Ember.computed.{macro}` instead of
 `EmberCPM.Macros.{macro}` (for the sake of uniform access), simply call
 `EmberCPM.install()` before your application code.
-
-### Change Warning
-
-Ember-CPM will likely see several breaking changes during Q2 and Q3 2014 as its
-scope and structure change. We will, of course, bump the major version when making
-breaking changes and make the period of instability as short as possible.
