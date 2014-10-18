@@ -18,7 +18,7 @@ script:
 after_success:
   - ember build --environment=production
   - "./bin/s3-publish.js"
-  - "./bin/bower_ember_build"
+  - "./bin/publish_to_shim_repo"
 
 env:
   global:
