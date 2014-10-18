@@ -4,8 +4,8 @@ var get = Ember.get;
 var guidFor = Ember.guidFor;
 var arrayComputed = Ember.arrayComputed;
 
-var a_forEach = Ember.ArrayPolyfills.forEach,
-  a_slice   = Array.prototype.slice;
+var a_forEach = Ember.ArrayPolyfills.forEach;
+var a_slice   = Array.prototype.slice;
 
 /*
    Returns the index where an item is to be removed from, or placed into, for
@@ -21,10 +21,9 @@ function getIndex(changeMeta, instanceMeta, dependentArrayDelta) {
     recomputeGuidIndexes(instanceMeta, changeMeta.property._dependentKeys, this);
   }
 
-  var dependentArrayLengths = instanceMeta.dependentArrayLengths,
-      dependentArrayIndex = instanceMeta.dependentGuidToIndex[dependentArrayGuid],
-      offset = 0,
-      arrayIndex;
+  var dependentArrayLengths = instanceMeta.dependentArrayLengths;
+  var dependentArrayIndex = instanceMeta.dependentGuidToIndex[dependentArrayGuid];
+  var offset = 0, arrayIndex;
 
   // offset is the sum of the lengths of arrays to our left
   for (var i = 0; i < dependentArrayIndex; ++i) {
@@ -68,6 +67,10 @@ function recomputeGuidIndexes(instanceMeta, keys, context) {
   obj.get('itemsB').pushObjects(['e', 'f']);
   obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
   ```
+
+  @method macros.concat
+  @param *arguments Dependent keys with the arrays to concat.
+  @return {Array}
 */
 export default function EmberCPM_concat() {
   var args = a_slice.call(arguments);
