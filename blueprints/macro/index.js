@@ -38,7 +38,7 @@ function removeMacroFromNamespace (name) {
     // Get rid of any matching import
     .replace(new RegExp("(import\\s*" + camelizedName + "\\s*from\\s*\\'.\/macros\/" + name + "\';)\n", "gm"), '')
     // Get rid of the namespace reference
-    .replace(new RegExp("(var\\s*Macros\\s*=\\s*{[^}]+)(\\s*toString\\s*:\\s*toString,\n\\s*)([^}]+};)", "gm"), '$1$3');
+    .replace(new RegExp("(var\\s*Macros\\s*=\\s*{[^}]+)(\\s*" + camelizedName + "\\s*:\\s*" + camelizedName  + ",\n\\s*)([^}]+};)", "gm"), '$1$3');
   fs.writeFileSync(namespacePath, newContent);
 }
 
