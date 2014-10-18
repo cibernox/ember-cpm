@@ -19,7 +19,7 @@ import {parseComputedPropertyMacro} from '../utils';
   ```
 
   @method macros.asInt
-  @param {String} dependentKey Depedent key which value will be casted to a integer.
+  @param {String} dependentKey Dependent key which value will be casted to a integer.
   @return {Number} Returns casted integer.
 */
 export default parseComputedPropertyMacro(function (raw) {
