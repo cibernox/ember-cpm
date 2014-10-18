@@ -56,7 +56,8 @@ export function getDependentPropertyKeys(argumentArr) {
  */
 export function getVal(val) {
   if (Ember.typeOf(val) === 'string') {
-    return Ember.get(this, val) || val;
+    var propVal = Ember.get(this, val);
+    return  'undefined' === typeof propVal ? val : propVal;
   } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
     return val.altKey ? this.get(val.altKey) : val.func.apply(this);
   } else {
