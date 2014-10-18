@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import asFloat from 'ember-cpm/macros/asFloat';
+import asFloat from 'ember-cpm/macros/as-float';
 
 var MyType = Ember.Object.extend({
   val: '6',

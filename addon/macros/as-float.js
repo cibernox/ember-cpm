@@ -9,15 +9,18 @@ import {parseComputedPropertyMacro} from '../utils';
 
   ```javascript
   var item = Ember.Object.extend({
-    stringPrice: '123.45',
-    price: asFloat('stringPrice')
+    castedString: asFloat('33.33'),
+    castedInt: asFloat('1'),
+    castedCP: asFloat(sum('castedString', 'castedInt'))
   }).create();
 
-  item.get('price'); // 123.45
+  item.get('castedString'); // 33.33
+  item.get('castedInt');    // 1.0
+  item.get('castedCP');     // 34.33
   ```
 
   @method macros.asFloat
-  @param {String} dependentKey Dependent key which value will be casted to a float.
+  @param value The value to cast. It can be a number, a numeric string or a property key.
   @return {Number} Returns casted float.
 */
-export default parseComputedPropertyMacro (parseFloat);
+export default parseComputedPropertyMacro(parseFloat);
