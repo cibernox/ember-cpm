@@ -42,7 +42,7 @@ var typeOf = Ember.typeOf;
 export default function EmberCPM_literal (val) {
   var valType = typeOf(val);
   assert(
-    "Illegal Argument: %@ (%@)".fmt(val, valType),
+    Ember.String.fmt("Illegal Argument: %@ (%@) is a non-literal value", val, valType),
     ['string', 'null', 'undefined'].indexOf(valType) !== -1
   );
   return computed(function () {
