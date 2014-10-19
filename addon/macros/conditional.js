@@ -1,23 +1,23 @@
 import Ember from 'ember';
-/**
- * Conditional computed property
- *
- * Usage:
- *
- *      // A simple true/false check on a property
- *      var MyType = Ember.Object.extend({
- *          a: true,
- *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
- *      });
- *
- *      // Composable computed properties
- *      var lt = Ember.computed.lt; // "less than"
- *      var MyType = Ember.Object.extend({
- *          a: 15,
- *          b: EmberCPM.Macros.conditional(lt('a', 57), 'yes', 'no')
- *      });
- */
 
+/**
+   Conditional computed property
+
+   Example:
+   ```js
+    var Person = Ember.Object.extend({
+      canDrink: EmberCPM.Macros.conditional(Ember.computed.gte('age', 21), 'yes', 'no')
+    });
+    var boy = Person.create({age: 15});
+
+    boy.get('canDrink') // 'no'
+  ```
+  @method macros.conditions
+  @param {String|ComputedProperty} Dependent key or CP with truthy/falsy value.
+  @param                           valIfTrue Value if the first params is truthy
+  @param                           valIfTrue Value if the first params is falsy
+  @return the second or third parameter.
+ */
 export default function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
   var isConditionComputed = Ember.Descriptor === condition.constructor;
   var propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];

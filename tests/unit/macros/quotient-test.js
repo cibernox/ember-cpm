@@ -12,8 +12,7 @@ var MyType = Ember.Object.extend({
 
 var myObj = MyType.create({
   a: 6,
-  b: 2,
-  arr: [1, 2, 4]
+  b: 2
 });
 
 module('quotient');
@@ -25,7 +24,7 @@ test('calculates the quotient of two basic numeric properties', function () {
   myObj.set('a', 6);
 });
 
-test('calculates the quotient of a numeric property and a numeric ltesteral', function () {
+test('calculates the quotient of a numeric property and a numeric literal', function () {
   equal(myObj.get('d'), 2);
   equal(myObj.get('e'), 0.5);
   myObj.set('a', 12);
@@ -45,7 +44,7 @@ test('single argument case', function () {
   myObj.set('a', 6);
 });
 
-test('composable CPM support', function () {
+test('composable CP support', function () {
   equal(myObj.get('h'), 3);
   myObj.set('a', 5);
   equal(myObj.get('h'), 2.5);
