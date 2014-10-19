@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import asInt from 'ember-cpm/macros/asInt';
+import asInt from 'ember-cpm/macros/as-int';
 
 var MyType = Ember.Object.extend({
   val: '6',

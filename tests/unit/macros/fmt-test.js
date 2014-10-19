@@ -44,5 +44,4 @@ test('recomputes', function() {
   equal(o.get('labeled'), 'First Name: Kaylee');
   Ember.run(function() {o.set('value', 'Mike');});
   equal(o.get('labeled'), 'First Name: Mike');
-  
 });
