@@ -30,12 +30,11 @@ import {getDependentPropertyKeys, getVal} from '../utils';
  * @return {Boolean} Returns false if @param is evalated to something truthy, otherwise returns false
  */
 
-export default function EmberCPM_not () {
-  var mainArguments = Array.prototype.slice.call(arguments); // all arguments
-  var propertyArguments = getDependentPropertyKeys(mainArguments);
+export default function EmberCPM_not (arg) {
+  var propertyArguments = getDependentPropertyKeys([arg]);
 
   propertyArguments.push(function () {
-    return mainArguments.length > 0 ? !getVal.call(this, mainArguments[0]) : null;
+    return 'undefined' !== typeof arg ? !getVal.call(this, arg) : null;
   });
 
   return Ember.computed.apply(this, propertyArguments);
