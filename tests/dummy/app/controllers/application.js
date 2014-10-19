@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import ifNull from 'ember-cpm/macros/if-null';
-import EmberCPM from 'ember-cpm/ember-cpm';
+import EmberCPM from 'ember-cpm';
 
 export default Ember.Controller.extend({
   a: 1,
