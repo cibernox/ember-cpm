@@ -4,22 +4,16 @@ var get = Ember.get;
 var reduceComputed = Ember.reduceComputed;
 
 /**
- * DEPRECATED - 10/14/2014
- * Rather than use sumBy, developers should use composed computed property macros
- *
- * OLD WAY
- * {
- *   list: [{id: 1, val: 5.0}, {id: 2, val: 2.0}],
- *   listValSum: sumBy('list', 'val')
- * }
- *
- * NEW WAY
- * {
- *   list: [{id: 1, val: 5.0}, {id: 2, val: 2.0}],
- *   listValSum: sum(mapBy('list', 'val'))
- * }
- */
+  Sums the mapped values on the key in the elements of the given array.
 
+  This property is deprecated. Use a composition of `sum` and `mapBy`, like: `listValSum: sum(mapBy('list', 'val'))`
+
+  @method macros.sumBy
+  @param {String} dependentKey The key with the array.
+  @param {String} propertyKey  The key of the items we want to sum by.
+  @return {Number} The product of all its arguments.
+  @deprecated
+*/
 export default function EmberCPM_sumBy(dependentKey, propertyKey) {
   Ember.deprecate("[DEPRECATED: EmberCPM/sumBy] Please use a combination of EmberCPM.Macros.sum and EmberCPM.Macros.mapBy \nEmberCPM.Macros.sum(EmberCPM.Macros.mapBy('list', 'value'))");
 
