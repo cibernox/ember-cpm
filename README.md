@@ -17,7 +17,7 @@ If you are using [Ember CLI](https://github.com/stefanpenner/ember-cli), you can
 an addon with `npm install ember-cpm --save-dev` and you will be able to import native ES modules from
 within your app.
 
-If not, you need to add `ember-cpm.js` manually to your project. 
+If not, you need to add `ember-cpm.js` manually to your project.
 
 You can find the latest versions of ember-cpm in [the S3 bucket](http://ember-cpm-builds.s3-website-us-east-1.amazonaws.com/) in two flavours: globals or AMD.
 Alternatively, you can also build from source. See [Contributing](https://github.com/jamesarosen/ember-cpm#contributing) for more info about how to build from source.
@@ -52,6 +52,28 @@ After running `npm install` to get all the dependencies you can:
 * Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode.
 * Run `ember test` to run all tests once (requires phantomjs).
 * Run `ember build` to build from source.
+
+#### Generating new computed property macros with ember-cli
+
+* Run `ember g macro <dasherized-macro-name>`. This will generate a few files
+  * `./addon/macros/dasherized-macro-name.js` (the macro)
+  * `./addon/tests/dummy/unit/macro/dasherized-macro-name-test.js` (a test)*
+  * and modify `./addon/ember-cpm.js`
+
+```javascript
+// import the macro
+import dasherizedMacroName from './macros/dasherized-macro-name.js'
+...
+
+var Macros = {
+  ...
+  // allows use via EmberCPM.Macros.dasherizedMacroName
+  dasherizedMacroName: dasherizedMacroName,
+  ...
+};
+
+```
+`ember d macro <dasherized-macro-name>` will do the reverse of these changes
 
 ### Provided Macros
 
