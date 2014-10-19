@@ -17,7 +17,7 @@ If you are using [Ember CLI](https://github.com/stefanpenner/ember-cli), you can
 an addon with `npm install ember-cpm --save-dev` and you will be able to import native ES modules from
 within your app.
 
-If not, you need to add `ember-cpm.js` manually to your project. 
+If not, you need to add `ember-cpm.js` manually to your project.
 
 You can find the latest versions of ember-cpm in [the S3 bucket](http://ember-cpm-builds.s3-website-us-east-1.amazonaws.com/) in two flavours: globals or AMD.
 Alternatively, you can also build from source. See [Contributing](https://github.com/jamesarosen/ember-cpm#contributing) for more info about how to build from source.
@@ -65,9 +65,6 @@ After running `npm install` to get all the dependencies you can:
    `Handlebars.Utils.escapeExpression` *and* wraps the result in a
    `Handlebars.SafeString` (since it's now safe)
  * `ifNull` -- fall back on a default value
- * `notAmong` -- inverse of `among`
- * `notEqual` -- inverse of the built-in `equal` macro
- * `notMatch` -- inverse of the built-in `match` macro
  * `promise` -- wraps the original value in an already-resolved promise
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
