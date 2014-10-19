@@ -27,11 +27,11 @@ module.exports = {
 };
 
 /**
- * Remove module import and namespace inclusion of a macro from addon/ember-cpm.js
+ * Remove module import and namespace inclusion of a macro from addon/index.js
  */
 function removeMacroFromNamespace (name) {
   var camelizedName = inflection.camelize(inflection.titleize(name).replace('-', ''), true);
-  var namespacePath = path.join(process.cwd(), 'addon', 'ember-cpm.js');
+  var namespacePath = path.join(process.cwd(), 'addon', 'index.js');
   var oldContent = fs.readFileSync(namespacePath, 'utf-8');
   var newContent = oldContent;
   newContent = newContent
@@ -43,11 +43,11 @@ function removeMacroFromNamespace (name) {
 }
 
 /**
- * Add a module import and namespace inclusion of a macro to addon/ember-cpm.js
+ * Add a module import and namespace inclusion of a macro to addon/index.js
  */
 function addMacroToNamespace (name) {
   var camelizedName = inflection.camelize(inflection.titleize(name).replace('-', ''), true);
-  var namespacePath = path.join(process.cwd(), 'addon', 'ember-cpm.js');
+  var namespacePath = path.join(process.cwd(), 'addon', 'index.js');
   var oldContent = fs.readFileSync(namespacePath, 'utf-8');
   var importExistence  = new RegExp("(?:import)\\s" + camelizedName + "\\sfrom\\s\\'\\.\\\/macros\\\/" + name + "\\';","gm");
   var attachmentExistence  = new RegExp("(?:var\\s*Macros\\s*\\=\\s*\\{)(?:\\s*[A-Za-z:,\\s]+\\s*)(" + camelizedName + ")\\:\\s*(" + camelizedName + "),(?:\\s*[A-Za-z\\:,\\s]+\\s*)\\};","gm");
@@ -56,7 +56,7 @@ function addMacroToNamespace (name) {
 //(import\s*[A-Za-z]+\s*from\s*\'[\w\/\.\-]+\'\;)
   if (!importExistence.test(oldContent)) {
     var importString = 'import ' + camelizedName + ' from \'./macros/' + name + '\';';
-    console.log('  adding "' + importString + '" to addons/ember-cpm.js');
+    console.log('  adding "' + importString + '" to addons/index.js');
     newContent = newContent.replace(/(import\s*[A-Za-z]+\s*from\s*\'[\w\/\.\-]+\'\;)(?![\s\S]*import)/,'$1' + EOL + importString);
   }
 

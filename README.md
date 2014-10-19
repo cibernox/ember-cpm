@@ -30,8 +30,8 @@ In Ember CLI:
 ```js
 // Import only one macros
 import ifNull from "ember-cpm/macros/if-null";
-// or alternatively import all macros
-import EmberCPM from "ember-cpm/ember-cpm";
+// or alternatively import all the namespace
+import EmberCPM from "ember-cpm";
 ```
 
 In any other scenario, include `ember-cpm.js` after ember but before your app, and a gobal will be available:
