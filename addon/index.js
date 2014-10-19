@@ -22,7 +22,6 @@ import quotient from './macros/quotient';
 import difference from './macros/difference';
 import asFloat from './macros/as-float';
 import asInt from './macros/as-int';
-import kickAss from './macros/kick-ass';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -34,7 +33,6 @@ function reverseMerge(dest, source) {
 
 var VERSION = '1.2.2';
 var Macros = {
-  kickAss: kickAss,
   among: among,
   allEqual: allEqual,
   encodeURIComponent: encodeURIComponent,
