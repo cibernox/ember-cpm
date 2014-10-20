@@ -1,11 +1,11 @@
 {
   "name": "ember-cpm",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Computed Propery Macros for Ember.js",
   "main": "dist/named-amd/ember-cpm.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jamesarosen/ember-cpm.git"
+    "url": "git://github.com/cibernox/ember-cpm.git"
   },
   "keywords": [
     "ember",
@@ -13,9 +13,10 @@
   ],
   "author": "James A. Rosen",
   "license": "MIT/APLv2",
-  "homepage": "https://github.com/jamesarosen/ember-cpm",
+  "homepage": "https://github.com/cibernox/ember-cpm",
   "authors": [
-    "James Alexander Rosen"
+    "James Alexander Rosen",
+    "Miguel Camba"
   ],
   "dependencies": {
     "handlebars": "~1.3.0",
