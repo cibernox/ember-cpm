@@ -1,6 +1,6 @@
 # Changelog
 
-### Master
+### 1.3.0 2014-10-20
 Doc: Add formal YUIdoc to all macros.
 Breaking enhalcement: Rename `addon/ember-cpm.js` to `addon/index.js`. Now you import `import EmberCPM from "ember-cpm";`
 Deprecation: Deprecated `notEqual`, `notMatch` and `notAmong`
