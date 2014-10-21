@@ -62,13 +62,13 @@ After running `npm install` to get all the dependencies you can:
 
 ```javascript
 // import the macro
-import dasherizedMacroName from './macros/dasherized-macro-name.js'
+import camelizedMacroName from './macros/dasherized-macro-name.js'
 ...
 
 var Macros = {
   ...
-  // allows use via EmberCPM.Macros.dasherizedMacroName
-  dasherizedMacroName: dasherizedMacroName,
+  // allows use via EmberCPM.Macros.camelizedMacroName
+  camelizedMacroName: camelizedMacroName,
   ...
 };
 
