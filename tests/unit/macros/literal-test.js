@@ -2,9 +2,7 @@ import Ember from 'ember';
 import l from 'ember-cpm/macros/literal';
 
 var MyType = Ember.Object.extend({
-  literalProp: l('val'),
-  noArg: l(),
-  nullArg: l(null)
+  literalProp: l('val')
 });
 
 var myObj;
@@ -22,11 +20,19 @@ test('Property key (should return the key its self)', function () {
 });
 
 test('No argument case', function () {
-  strictEqual(myObj.get('noArg'), undefined);
+  throws(function () {
+    var TestType = Ember.Object.extend({
+      val: l()
+    });
+  }, "Illegal Argument");
 });
 
 test('Null argument case', function () {
-  strictEqual(myObj.get('nullArg'), null);
+  throws(function () {
+    var TestType = Ember.Object.extend({
+      val: l(null)
+    });
+  }, "Illegal Argument");
 });
 
 test('Numeric argument case', function () {

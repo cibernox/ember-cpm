@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
-var assert = Ember.assert;
 var computed = Ember.computed;
-var typeOf = Ember.typeOf;
 
 /**
  * Returns a literal value. Useful for disambiguating
@@ -40,11 +38,13 @@ var typeOf = Ember.typeOf;
  */
 
 export default function EmberCPM_literal (val) {
-  var valType = typeOf(val);
-  assert(
-    Ember.String.fmt("Illegal Argument: %@ (%@) is a non-literal value", val, valType),
-    ['string', 'null', 'undefined'].indexOf(valType) !== -1
-  );
+  Ember.runInDebug(function () {
+    var valType = Ember.typeOf(val);
+    Ember.assert(
+      Ember.String.fmt("Illegal Argument: %@ (%@) is a non-literal value", val, valType),
+      ['string'].indexOf(valType) !== -1
+    );
+  });
   return computed(function () {
       return val;
   }).readOnly();
