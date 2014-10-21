@@ -53,6 +53,28 @@ After running `npm install` to get all the dependencies you can:
 * Run `ember test` to run all tests once (requires phantomjs).
 * Run `ember build` to build from source.
 
+#### Generating new computed property macros with ember-cli
+
+* Run `ember g macro <dasherized-macro-name>`. This will generate a few files
+  * `./addon/macros/dasherized-macro-name.js` (the macro)
+  * `./addon/tests/dummy/unit/macro/dasherized-macro-name-test.js` (a test)*
+  * and modify `./addon/ember-cpm.js`
+
+```javascript
+// import the macro
+import camelizedMacroName from './macros/dasherized-macro-name.js'
+...
+
+var Macros = {
+  ...
+  // allows use via EmberCPM.Macros.camelizedMacroName
+  camelizedMacroName: camelizedMacroName,
+  ...
+};
+
+```
+`ember d macro <dasherized-macro-name>` will do the reverse of these changes
+
 ### Provided Macros
 
  * `among` -- returns `true` if the original value is among the given literals
