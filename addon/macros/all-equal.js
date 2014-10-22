@@ -1,3 +1,10 @@
+/**
+  EmberCPM Macros
+
+  @module macros
+  @requires ember, utils
+*/
+
 import Ember from 'ember';
 import {getVal, getDependentPropertyKeys} from '../utils';
 
@@ -27,6 +34,7 @@ import {getVal, getDependentPropertyKeys} from '../utils';
   ```
 
   @method macros.allEqual
+  @for macros
   @param *arguments Elements that must be equal. It be regular value, a property key or another computed property.
   @return {Boolean} Returns true it all elements are equal
 */
