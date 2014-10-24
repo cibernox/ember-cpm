@@ -9,7 +9,6 @@ var MyType = Ember.Object.extend({
   f: sum('a', 'b', 'c', 2),
   g: sum('a'),
   h: sum(2),
-  i: sum(),
   j: [1, 2, 3, 4],
   k: sum(Ember.computed.max('j'), 5),
   l: sum(sum('a', 'b'), 5),
@@ -36,7 +35,11 @@ test('calculates the sum of two basic numeric properties', function () {
 });
 
 test('returns 0 when passed no arguments', function () {
-  equal(myObj.get('i'), 0);
+  throws(function () {
+    Ember.Object.extend({
+      prop: sum()
+    });
+  }, 'Error:');
 });
 
 test('calculates the sum of three basic numeric properties', function () {
