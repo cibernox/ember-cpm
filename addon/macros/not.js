@@ -32,7 +32,7 @@ import {getDependentPropertyKeys, getVal} from '../utils';
 
 export default function EmberCPM_not (arg) {
   var propertyArguments = getDependentPropertyKeys([arg]);
-
+  Ember.assert('Illegal Argument: ' + arg, 'undefined' !== typeof arg && null !== arg);
   propertyArguments.push(function () {
     return 'undefined' !== typeof arg ? !getVal.call(this, arg) : null;
   });

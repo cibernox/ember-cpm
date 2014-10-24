@@ -10,7 +10,6 @@ var MyType = Ember.Object.extend({
   notFalse: not(false),
   notAllEqual: not(allEqual('five', '5', '5')),
   notNotAllEqual: not(not(allEqual('five', '5', '5'))),
-  noArgs: not()
 });
 
 var myObj;
@@ -42,5 +41,17 @@ test('Alias inverse (composable CPM)', function () {
 });
 
 test('Zero-argument case', function () {
-  strictEqual(myObj.get('noArgs'), null);
+  throws(function () {
+      Ember.Object.extend({
+        prop: not()
+      });
+  }, 'Illegal Argument');
+});
+
+test('Null-argument case', function () {
+  throws(function () {
+      Ember.Object.extend({
+        prop: not(null)
+      });
+  }, 'Illegal Argument');
 });
