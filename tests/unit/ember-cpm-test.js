@@ -1,5 +1,5 @@
 import Ember from "ember";
-import EmberCPM from "ember-cpm/ember-cpm";
+import EmberCPM from "ember-cpm";
 
 module("EmberCPM");
 

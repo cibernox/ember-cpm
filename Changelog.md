@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.3.0 2014-10-20
+Doc: Add formal YUIdoc to all macros.
+Breaking enhalcement: Rename `addon/ember-cpm.js` to `addon/index.js`. Now you import `import EmberCPM from "ember-cpm";`
+Deprecation: Deprecated `notEqual`, `notMatch` and `notAmong`
+Feature: Added bluprint to generate macros: `ember g macro macro-name`
+Breaking enhalcement: Macro `promise` returns a RSVP.Promise instead of a jQuery promise.
+
 ### 1.2.2 2014-10-14
 Doc: Remove outdated warning in readme
 Feature: Use Ember.deprecate to warn about deprecations.

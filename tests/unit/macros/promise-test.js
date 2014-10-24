@@ -16,16 +16,22 @@ test('returns a promise', function() {
   equal(typeof(p.then), 'function');
 });
 
-test('is pre-resolved', function() {
+asyncTest('is pre-resolved', function() {
   var state;
   var p = object.get('asPromise');
   p.then(function() { state = 'passed'; }, function() { state = 'failed'; });
-  equal(state, 'passed');
+  setTimeout(function(){
+    start();
+    equal(state, 'passed');
+  });
 });
 
-test('resolves with the value', function() {
-  var resolvedWith;
+asyncTest('resolves with the value', function() {
+  var state;
   var p = object.get('asPromise');
-  p.then(function(x) { resolvedWith = x; }, function(x) { resolvedWith = x; });
-  equal(resolvedWith, 'Kangaroo');
+  p.then(function(x) { state = x; }, function(x) { state = x; });
+  setTimeout(function(){
+    start();
+    equal(state, 'Kangaroo');
+  });
 });

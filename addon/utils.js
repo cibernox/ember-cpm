@@ -1,17 +1,30 @@
+/**
+  EmberCPM Utils
+
+  @module utils
+  @requires ember
+*/
+
 import Ember from "ember";
 
 /**
- * Retain items in an array based on type
- * @param {array} arr  array to iterate over
- * @param {string} type string representation of type
- *
- * Example:
- * var x = ['a', 'b', 123, {hello: 'world'}];
- *
- * retainByType(x, 'string'); // ['a', 'b']
- * retainByType(x, 'number'); // [123]
- * retainByType(x, 'object'); // [{hello: 'world'}]
- *
+ Retain items in an array based on type
+
+ Example:
+
+ ```js
+ var x = ['a', 'b', 123, {hello: 'world'}];
+
+ retainByType(x, 'string'); // ['a', 'b']
+ retainByType(x, 'number'); // [123]
+ retainByType(x, 'object'); // [{hello: 'world'}]
+ ```
+
+ @method retainByType
+ @for utils
+ @param {Array}  arr  array to iterate over
+ @param {String} type string representation of type
+
  */
 export function retainByType(arr, type) {
   return arr.reject(
@@ -44,15 +57,16 @@ export function getDependentPropertyKeys(argumentArr) {
 }
 
 /**
- * Evaluate a value, which could either be a property key or a literal
- * @param val value to evaluate
- *
- * if the value is a string, the object that the computed property is installed
- * on will be checked for a property of the same name. If one is found, it will
- * be evaluated, and the result will be returned. Otherwise the string value its
- * self will be returned
- *
- * All non-string values pass straight through, and are returned unaltered
+ Evaluate a value, which could either be a property key or a literal
+ if the value is a string, the object that the computed property is installed
+ on will be checked for a property of the same name. If one is found, it will
+ be evaluated, and the result will be returned. Otherwise the string value its
+ self will be returned
+
+ All non-string values pass straight through, and are returned unaltered
+
+ @method getVal
+ @param val value to evaluate
  */
 export function getVal(val) {
   if (Ember.typeOf(val) === 'string') {
@@ -67,13 +81,15 @@ export function getVal(val) {
 
 
 /**
- * Generate a "parse-like" computed property macro
- * @param {function} parseFunction single-argument function that
- *  transforms a raw value into a "parsed" value
- *
- * i.e.,
- *
- * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
+ Generate a "parse-like" computed property macro
+
+ Example:
+ ```js
+ parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
+ ```
+
+ @method parseComputedPropertyMacro
+ @param {function} parseFunction single-argument function that transforms a raw value into a "parsed" value
  */
 export function parseComputedPropertyMacro (parseFunction) {
   return function parseMacro(dependantKey) {
@@ -124,8 +140,11 @@ export function parseComputedPropertyMacro (parseFunction) {
 }
 
 /**
- * Return a computed property macro
- * @param {[type]} reducingFunction [description]
+ Return a computed property macro
+
+ @method reduceComputedPropertyMacro
+ @param {Function} reducingFunction
+ @param {Object} options
  */
 export function reduceComputedPropertyMacro(reducingFunction, options) {
   var opts = options || {};

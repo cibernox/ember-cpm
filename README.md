@@ -17,7 +17,7 @@ If you are using [Ember CLI](https://github.com/stefanpenner/ember-cli), you can
 an addon with `npm install ember-cpm --save-dev` and you will be able to import native ES modules from
 within your app.
 
-If not, you need to add `ember-cpm.js` manually to your project. 
+If not, you need to add `ember-cpm.js` manually to your project.
 
 You can find the latest versions of ember-cpm in [the S3 bucket](http://ember-cpm-builds.s3-website-us-east-1.amazonaws.com/) in two flavours: globals or AMD.
 Alternatively, you can also build from source. See [Contributing](https://github.com/jamesarosen/ember-cpm#contributing) for more info about how to build from source.
@@ -30,8 +30,8 @@ In Ember CLI:
 ```js
 // Import only one macros
 import ifNull from "ember-cpm/macros/if-null";
-// or alternatively import all macros
-import EmberCPM from "ember-cpm/ember-cpm";
+// or alternatively import all the namespace
+import EmberCPM from "ember-cpm";
 ```
 
 In any other scenario, include `ember-cpm.js` after ember but before your app, and a gobal will be available:
@@ -53,6 +53,28 @@ After running `npm install` to get all the dependencies you can:
 * Run `ember test` to run all tests once (requires phantomjs).
 * Run `ember build` to build from source.
 
+#### Generating new computed property macros with ember-cli
+
+* Run `ember g macro <dasherized-macro-name>`. This will generate a few files
+  * `./addon/macros/dasherized-macro-name.js` (the macro)
+  * `./addon/tests/dummy/unit/macro/dasherized-macro-name-test.js` (a test)*
+  * and modify `./addon/ember-cpm.js`
+
+```javascript
+// import the macro
+import camelizedMacroName from './macros/dasherized-macro-name.js'
+...
+
+var Macros = {
+  ...
+  // allows use via EmberCPM.Macros.camelizedMacroName
+  camelizedMacroName: camelizedMacroName,
+  ...
+};
+
+```
+`ember d macro <dasherized-macro-name>` will do the reverse of these changes
+
 ### Provided Macros
 
  * `among` -- returns `true` if the original value is among the given literals
@@ -65,9 +87,6 @@ After running `npm install` to get all the dependencies you can:
    `Handlebars.Utils.escapeExpression` *and* wraps the result in a
    `Handlebars.SafeString` (since it's now safe)
  * `ifNull` -- fall back on a default value
- * `notAmong` -- inverse of `among`
- * `notEqual` -- inverse of the built-in `equal` macro
- * `notMatch` -- inverse of the built-in `match` macro
  * `promise` -- wraps the original value in an already-resolved promise
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator

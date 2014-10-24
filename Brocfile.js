@@ -9,16 +9,14 @@ if (process.argv[2] === 'build') {
   var transpiled = dist('addon', {
     global: 'EmberCPM',
     packageName: 'ember-cpm',
-    main: 'ember-cpm',
+    main: 'index',
     shim: { 'ember': 'Ember' }
   });
 
   emberCPM = new Funnel(transpiled, {
     getDestinationPath: function(relativePath) {
-      if (relativePath === 'globals/main.js') {
-        return 'globals/ember-cpm.js';
-      } else if (relativePath === 'named-amd/main.js') {
-        return 'named-amd/ember-cpm.js';
+      if (/main.js/.test(relativePath)){
+        return relativePath.replace('main.js', 'ember-cpm.js')
       }
       return relativePath;
     }

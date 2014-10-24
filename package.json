@@ -2,8 +2,11 @@
   "name": "ember-cpm",
   "description": "Computed Propery Macros for Ember.js",
   "author": "James A. Rosen <james.a.rosen@gmail.com>",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "licence": "APLv2 / MIT",
+  "contributors": [
+    "Miguel Camba <miguel.camba@gmail.com>"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -16,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jamesarosen/ember-cpm.git"
+    "url": "git://github.com/cibernox/ember-cpm.git"
   },
   "engines": {
     "node": ">= 0.10.0"
@@ -35,6 +38,7 @@
     "ember-cli-ic-ajax": "0.1.1",
     "ember-cli-inject-live-reload": "^1.2.2",
     "ember-cli-qunit": "0.1.0",
+    "ember-cli-yuidoc": "0.0.9",
     "ember-data": "1.0.0-beta.10",
     "ember-publisher": "0.0.7",
     "express": "^4.8.5",
