@@ -7,7 +7,6 @@ var MyType = Ember.Object.extend({
   c: product('a', 'b'),
   d: product('a', 'c'),
   e: product('a'),
-  f: product(),
   i: product('a', 'b', 'g', 'h'),
   j: product('a', 'b', 'g', 'h', 2),
   k: product(product('a', 'b'), 'h')
@@ -46,7 +45,11 @@ test('given one argument, returns the value of that property', function () {
 });
 
 test('given no arguments, returns 0', function () {
-  equal(myObj.get('f'), 0);
+  throws(function () {
+    Ember.Object.extend({
+      prop: product()
+    });
+  }, 'Error:');
 });
 
 test('product of product', function () {

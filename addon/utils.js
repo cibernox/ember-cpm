@@ -151,15 +151,14 @@ export function reduceComputedPropertyMacro(reducingFunction, options) {
 
   return function () {
     var mainArguments = Array.prototype.slice.call(arguments); // all arguments
+    Ember.assert('Error: At least one argument is required', mainArguments.length > 0);
+
     var propertyArguments = getDependentPropertyKeys(mainArguments);
 
     propertyArguments.push(function () {
       var self = this;
       switch (mainArguments.length) {
-
-        case 0:   // Handle zero-argument case
-          return 0;
-
+        // case 0:   // We already handle the zero-argument case above
         case 1:   // Handle one-argument case
           return singleItemCallback.call(this, mainArguments[0]);
 
