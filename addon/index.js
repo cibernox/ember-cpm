@@ -20,6 +20,7 @@ import conditional from './macros/conditional';
 import product from './macros/product';
 import quotient from './macros/quotient';
 import difference from './macros/difference';
+import not from './macros/not';
 import asFloat from './macros/as-float';
 import asInt from './macros/as-int';
 
@@ -33,6 +34,7 @@ function reverseMerge(dest, source) {
 
 var VERSION = '1.3.0';
 var Macros = {
+  not: not,
   among: among,
   allEqual: allEqual,
   encodeURIComponent: encodeURIComponent,
