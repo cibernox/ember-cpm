@@ -4,11 +4,14 @@ import asFloat from 'ember-cpm/macros/as-float';
 var MyType = Ember.Object.extend({
   val: '6',
   floatVal: 1.2,
+  boolVal: true,
+  nullVal: null,
+  undefinedVal: undefined,
   valAsFloat: asFloat('val'),
-  nothingAsFloat: asFloat(),
+  nullAsFloat: asFloat('nullValue'),
+  undefinedAsFloat: asFloat('undefinedValue'),
+  boolAsFloat: asFloat('boolVal'),
   floatAsFloat: asFloat('floatVal'),
-  nullAsFloat: asFloat(null),
-  undefinedAsFloat: asFloat(undefined),
   emptyStringAsFloat: asFloat(''),
   nonNumericStringAsFloat: asFloat('abcd')
 });
@@ -43,8 +46,12 @@ test('numeric prop - setting value as a float', function () {
   strictEqual(myObj.get('floatVal'), 12.1);
 });
 
-test('zero argument case', function () {
-  strictEqual(myObj.get('nothingAsFloat').toString(), 'NaN');
+test('null prop - getting value as a float', function () {
+  strictEqual(myObj.get('nullAsFloat').toString(), 'NaN');
+});
+
+test('undefined prop - getting value as a float', function () {
+  strictEqual(myObj.get('undefinedAsFloat').toString(), 'NaN');
 });
 
 test('string argument case', function () {
@@ -52,10 +59,38 @@ test('string argument case', function () {
   equal(myObj.get('emptyStringAsFloat').toString(), 'NaN', 'empty string');
 });
 
-test('null argument case', function () {
-  strictEqual(myObj.get('nullAsFloat').toString(), 'NaN');
+test('Setting float value updates dependant string property', function () {
+  myObj.set('valAsFloat', 3.2);
+  strictEqual(myObj.get('val'), '3.2', 'string type of dependant property is respected');
 });
 
-test('undefined argument case', function () {
-  strictEqual(myObj.get('undefinedAsFloat').toString(), 'NaN');
+test('Setting float value updates dependant numeric property', function () {
+  myObj.set('floatAsFloat', 111.124);
+  strictEqual(myObj.get('floatVal'), 111.124, 'float type of dependant property is respected');
+});
+
+test('boolean argument case', function () {
+  strictEqual(myObj.get('boolAsFloat'), 1.0, 'boolean true evaluates to 1');
+  myObj.set('boolVal', false);
+  strictEqual(myObj.get('boolAsFloat'), 0.0, 'boolean false evaluates to 0');
+  myObj.set('boolAsFloat', 1.0);
+  strictEqual(myObj.get('boolVal'), true);
+  myObj.set('boolAsFloat', 0.0);
+  strictEqual(myObj.get('boolVal'), false);
+});
+
+test('zero-argument case throws an exception', function () {
+  throws(function () {
+    Ember.Object.extend({
+      prop: asFloat()
+    });
+  }, /No\sargument/);
+});
+
+test('null-argument case throws an exception', function () {
+  throws(function () {
+    Ember.Object.extend({
+      prop: asFloat(null)
+    });
+  }, /Null\sargument/);
 });

@@ -94,18 +94,19 @@ export function getVal(val) {
 export function parseComputedPropertyMacro (parseFunction) {
   return function parseMacro(dependantKey) {
     var args = [];
-    if (dependantKey) {
-      args.push(dependantKey);
+    if ('undefined' === typeof dependantKey) {
+      throw 'No argument';
     }
+    if (dependantKey === null) {
+      throw 'Null argument';
+    }
+    args.push(dependantKey);
     args.push(function (propKey, val) {
-      if (['undefined', 'null'].indexOf(Ember.typeOf(dependantKey)) !== -1) {
-        return NaN; // same as parseInt, parseFloat return for null or undefined
-      }
       if (arguments.length === 1) {
         //getter
         var rawValue = this.get(dependantKey);
-        // Have to check again for null/undefined values, since the first check
-        // could have just been non-null property keys
+
+        // Check for null/undefined values
         if (['undefined', 'null'].indexOf(Ember.typeOf(rawValue)) !== -1) {
           return NaN;
         }
@@ -126,7 +127,19 @@ export function parseComputedPropertyMacro (parseFunction) {
         //respect the type of the dependent property
         switch (Ember.typeOf(this.get(dependantKey))) {
           case 'number':
-            this.set(dependantKey, parseFunction(val));
+            this.set(dependantKey, parseFloat(val));
+            break;
+          case 'boolean':
+            switch(Ember.typeOf(val)) {
+              case 'string':
+                this.set(dependantKey, val.toLowerCase() === 'true');
+                break;
+              case 'number':
+                this.set(dependantKey, val !== 0);
+                break;
+              default:
+                throw 'Can\'t transform value of type %@ into a boolean'.fmt(Ember.typeOf(val));
+            }
             break;
           default:
             this.set(dependantKey, val.toString());
