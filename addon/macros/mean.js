@@ -48,7 +48,8 @@ export default function EmberCPM_mean () {
         case 'null':
           break;
         default:
-          throw 'Unsupported value type: %@'.fmt(Ember.typeOf(v));
+          var msg = Ember.String.fmt('Unsupported value type: %@', Ember.typeOf(v));
+          throw new TypeError(msg);
       }
     });
     return count > 0 ? sum/count : 0;

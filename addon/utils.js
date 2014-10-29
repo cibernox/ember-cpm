@@ -95,10 +95,10 @@ export function parseComputedPropertyMacro (parseFunction) {
   return function parseMacro(dependantKey) {
     var args = [];
     if ('undefined' === typeof dependantKey) {
-      throw 'No argument';
+      throw new TypeError('No argument');
     }
     if (dependantKey === null) {
-      throw 'Null argument';
+      throw new TypeError('Null argument');
     }
     args.push(dependantKey);
     args.push(function (propKey, val) {
@@ -138,7 +138,8 @@ export function parseComputedPropertyMacro (parseFunction) {
                 this.set(dependantKey, val !== 0);
                 break;
               default:
-                throw 'Can\'t transform value of type %@ into a boolean'.fmt(Ember.typeOf(val));
+                var msg = Ember.String.fmt('Can\'t transform value of type %@ into a boolean', Ember.typeOf(val));
+                throw new TypeError(msg);
             }
             break;
           default:
