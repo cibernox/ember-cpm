@@ -17,7 +17,8 @@ var EmberHandlebars = Ember.Handlebars;
   obj.get('escaped'); // '&lt;em&gt;Hi&lt;/em&gt;'
   ```
 
-  @method macros.htmlScape
+  @method htmlScape
+  @for macros
   @param {String} Dependent key with the string to scape.
   @return {Ember.Handlebars.SafeString} The escaped string.
 */

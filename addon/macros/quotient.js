@@ -17,7 +17,8 @@ import {getVal, getDependentPropertyKeys} from '../utils';
   });
   ```
 
-  @method macros.quotient
+  @method quotient
+  @for macros
   @param dividend Can be a number, a property key containing a number or another computed property.
   @return {Float} The quotient of the division.
 */

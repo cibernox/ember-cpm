@@ -34,7 +34,8 @@ var isPresent = function(value) {
   item.get('displayName'); // 'Jean-Luc'
   ```
 
-  @method macros.firstPresent
+  @method firstPresent
+  @for macros
   @param *arguments
   @return The first arguments that is not blank.
 */

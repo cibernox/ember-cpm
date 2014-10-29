@@ -7,7 +7,8 @@ var EmberHandlebars = Ember.Handlebars;
 /**
   Casts the value of the given dependent key to a Handlebars.SafeString
 
-  @method macros.safeString
+  @method safeString
+  @for macros
   @param {String} Dependent key with the string to cast.
   @return {Ember.Handlebars.SafeString} The casted string.
 */

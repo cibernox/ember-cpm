@@ -20,7 +20,8 @@ var computed = Ember.computed;
   show.get('hasCartoonDog'); // true
   ```
 
-  @method macros.among
+  @method among
+  @for macros
   @param {String} dependentKey Dependent key which value must be among the given values.
   @param          *values      Values among which the dependentKey must be included.
   @return {Boolean} Returns true the value in the given dependent key is among the privided values.

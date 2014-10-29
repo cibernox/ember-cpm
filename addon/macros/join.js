@@ -19,7 +19,8 @@ var a_slice = Array.prototype.slice;
   picard.get('fullName'); // 'Jean-Luc Picard'
   ```
 
-  @method macros.join
+  @method join
+  @for macros
   @param *arguments The last argument is the separator string. The rest are the dependent keys with the strings to join.
   @return {String}  The joined string.
 */

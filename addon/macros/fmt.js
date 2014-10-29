@@ -22,7 +22,8 @@ var a_slice = Array.prototype.slice;
   teacher.get('catchPhrase'); // 'Hi, my name is Miguel and I will teach you Javascript'
   ```
 
-  @method macros.fmt
+  @method fmt
+  @for macros
   @param *arguments The last element is the string to format. The rest of the arguments are the dependent key with the values to interpolate.
                     The string interpolations follows the same rules in `Ember.String.fmt`
   @return The formatted string.

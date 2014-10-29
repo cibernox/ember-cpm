@@ -14,7 +14,8 @@ import { getVal, getDependentPropertyKeys } from '../utils';
   item.get('benefit'); // 8
   ```
 
-  @method macros.difference
+  @method difference
+  @for macros
   @param {Number|String|ComputedProperty} firstNumber First operand
   @param {Number|String|ComputedProperty} lastNumber  Last operand
   @return {Number} Difference between the operands.

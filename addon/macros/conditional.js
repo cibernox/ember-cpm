@@ -12,7 +12,8 @@ import Ember from 'ember';
 
     boy.get('canDrink') // 'no'
   ```
-  @method macros.conditions
+  @method conditions
+  @for macros
   @param {String|ComputedProperty} Dependent key or CP with truthy/falsy value.
   @param                           valIfTrue Value if the first params is truthy
   @param                           valIfTrue Value if the first params is falsy

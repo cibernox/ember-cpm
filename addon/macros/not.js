@@ -26,6 +26,8 @@ import {getDependentPropertyKeys, getVal} from '../utils';
  * rl.get('holdLaunch'); // false
  * ```
  *
+ * @method not
+ * @for macros
  * @param  {String|Number|ComputedProperty} property to invert
  * @return {Boolean} Returns false if @param is evalated to something truthy, otherwise returns false
  */

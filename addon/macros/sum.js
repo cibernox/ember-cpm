@@ -18,7 +18,8 @@ import {reduceComputedPropertyMacro, getVal} from '../utils';
   });
   ```
 
-  @method macros.sum
+  @method sum
+  @for macros
   @param *arguments It can be numbers, property keys containing numbers or other computed properties.
   @return {Number} The sum of all its arguments.
 */

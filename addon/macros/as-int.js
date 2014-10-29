@@ -18,7 +18,7 @@ import {parseComputedPropertyMacro} from '../utils';
   item.get('invalid'); // NaN
   ```
 
-  @method macros.asInt
+  @method asInt
   @for macros
   @param {Number|String|Boolean} value The value to cast. It can be a numbed, a numeric string or a property key.
   @return {Number} Returns casted integer.

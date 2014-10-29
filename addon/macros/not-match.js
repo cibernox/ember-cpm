@@ -6,7 +6,8 @@ var computed = Ember.computed;
 /**
   Opposite or `Ember.computed.match`
 
-  @method macros.notMatch
+  @method notMatch
+  @for macros
   @param {String} dependentKey Dependent key which value must not be match to the given regexp.
   @param {String} regexp       Regular expression to compare with.
   @return {Boolean} Returns true if the value in dependentKey does not match the given regexp.

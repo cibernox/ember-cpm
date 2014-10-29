@@ -20,7 +20,8 @@ import { getVal, getDependentPropertyKeys } from '../utils';
   });
   ```
 
-  @method macros.mean
+  @method mean
+  @for macros
   @param *arguments It can be a number, an array of numbers, a property key pointing to any of those, or another computed property.
   @return {Number}  The arithmetical mean of the given values.
  */

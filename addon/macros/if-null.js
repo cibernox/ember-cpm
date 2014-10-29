@@ -16,7 +16,8 @@ var computed = Ember.computed;
   obj.get('username'); // 'Anonymous'
   ```
 
-  @method macros.ifNull
+  @method ifNull
+  @for macros
   @param {String} dependentKey Name of the key with the possible null value.
   @param          defaultValue Value that the CP will return if the dependent key is null.
   @return

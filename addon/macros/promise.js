@@ -15,7 +15,8 @@ var computed = Ember.computed;
     obj.get('asPromise').then(function(x){ console.log(x); }) // Logs 'Kangaroo'
   ```
 
-  @method macros.promise
+  @method promise
+  @for macros
   @param {String} dependentKey The property key with the resolve value of the promise.
   @return {Promise} A promise
 */

@@ -17,7 +17,8 @@ var computed = Ember.computed;
   item.get('safeUrl'); // 'http://example.com/one%20and%20two'
   ```
 
-  @method macros.encodeURI
+  @method encodeURI
+  @for macros
   @param {String} dependentKey String with the dependent key which value will be encoded.
   @return {String} A encoded url
 */

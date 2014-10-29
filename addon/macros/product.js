@@ -15,7 +15,8 @@ import {reduceComputedPropertyMacro} from '../utils';
   });
   ```
 
-  @method macros.product
+  @method product
+  @for macros
   @param *arguments It can be numbers, property keys containing numbers or other computed properties.
   @return {Number} The product of all its arguments.
 */

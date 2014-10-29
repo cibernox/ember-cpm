@@ -68,7 +68,8 @@ function recomputeGuidIndexes(instanceMeta, keys, context) {
   obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
   ```
 
-  @method macros.concat
+  @method concat
+  @for macros
   @param *arguments Dependent keys with the arrays to concat.
   @return {Array}
 */

@@ -6,7 +6,8 @@ var computed = Ember.computed;
 /**
   Opposite of `EmberCPM.macros.among`
 
-  @method macros.notAmong
+  @method notAmong
+  @for macros
   @param {String} dependentKey Dependent key which value must not be among the given values.
   @param          *values      Values among which the dependentKey must not be included.
   @return {Boolean} Returns false the value in the given dependent key is among the privided values.

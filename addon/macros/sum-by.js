@@ -8,7 +8,8 @@ var reduceComputed = Ember.reduceComputed;
 
   This property is deprecated. Use a composition of `sum` and `mapBy`, like: `listValSum: sum(mapBy('list', 'val'))`
 
-  @method macros.sumBy
+  @method sumBy
+  @for macros
   @param {String} dependentKey The key with the array.
   @param {String} propertyKey  The key of the items we want to sum by.
   @return {Number} The product of all its arguments.
