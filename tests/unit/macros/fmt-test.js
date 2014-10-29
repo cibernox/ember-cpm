@@ -26,11 +26,17 @@ test('injects the value into the format-string', function() {
 test('returns undefined if *any* of the values is undefined', function() {
   var o = MyObj.create({ label: "Name" });
   strictEqual(o.get('labeled'), undefined);
+  var oo = MyObj.create({ label: null });
+  strictEqual(oo.get('labeled'), undefined);
+  var ooo = MyObj.create({ value: '123' });
+  strictEqual(ooo.get('labeled'), undefined);
 });
 
 test('returns null if *any* of the values is null', function() {
   var o = MyObj.create({ value: "Kaylee", label: null });
   strictEqual(o.get('labeled'), null);
+  var oo = MyObj.create({ value: null, label: "Name" });
+  strictEqual(oo.get('labeled'), null);
 });
 
 test('injects multiple values into the format-string', function() {

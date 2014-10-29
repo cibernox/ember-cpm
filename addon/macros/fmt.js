@@ -38,16 +38,18 @@ export default function EmberCPM_fmt() {
   propertyArguments.push(function(){
     var formatString = getVal.call(this, mainArguments[mainArguments.length - 1]);
 
-    var values = [], i, value;
+    var values = [];
+    var undefinedValueFound = false;
+    var nullValueFound = false;
 
-    for (i = 0; i < mainArguments.length - 1; i++) {
-      value = getVal.call(this, mainArguments[i], false);
-      if (value === undefined) { return undefined; }
-      if (value === null)      { return null; }
+    for (var i = 0; i < mainArguments.length - 1; i++) {
+      var value = getVal.call(this, mainArguments[i], false);
+      if (value === undefined) { undefinedValueFound = true; break; }
+      if (value === null)      { nullValueFound = true; }
       values.push(value);
     }
 
-    return EmberString.fmt(formatString, values);
+    return undefinedValueFound ? undefined : (nullValueFound ? null : EmberString.fmt(formatString, values));
   });
 
   return computed.apply(this, propertyArguments);
