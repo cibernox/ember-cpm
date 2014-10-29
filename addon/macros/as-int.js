@@ -19,9 +19,10 @@ import {parseComputedPropertyMacro} from '../utils';
   ```
 
   @method macros.asInt
-  @param value The value to cast. It can be a numbed, a numeric string or a property key.
+  @for macros
+  @param {Number|String|Boolean} value The value to cast. It can be a numbed, a numeric string or a property key.
   @return {Number} Returns casted integer.
 */
 export default parseComputedPropertyMacro(function (raw) {
-  return parseInt(raw, 10);
+  return 'boolean' === typeof raw ? (raw ? 1 : 0) : parseInt(raw, 10);
 });
