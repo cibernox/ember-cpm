@@ -9,13 +9,13 @@ var MyObj = Ember.Object.extend({
 });
 
 test('returns undefined if the value is undefined', function() {
-  var o = MyObj.create();
-  equal(o.get('starred'), undefined);
+  var o = MyObj.create({});
+  strictEqual(o.get('starred'), undefined);
 });
 
 test('returns null if the value is null', function() {
   var o = MyObj.create({ value: null });
-  equal(o.get('starred'), null);
+  strictEqual(o.get('starred'), null);
 });
 
 test('injects the value into the format-string', function() {
@@ -25,12 +25,12 @@ test('injects the value into the format-string', function() {
 
 test('returns undefined if *any* of the values is undefined', function() {
   var o = MyObj.create({ label: "Name" });
-  equal(o.get('labeled'), undefined);
+  strictEqual(o.get('labeled'), undefined);
 });
 
 test('returns null if *any* of the values is null', function() {
-  var o = MyObj.create({ value: "Kaylee" });
-  equal(o.get('labeled'), undefined);
+  var o = MyObj.create({ value: "Kaylee", label: null });
+  strictEqual(o.get('labeled'), null);
 });
 
 test('injects multiple values into the format-string', function() {
