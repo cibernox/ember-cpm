@@ -107,7 +107,7 @@ export function parseComputedPropertyMacro (parseFunction) {
         var rawValue = this.get(dependantKey);
 
         // Check for null/undefined values
-        if (['undefined', 'null'].indexOf(Ember.typeOf(rawValue)) !== -1) {
+        if (Ember.A(['undefined', 'null']).indexOf(Ember.typeOf(rawValue)) !== -1) {
           return NaN;
         }
         else {
