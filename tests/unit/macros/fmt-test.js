@@ -45,3 +45,21 @@ test('recomputes', function() {
   Ember.run(function() {o.set('value', 'Mike');});
   equal(o.get('labeled'), 'First Name: Mike');
 });
+
+test('composeable macro support', function () {
+  var Typ = Ember.Object.extend({
+    firstName: 'Mike',
+    lastName: 'North',
+    language: 'JavaScript',
+    text: fmt(fmt('firstName', 'lastName', '%@ %@'), 'language', 'User %@ likes to write %@')
+  });
+  var obj = Typ.create({});
+
+  strictEqual(obj.get('text'), 'User Mike North likes to write JavaScript');
+  obj.setProperties({
+    firstName: 'Stefan',
+    lastName: 'Penner'
+  });
+  strictEqual(obj.get('text'), 'User Stefan Penner likes to write JavaScript');
+
+});
