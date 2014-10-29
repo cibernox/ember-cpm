@@ -24,7 +24,7 @@ test('get string non-property', function () {
 
 module("utils - retainByType");
 
-var x = ['a', 'b', 'c', 123, 456, {hello: 'world'}, [1,2,4], undefined, undefined, null];
+var x = Ember.A(['a', 'b', 'c', 123, 456, {hello: 'world'}, [1,2,4], undefined, undefined, null]);
 
 test('retain strings', function () {
   deepEqual(retainByType(x, 'string'), ['a', 'b', 'c']);

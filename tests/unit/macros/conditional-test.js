@@ -27,7 +27,7 @@ test('handles a boolean conditional properly', function() {
 });
 
 function simpleComputedPropertyMacroTest(name, fn, tests) {
-  test('handles composed "%@" computed proerty'.fmt(name), function () {
+  test(Ember.String.fmt('handles composed "%@" computed proerty', name), function () {
     var MyType = Ember.Object.extend({
       a: -1,
       mac: conditional(fn('a', 15), 'yes', 'no')
@@ -106,7 +106,7 @@ test('handles "any" composable computed property macro', function () {
 
 test('handles "empty" composable computed property macro', function () {
   var MyType = Ember.Object.extend({
-    attendees: ['Charlie', 'Dennis', 'Mac'],
+    attendees: Ember.A(['Charlie', 'Dennis', 'Mac']),
     paddysPubStatus: conditional(empty('attendees'), 'closed', 'open')
   });
 

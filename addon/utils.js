@@ -52,7 +52,7 @@ export function getDependentPropertyKeys(argumentArr) {
       }
       return prev;
     },
-    []
+    Ember.A()
   );
 }
 

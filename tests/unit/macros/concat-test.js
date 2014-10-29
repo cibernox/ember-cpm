@@ -53,7 +53,7 @@ test("updates when elements in dependent arrays are replaced", function() {
 });
 
 test("updates correctly for initial dependent arrays updated via `set`", function() {
-  var lannisters = [o('Tytos'), o('Tywin')];
+  var lannisters = Ember.A([o('Tytos'), o('Tywin')]);
   var array = obj.get('allPeople');
 
   Ember.run(function() {
@@ -63,7 +63,7 @@ test("updates correctly for initial dependent arrays updated via `set`", functio
 });
 
 test("updates correctly for subsequent dependent arrays updated via `set`", function() {
-  var starks = [o('Sansa'), o('Arya')];
+  var starks = Ember.A([o('Sansa'), o('Arya')]);
   var array = obj.get('allPeople');
 
   Ember.run(function() {

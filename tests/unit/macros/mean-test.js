@@ -10,11 +10,11 @@ var MyType = Ember.Object.extend({
   g: mean(mean('a', 'b', 'c', 'd'), 5, 13, 7),
   h: mean(),
   i: mean('a'),
-  j_data: [6, 2, 1, 3],
+  j_data: Ember.A([6, 2, 1, 3]),
   j: mean('j_data'),
   l: mean('a', 'b', 'c', null),
   m: mean('a', 'b', 'c', undefined),
-  n_data: [{id: 1, val: 30}, {id: 2, val: 20}],
+  n_data: Ember.A([{id: 1, val: 30}, {id: 2, val: 20}]),
   n: mean(Ember.computed.mapBy('n_data', 'val'))
 });
 

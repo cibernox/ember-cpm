@@ -9,7 +9,7 @@ var MyType = Ember.Object.extend({
   f: sum('a', 'b', 'c', 2),
   g: sum('a'),
   h: sum(2),
-  j: [1, 2, 3, 4],
+  j: Ember.A([1, 2, 3, 4]),
   k: sum(Ember.computed.max('j'), 5),
   l: sum(sum('a', 'b'), 5),
   m: sum('j'),
