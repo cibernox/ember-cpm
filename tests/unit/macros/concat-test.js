@@ -124,3 +124,10 @@ test("concatenates multiple arrays", function() {
 
   deepEqual(obj.get('allPeople').mapProperty('name'), ['Jaime', 'Cersei', 'Robb', 'Eddard', 'Ramsey', 'Roose']);
 });
+
+test('attempting to write to the property throws an exception', function () {
+  throws(function () {
+    obj.set('allPeople', Ember.A([]));
+  });
+
+});

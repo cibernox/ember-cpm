@@ -33,5 +33,5 @@ export default function EmberCPM_notAmong(dependentKey) {
     }
 
     return true;
-  });
+  }).readOnly();
 }

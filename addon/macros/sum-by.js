@@ -28,5 +28,5 @@ export default function EmberCPM_sumBy(dependentKey, propertyKey) {
     removedItem: function(accumulatedValue, item /*, changeMeta, instanceMeta */){
       return accumulatedValue - parseFloat(get(item, propertyKey));
     }
-  });
+  }).readOnly();
 }

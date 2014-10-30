@@ -72,3 +72,9 @@ test('null case', function () {
 test('undefined case', function () {
   equal(myObj.get('m'), 3);
 });
+
+test('throws exception if written to', function() {
+  throws(function () {
+    myObj.set('n', 6);
+  });
+});

@@ -35,5 +35,5 @@ export default function EmberCPM_join() {
     }).join(separator);
   });
 
-  return cp.property.apply(cp, properties);
+  return cp.property.apply(cp, properties).readOnly();
 }

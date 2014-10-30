@@ -27,5 +27,5 @@ export default function EmberCPM_ifNull(dependentKey, defaultValue) {
     var value = get(this, dependentKey);
 
     return value == null ? defaultValue : value;
-  });
+  }).readOnly();
 }

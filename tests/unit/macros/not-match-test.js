@@ -31,3 +31,10 @@ test('returns true if the value is a non-string', function() {
   var o = MyObj.create({ movie: { title: 595 } });
   equal(o.get('digitless'), true);
 });
+
+test('throws exception if written to', function() {
+  var o = MyObj.create({ movie: { title: 595 } });
+  throws(function () {
+    o.set('digitless', false);
+  });
+});

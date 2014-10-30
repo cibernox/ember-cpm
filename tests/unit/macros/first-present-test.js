@@ -19,3 +19,10 @@ test('returns undefined if all values are empty', function() {
   var obj = Obj.create({ name: '', email: '' });
   equal(obj.get('displayName'), undefined);
 });
+
+test('throws exception if written to', function() {
+  var obj = Obj.create({ name: '', email: '' });
+  throws(function () {
+    obj.set('displayName', 6);
+  });
+});

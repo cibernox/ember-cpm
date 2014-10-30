@@ -51,3 +51,9 @@ test('composable properties case', function () {
   equal(myObj.get('i'), 6);
   myObj.set('a', 6);
 });
+
+test('throws exception if written to', function() {
+  throws(function () {
+    myObj.set('g', 6);
+  });
+});

@@ -16,3 +16,10 @@ test('returns true if the value is not among the given values', function() {
   var o = MyObj.create({ value: 'Garfield' });
   equal(o.get('notCartoonDog'), true);
 });
+
+test('throws exception if written to', function() {
+  var o = MyObj.create({ value: 'Garfield' });
+  throws(function () {
+    o.set('notCartoonDog', true);
+  });
+});

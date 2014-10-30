@@ -52,5 +52,5 @@ export default function EmberCPM_firstPresent() {
     if (property) { return get(that, property); }
   });
 
-  return computed.apply(this, computedArgs);
+  return computed.apply(this, computedArgs).readOnly();
 }

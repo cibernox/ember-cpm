@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { getVal, getDependentPropertyKeys } from '../utils';
 
+var computed = Ember.computed;
+
 /**
   Returns the difference between the given elements
 
@@ -35,5 +37,5 @@ export default function EmberCPM_difference() {
     }
   });
 
-  return Ember.computed.apply(this, propertyArguments);
+  return computed.apply(this, propertyArguments).readOnly();
 }

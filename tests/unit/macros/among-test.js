@@ -84,3 +84,11 @@ test("Numeric values, with numeric computed property macros", function() {
     strictEqual(obj.get('prop'), true);
   });
 });
+
+
+test('attempting to write to the property throws an exception', function () {
+  throws(function () {
+    var show = Show.create({ pet: { name: 'Garfield' } });
+    show.set('hasCartoonDog', true);
+  });
+});

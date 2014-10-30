@@ -55,3 +55,9 @@ test('Null-argument case', function () {
       });
   }, 'Illegal Argument');
 });
+
+test('is writable, and updates dependant property', function () {
+  strictEqual(myObj.get('val'), false);
+  myObj.set('notValAlias', false);
+  strictEqual(myObj.get('val'), true);
+});

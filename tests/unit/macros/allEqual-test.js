@@ -59,3 +59,9 @@ test('handles composable CPMs', function () {
   myObj.set('b', 4);
   equal(myObj.get('j'), false);
 });
+
+test('attempting to write to the property throws an exception', function () {
+  throws(function () {
+    myObj.set('g', true);
+  });
+});
