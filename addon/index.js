@@ -23,6 +23,7 @@ import difference from './macros/difference';
 import not from './macros/not';
 import asFloat from './macros/as-float';
 import asInt from './macros/as-int';
+import asString from './macros/as-string';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -34,6 +35,7 @@ function reverseMerge(dest, source) {
 
 var VERSION = '1.3.0';
 var Macros = {
+  asString: asString,
   not: not,
   among: among,
   allEqual: allEqual,
