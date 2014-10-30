@@ -25,5 +25,5 @@ export default function EmberCPM_notMatch(dependentKey, regexp) {
     var value = get(this, dependentKey);
 
     return typeof value === 'string' ? !value.match(regexp) : true;
-  });
+  }).readOnly();
 }

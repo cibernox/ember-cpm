@@ -8,6 +8,18 @@
 import Ember from "ember";
 
 /**
+  Check whether a given object is a computed property macro
+
+  @method isCPM
+  @for utils
+  @param {Object} obj object to check
+  @return true if the object is a computed property macro, false otherwise
+*/
+export function isCPM (obj) {
+  return 'object' === Ember.typeOf(obj) && obj.constructor === Ember.Descriptor;
+}
+
+/**
  Retain items in an array based on type
 
  Example:
@@ -34,7 +46,19 @@ export function retainByType(arr, type) {
   );
 }
 
+/**
+  Get a list of dependent property keys, given an arguments object*
+  passed to a computed property at declaration time
 
+  This involves evaluating any nested CPMs, and aggregating all of their
+  dependent property keys 
+
+  @method getDependentPropertyKeys
+  @for utils
+  @param {Array} argumentArr array of arguments passed to CPM at declaration time
+  @return {Array} dependent property keys
+
+ */
 export function getDependentPropertyKeys(argumentArr) {
   return argumentArr.reduce(
     function (prev, item) {
@@ -45,7 +69,7 @@ export function getDependentPropertyKeys(argumentArr) {
         case 'number':
           break;
         default:
-          if (item && item.constructor === Ember.Descriptor) {
+          if (isCPM(item)) {
             prev.pushObjects(item._dependentKeys);
           }
           break;
@@ -72,7 +96,7 @@ export function getVal(val) {
   if (Ember.typeOf(val) === 'string') {
     var propVal = Ember.get(this, val);
     return  'undefined' === typeof propVal ? val : propVal;
-  } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
+  } else if (isCPM(val)) {
     return val.altKey ? this.get(val.altKey) : val.func.apply(this);
   } else {
     return val;
@@ -194,6 +218,6 @@ export function reduceComputedPropertyMacro(reducingFunction, options) {
           );
       }
     });
-    return Ember.computed.apply(this, propertyArguments);
+    return Ember.computed.apply(this, propertyArguments).readOnly();
   };
 }

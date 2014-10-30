@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
+var computed = Ember.computed;
 /**
    Conditional computed property
 
@@ -29,5 +30,5 @@ export default function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
     return conditionEvaluation ? valIfTrue : valIfFalse;
   });
 
-  return Ember.computed.apply(this, propertyArguments);
+  return computed.apply(this, propertyArguments).readOnly();
 }

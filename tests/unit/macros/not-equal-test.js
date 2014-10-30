@@ -16,3 +16,10 @@ test('returns true if the value is not equal', function() {
   var o = MyObj.create({ value: 99419 });
   equal(o.get('isNotTwelve'), true);
 });
+
+test('throws exception if written to', function() {
+  var o = MyObj.create({ value: 99419 });
+  throws(function () {
+    o.set('isNotTwelve', true);
+  });
+});

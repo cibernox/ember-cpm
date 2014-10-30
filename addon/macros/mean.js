@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { getVal, getDependentPropertyKeys } from '../utils';
 
+var computed = Ember.computed;
+
 /**
   Calculate the arithmetic mean of some numeric properties, numeric literals,
   and/or arrays of numeric properties and literals.
@@ -56,5 +58,5 @@ export default function EmberCPM_mean () {
     return count > 0 ? sum/count : 0;
   });
 
-  return Ember.computed.apply(this, propertyArguments);
+  return computed.apply(this, propertyArguments).readOnly();
 }

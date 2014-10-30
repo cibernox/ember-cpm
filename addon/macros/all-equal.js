@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import {getVal, getDependentPropertyKeys} from '../utils';
 
+var computed = Ember.computed;
+
 /**
   Returns true if all the all its dependent values are equal between them.
 
@@ -51,5 +53,5 @@ export default function EmberCPM_allEqual() {
     }
   });
 
-  return Ember.computed.apply(this, propertyArguments);
+  return computed.apply(this, propertyArguments).readOnly();
 }

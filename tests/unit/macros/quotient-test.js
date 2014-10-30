@@ -50,3 +50,10 @@ test('composable CP support', function () {
   equal(myObj.get('h'), 2.5);
   myObj.set('a', 6);
 });
+
+
+test('throws exception if written to', function() {
+  throws(function () {
+    myObj.set('g', 6);
+  });
+});

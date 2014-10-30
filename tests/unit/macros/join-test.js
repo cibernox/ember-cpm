@@ -20,3 +20,10 @@ test('updates when dependent properties update', function() {
   obj.set('lastName', 'of Borg');
   equal(obj.get('fullName'), 'Locutus of Borg');
 });
+
+test('throws exception if written to', function() {
+  var obj = Obj.create();
+  throws(function () {
+    obj.set('fullName', 'James T. Kirk');
+  });
+});

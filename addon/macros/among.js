@@ -40,5 +40,5 @@ export default function EmberCPM_among() {
     return false;
   });
 
-  return computed.apply(this, propertyArguments);
+  return computed.apply(this, propertyArguments).readOnly();
 }

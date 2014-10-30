@@ -95,3 +95,9 @@ test("can be used on an ArrayProxy itself", function(){
 
   equal(base.get('sum'), 15);
 });
+
+test('throws exception if written to', function() {
+  throws(function () {
+    base.set('sum', 6);
+  });
+});

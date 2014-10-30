@@ -23,3 +23,10 @@ test('returns other falsy values', function() {
   equal(MyObj.create({ value: false }).get('orSushi'), false);
   equal(MyObj.create({ value: 0 }).get('orSushi'), 0);
 });
+
+test('throws exception if written to', function() {
+  var obj = MyObj.create({ value: false });
+  throws(function () {
+    obj.set('orSushi', true);
+  });
+});

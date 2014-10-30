@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import {getVal, getDependentPropertyKeys} from '../utils';
 
+var computed = Ember.computed;
+
 /**
   Returns an the float quotient of divide the first argument by the second one.
 
@@ -37,5 +39,5 @@ export default function EmberCPM_quotient() {
     }
   });
 
-  return Ember.computed.apply(this, propertyArguments);
+  return computed.apply(this, propertyArguments).readOnly();
 }
