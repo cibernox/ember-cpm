@@ -42,6 +42,7 @@ export function getDependentPropertyKeys(argumentArr) {
         case 'string':
           prev.push(item);
           break;
+        case 'boolean':
         case 'number':
           break;
         default:
