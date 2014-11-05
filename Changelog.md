@@ -1,5 +1,8 @@
 # Changelog
 
+Doc: Update to ember-cli-yuidoc. Now documentation is available under the `/docs` url, watching for changes.
+Feature: Added support for composable CPs to `join` macro.
+
 ### 1.3.0 2014-10-20
 Doc: Add formal YUIdoc to all macros.
 Breaking enhalcement: Rename `addon/ember-cpm.js` to `addon/index.js`. Now you import `import EmberCPM from "ember-cpm";`
