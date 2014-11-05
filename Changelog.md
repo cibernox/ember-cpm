@@ -1,6 +1,6 @@
 # Changelog
 
-Doc: Update to ember-cli-yuidoc. Now documentation is available under the `/docs` url, watching for changes.
+Doc: Update to ember-cli-yuidoc. Now documentation is available under the `/docs` url when executing `ember serve --docs`, watching for changes.
 Feature: Added support for composable CPs to `join` macro.
 
 ### 1.3.0 2014-10-20

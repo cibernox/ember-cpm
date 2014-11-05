@@ -49,7 +49,7 @@ You have to install Ember CLI to build this library. If you don't have it, visit
 
 After running `npm install` to get all the dependencies you can:
 
-* Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode. You can also see the documentation going into `/docs`.
+* Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode. You can also run `ember serve --docs` to see generate and expose documentation in `/docs`.
 * Run `ember test` to run all tests once (requires phantomjs).
 * Run `ember build` to build from source.
 * Run `ember yuidoc` to generate all the documentation inside the `/docs` folder
