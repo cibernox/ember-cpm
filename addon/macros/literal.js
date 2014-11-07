@@ -32,12 +32,16 @@ var computed = Ember.computed;
  *     l('satisfactory'),   // literal
  *     l('rad')             // literal
  *   )
- *
  * })
  * ```
+ *
+ * @method literal
+ * @for macros
+ * @param {String} String value that you don't want to be interpreted as a propertyKey event.
+ * @return {ComputedProperty}
  */
 
-export default function EmberCPM_literal (val) {
+export default function EmberCPM_literal(val) {
   Ember.runInDebug(function () {
     var valType = Ember.typeOf(val);
     Ember.assert(
