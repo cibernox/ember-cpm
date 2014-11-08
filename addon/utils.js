@@ -38,6 +38,7 @@ export function retainByType(arr, type) {
 export function getDependentPropertyKeys(argumentArr) {
   return argumentArr.reduce(
     function (prev, item) {
+      console.log('item', item);
       switch (Ember.typeOf(item)) {
         case 'string':
           prev.push(item);
@@ -70,7 +71,8 @@ export function getDependentPropertyKeys(argumentArr) {
  @param val value to evaluate
  */
 export function getVal(val) {
-  if (Ember.typeOf(val) === 'string') {
+  console.log('val', val);
+  if (Ember.typeOf(val) === 'string' && val.indexOf(' ') === -1) {
     var propVal = Ember.get(this, val);
     return  'undefined' === typeof propVal ? val : propVal;
   } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {

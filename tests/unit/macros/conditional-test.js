@@ -131,3 +131,17 @@ test('handles nested conditional computed properties', function () {
   myObj.set('a', 16);
   equal(myObj.get('b'), 'bad');
 });
+
+test('handles computed properties for values', function() {
+  var MyType = Ember.Object.extend({
+    a: true,
+    b: conditional('a', 'positive', 'negative'),
+    positive: 'Yep',
+    negative: 'No!'
+  });
+
+  var myObj = MyType.create();
+  equal(myObj.get('b'), 'Yep');
+  myObj.set('a', false);
+  equal(myObj.get('b'), 'No!');
+});
