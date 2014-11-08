@@ -34,19 +34,22 @@ export function retainByType(arr, type) {
   );
 }
 
-
 export function getDependentPropertyKeys(argumentArr) {
   return argumentArr.reduce(
     function (prev, item) {
       switch (Ember.typeOf(item)) {
         case 'string':
-          prev.push(item);
+          var containsSpaces = item.indexOf(' ') !== -1;
+
+          if(!containsSpaces) {
+            prev.push(item);
+          }
           break;
         case 'boolean':
         case 'number':
           break;
         default:
-          if (item && item.constructor === Ember.Descriptor) {
+          if (item && item.constructor === Ember.Descriptor && item._dependentKeys) {
             prev.pushObjects(item._dependentKeys);
           }
           break;
