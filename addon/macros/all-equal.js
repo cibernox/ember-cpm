@@ -2,7 +2,7 @@ import Ember from 'ember';
 import {getVal, getDependentPropertyKeys} from '../utils';
 
 /**
-  Returns true if all the all its dependent values are equal between them.
+  Returns true if all the dependent values are equal.
 
   Example
 
@@ -28,8 +28,8 @@ import {getVal, getDependentPropertyKeys} from '../utils';
 
   @method allEqual
   @for macros
-  @param *arguments Elements that must be equal. It be regular value, a property key or another computed property.
-  @return {Boolean} Returns true it all elements are equal
+  @param *arguments Elements that must be equal. It may be a regular value, a property key or another computed property.
+  @return {Boolean} Returns true if all elements are equal
 */
 export default function EmberCPM_allEqual() {
   var mainArguments = Array.prototype.slice.call(arguments); // all arguments
