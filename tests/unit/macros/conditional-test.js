@@ -10,7 +10,6 @@ var any = Ember.computed.any;
 var eq = Ember.computed.equal;
 var empty = Ember.computed.empty;
 
-
 module('conditional');
 
 test('handles a boolean conditional properly', function() {
@@ -130,4 +129,25 @@ test('handles nested conditional computed properties', function () {
   equal(myObj.get('b'), 'good');
   myObj.set('a', 16);
   equal(myObj.get('b'), 'bad');
+});
+
+test('handles computed positive and negative values', function() {
+  var MyType = Ember.Object.extend({
+    a: true,
+    positive: 'Yep',
+    negative: 'Nope',
+    b: conditional('a', 'positive', 'negative')
+  });
+
+  var myObj = MyType.create();
+
+  equal(myObj.get('b'), 'Yep');
+  myObj.set('positive', 'Yes!');
+  equal(myObj.get('b'), 'Yes!');
+
+  myObj.set('a', false);
+  equal(myObj.get('b'), 'Nope');
+
+  myObj.set('negative', 'No!');
+  equal(myObj.get('b'), 'No!');
 });
