@@ -1,6 +1,6 @@
 ## Ember-CPM
 
-[![Build Status](https://travis-ci.org/jamesarosen/ember-cpm.png)](http://travis-ci.org/jamesarosen/ember-cpm)
+[![Build Status](https://travis-ci.org/cibernox/ember-cpm.png)](http://travis-ci.org/cibernox/ember-cpm)
 
 Computed Property Macros for Ember
 
@@ -8,7 +8,7 @@ Computed Property Macros for Ember
 
 Ember. Versions between 0.9.8 and 1.x should work fine.
 (If you're running Ember 0.9.x and want the CP macros from Ember 1.0, the
-[ember_09 branch](https://github.com/jamesarosen/ember-cpm/tree/ember_09)
+[ember_09 branch](https://github.com/cibernox/ember-cpm/tree/ember_09)
 has them.)
 
 ### Installation
@@ -20,7 +20,7 @@ within your app.
 If not, you need to add `ember-cpm.js` manually to your project.
 
 You can find the latest versions of ember-cpm in [the S3 bucket](http://ember-cpm-builds.s3-website-us-east-1.amazonaws.com/) in two flavours: globals or AMD.
-Alternatively, you can also build from source. See [Contributing](https://github.com/jamesarosen/ember-cpm#contributing) for more info about how to build from source.
+Alternatively, you can also build from source. See [Contributing](https://github.com/cibernox/ember-cpm#contributing) for more info about how to build from source.
 If you use the global build, an `EmberCPM` global should be available.
 
 ### Usage
