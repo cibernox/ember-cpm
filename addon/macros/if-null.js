@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {getVal, getDependentPropertyKeys} from '../utils';
 
 var get = Ember.get;
 var computed = Ember.computed;
@@ -19,13 +20,17 @@ var computed = Ember.computed;
   @method ifNull
   @for macros
   @param {String} dependentKey Name of the key with the possible null value.
-  @param          defaultValue Value that the CP will return if the dependent key is null.
+  @param {Number|String|ComputedProperty} fallback Default value that the CP will return if the dependent key is null.
   @return
 */
-export default function EmberCPM_ifNull(dependentKey, defaultValue) {
-  return computed(dependentKey, function(){
+export default function EmberCPM_ifNull(dependentKey, fallback) {
+  var propertyArguments = getDependentPropertyKeys([dependentKey, fallback]);
+
+  propertyArguments.push(function(/* key, value, oldValue */) {
     var value = get(this, dependentKey);
 
-    return value == null ? defaultValue : value;
+    return value == null ? getVal.call(this, fallback) : value;
   });
+
+  return computed.apply(this, propertyArguments);
 }
