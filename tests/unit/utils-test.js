@@ -1,5 +1,6 @@
 import Ember from "ember";
-import { getVal, retainByType } from "ember-cpm/utils";
+import { getVal, retainByType, getDependentPropertyKeys } from "ember-cpm/utils";
+import l from 'ember-cpm/macros/literal';
 
 var MyType = Ember.Object.extend({
   a: 'A',
@@ -48,4 +49,47 @@ test('retain undefined', function () {
 
 test('retain null', function () {
   deepEqual(retainByType(x, 'null'), [null]);
+});
+
+module("utils - getDependentPropertyKeys");
+
+test('an empty array is allowed', function() {
+  deepEqual(getDependentPropertyKeys([]), []);
+});
+
+test('the dependant keys of a computed property are included', function() {
+  var argumentArray = [
+    'a',
+    Ember.computed.alias('dependantKey')
+  ];
+  deepEqual(getDependentPropertyKeys(argumentArray), ['a', 'dependantKey']);
+});
+
+test('literal values are not included', function() {
+  var argumentArray = [
+    'a',
+    l('aLiteralValue'),
+    l('a literal value')
+  ];
+  deepEqual(getDependentPropertyKeys(argumentArray), ['a']);
+});
+
+test('single word keys are included', function() {
+  deepEqual(getDependentPropertyKeys(['a', 'b']), ['a', 'b']);
+});
+
+test('keys with spaces are excluded', function() {
+  deepEqual(getDependentPropertyKeys(['aa', 'bb', 'not valid']), ['aa', 'bb']);
+});
+
+test('keys which are numbers are excluded', function() {
+  deepEqual(getDependentPropertyKeys(['aa', 'bb', 142857]), ['aa', 'bb']);
+});
+
+test('keys which are boolean are excluded', function() {
+  deepEqual(getDependentPropertyKeys(['aa', 'bb', true, false]), ['aa', 'bb']);
+});
+
+test('keys which are null are excluded', function() {
+  deepEqual(getDependentPropertyKeys(['aa', 'bb', null]), ['aa', 'bb']);
 });
