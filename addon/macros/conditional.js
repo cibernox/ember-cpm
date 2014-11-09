@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {getVal, getDependentPropertyKeys} from '../utils';
 
 /**
    Conditional computed property
@@ -15,18 +16,17 @@ import Ember from 'ember';
   @method conditions
   @for macros
   @param {String|ComputedProperty} Dependent key or CP with truthy/falsy value.
-  @param                           valIfTrue Value if the first params is truthy
-  @param                           valIfTrue Value if the first params is falsy
+  @param {Number|String|ComputedProperty} Positive value, key or CP. Used if the first params is truthy
+  @param {Number|String|ComputedProperty} Negative value, key or CP. Used if the first params is falsy
   @return the second or third parameter.
  */
-export default function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
+export default function EmberCPM_conditional(condition, positive, negative) {
+  var propertyArguments = getDependentPropertyKeys([condition, positive, negative]);
   var isConditionComputed = Ember.Descriptor === condition.constructor;
-  var propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];
 
   propertyArguments.push(function(/* key, value, oldValue */) {
     var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
-
-    return conditionEvaluation ? valIfTrue : valIfFalse;
+    return conditionEvaluation ? getVal.call(this, positive) : getVal.call(this, negative);
   });
 
   return Ember.computed.apply(this, propertyArguments);
