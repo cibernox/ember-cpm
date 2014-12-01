@@ -32,7 +32,7 @@ function reverseMerge(dest, source) {
   }
 }
 
-var VERSION = '1.3.0';
+var VERSION = '1.3.1';
 var Macros = {
   not: not,
   among: among,
