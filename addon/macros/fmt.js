@@ -1,6 +1,6 @@
 import Ember from 'ember';
+import {getVal, getDependentPropertyKeys} from '../utils';
 
-var get = Ember.get;
 var computed = Ember.computed;
 var EmberString = Ember.String;
 
@@ -29,21 +29,28 @@ var a_slice = Array.prototype.slice;
   @return The formatted string.
 */
 export default function EmberCPM_fmt() {
-  var formatString = '' + a_slice.call(arguments, -1),
-      properties   = a_slice.call(arguments, 0, -1),
-      propertyArguments = a_slice.call(arguments, 0 , -1);
+  var mainArguments = a_slice.call(arguments);
+  var propertyArguments = getDependentPropertyKeys(mainArguments)
+    // Don't regard a format string literal as a dependant property key
+    .reject(function (val) {
+      return val.indexOf('%@') !== -1;
+    });
 
   propertyArguments.push(function(){
-    var values = [], i, value;
+    var formatString = getVal.call(this, mainArguments[mainArguments.length - 1]);
 
-    for (i = 0; i < properties.length; ++i) {
-      value = get(this, properties[i]);
-      if (value === undefined) { return undefined; }
-      if (value === null)      { return null; }
+    var values = [];
+    var undefinedValueFound = false;
+    var nullValueFound = false;
+
+    for (var i = 0; i < mainArguments.length - 1; i++) {
+      var value = getVal.call(this, mainArguments[i], false);
+      if (value === undefined) { undefinedValueFound = true; break; }
+      if (value === null)      { nullValueFound = true; }
       values.push(value);
     }
 
-    return EmberString.fmt(formatString, values);
+    return undefinedValueFound ? undefined : (nullValueFound ? null : EmberString.fmt(formatString, values));
   });
 
   return computed.apply(this, propertyArguments);

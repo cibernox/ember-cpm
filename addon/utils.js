@@ -72,10 +72,12 @@ export function getDependentPropertyKeys(argumentArr) {
  @method getVal
  @param val value to evaluate
  */
-export function getVal(val) {
+export function getVal(val, implicitLiteral) {
   if (Ember.typeOf(val) === 'string') {
+    // Are strings that we identify as NOT property keys to be regarded as string literals?
+    var literalsAreImplicit = implicitLiteral === false ? false : true;
     var propVal = Ember.get(this, val);
-    return  'undefined' === typeof propVal ? val : propVal;
+    return  'undefined' === typeof propVal ? (literalsAreImplicit ? val : undefined) : propVal;
   } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
     return val.altKey ? this.get(val.altKey) : val.func.apply(this);
   } else {
