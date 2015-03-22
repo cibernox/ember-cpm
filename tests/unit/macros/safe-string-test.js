@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import safeString from "ember-cpm/macros/safe-string";
 
@@ -7,18 +8,18 @@ var MyObj = Ember.Object.extend({
   safe: safeString('value')
 });
 
-test('returns undefined if the value is undefined', function() {
+test('returns undefined if the value is undefined', function(assert) {
   var o = MyObj.create();
-  equal(o.get('safe'), undefined);
+  assert.equal(o.get('safe'), undefined);
 });
 
-test('returns null if the value is null', function() {
+test('returns null if the value is null', function(assert) {
   var o = MyObj.create({ value: null });
-  equal(o.get('safe'), null);
+  assert.equal(o.get('safe'), null);
 });
 
-test('returns a safe version of the value', function() {
+test('returns a safe version of the value', function(assert) {
   var actual = MyObj.create({ value: 'Wombat' }).get('safe');
-  equal(actual.toString(), 'Wombat');
-  equal(actual instanceof Ember.Handlebars.SafeString, true);
+  assert.equal(actual.toString(), 'Wombat');
+  assert.equal(actual instanceof Ember.Handlebars.SafeString, true);
 });

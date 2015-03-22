@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import promise from "ember-cpm/macros/promise";
 
@@ -11,27 +12,29 @@ module("promise", {
   }
 });
 
-test('returns a promise', function() {
+test('returns a promise', function(assert) {
   var p = object.get('asPromise');
-  equal(typeof(p.then), 'function');
+  assert.equal(typeof(p.then), 'function');
 });
 
-asyncTest('is pre-resolved', function() {
+test('is pre-resolved', function(assert) {
+  var done = assert.async();
   var state;
   var p = object.get('asPromise');
   p.then(function() { state = 'passed'; }, function() { state = 'failed'; });
   setTimeout(function(){
-    start();
-    equal(state, 'passed');
+    assert.equal(state, 'passed');
+    done();
   });
 });
 
-asyncTest('resolves with the value', function() {
+test('resolves with the value', function(assert) {
+  var done = assert.async();
   var state;
   var p = object.get('asPromise');
   p.then(function(x) { state = x; }, function(x) { state = x; });
   setTimeout(function(){
-    start();
-    equal(state, 'Kangaroo');
+    assert.equal(state, 'Kangaroo');
+    done();
   });
 });

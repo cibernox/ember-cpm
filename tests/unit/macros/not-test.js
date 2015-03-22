@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from 'ember';
 import not from 'ember-cpm/macros/not';
 import allEqual from 'ember-cpm/macros/all-equal';
@@ -23,33 +24,33 @@ module('not', {
   }
 });
 
-test('Boolean literals', function () {
-  strictEqual(myObj.get('notTrue'), false);
-  strictEqual(myObj.get('notFalse'), true);
+test('Boolean literals', function (assert) {
+  assert.strictEqual(myObj.get('notTrue'), false);
+  assert.strictEqual(myObj.get('notFalse'), true);
 });
 
-test('Not all equal (composable CPM)', function () {
-  strictEqual(myObj.get('notAllEqual'), false);
-  strictEqual(myObj.get('notNotAllEqual'), true);
+test('Not all equal (composable CPM)', function (assert) {
+  assert.strictEqual(myObj.get('notAllEqual'), false);
+  assert.strictEqual(myObj.get('notNotAllEqual'), true);
   myObj.set('five', '6');
-  strictEqual(myObj.get('notAllEqual'), true);
-  strictEqual(myObj.get('notNotAllEqual'), false);
+  assert.strictEqual(myObj.get('notAllEqual'), true);
+  assert.strictEqual(myObj.get('notNotAllEqual'), false);
 });
 
-test('Alias inverse (composable CPM)', function () {
-  strictEqual(myObj.get('notValAlias'), true);
+test('Alias inverse (composable CPM)', function (assert) {
+  assert.strictEqual(myObj.get('notValAlias'), true);
 });
 
-test('Zero-argument case', function () {
-  throws(function () {
+test('Zero-argument case', function (assert) {
+  assert.throws(function () {
       Ember.Object.extend({
         prop: not()
       });
   }, 'Illegal Argument');
 });
 
-test('Null-argument case', function () {
-  throws(function () {
+test('Null-argument case', function (assert) {
+  assert.throws(function () {
       Ember.Object.extend({
         prop: not(null)
       });

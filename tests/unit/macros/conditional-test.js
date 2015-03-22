@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import conditional from "ember-cpm/macros/conditional";
 
@@ -12,7 +13,7 @@ var empty = Ember.computed.empty;
 
 module('conditional');
 
-test('handles a boolean conditional properly', function() {
+test('handles a boolean conditional properly', function(assert) {
   var MyType = Ember.Object.extend({
     a: true,
     b: conditional('a', 'yes', 'no')
@@ -20,13 +21,13 @@ test('handles a boolean conditional properly', function() {
 
   var myObj = MyType.create();
 
-  equal(myObj.get('b'), 'yes');
+  assert.equal(myObj.get('b'), 'yes');
   myObj.set('a', false);
-  equal(myObj.get('b'), 'no');
+  assert.equal(myObj.get('b'), 'no');
 });
 
 function simpleComputedPropertyMacroTest(name, fn, tests) {
-  test(Ember.String.fmt('handles composed "%@" computed proerty', name), function () {
+  test(Ember.String.fmt('handles composed "%@" computed proerty', name), function (assert) {
     var MyType = Ember.Object.extend({
       a: -1,
       mac: conditional(fn('a', 15), 'yes', 'no')
@@ -36,7 +37,7 @@ function simpleComputedPropertyMacroTest(name, fn, tests) {
 
     for (var i = 0; i < tests.length; i += 1) {
       myObj.set('a', tests[i].value);
-      equal(myObj.get('mac'), tests[i].testResult);
+      assert.equal(myObj.get('mac'), tests[i].testResult);
     }
   });
 }
@@ -71,7 +72,7 @@ simpleComputedPropertyMacroTest('gte', gte, [
   {value: 13, testResult: 'no'}
 ]);
 
-test('handles "and" composable computed property macro', function () {
+test('handles "and" composable computed property macro', function (assert) {
   var MyType = Ember.Object.extend({
     hasTent: true,
     hasBackpack: false,
@@ -79,14 +80,14 @@ test('handles "and" composable computed property macro', function () {
   });
 
   var myObj = MyType.create();
-  equal(myObj.get('readyForCampString'), 'not ready');
+  assert.equal(myObj.get('readyForCampString'), 'not ready');
   myObj.set('hasBackpack', true);
-  equal(myObj.get('readyForCampString'), 'ready');
+  assert.equal(myObj.get('readyForCampString'), 'ready');
   myObj.set('hasTent', false);
-  equal(myObj.get('readyForCampString'), 'not ready');
+  assert.equal(myObj.get('readyForCampString'), 'not ready');
 });
 
-test('handles "any" composable computed property macro', function () {
+test('handles "any" composable computed property macro', function (assert) {
   var MyType = Ember.Object.extend({
     hasTent: false,
     hasBackpack: false,
@@ -94,44 +95,44 @@ test('handles "any" composable computed property macro', function () {
   });
 
   var myObj = MyType.create();
-  equal(myObj.get('readyForCampString'), 'did not start yet');
+  assert.equal(myObj.get('readyForCampString'), 'did not start yet');
   myObj.set('hasBackpack', true);
-  equal(myObj.get('readyForCampString'), 'started getting ready');
+  assert.equal(myObj.get('readyForCampString'), 'started getting ready');
   myObj.set('hasBackpack', false);
-  equal(myObj.get('readyForCampString'), 'did not start yet');
+  assert.equal(myObj.get('readyForCampString'), 'did not start yet');
   myObj.setProperties({hasBackpack: true, hasTesnt: true});
-  equal(myObj.get('readyForCampString'), 'started getting ready');
+  assert.equal(myObj.get('readyForCampString'), 'started getting ready');
 });
 
-test('handles "empty" composable computed property macro', function () {
+test('handles "empty" composable computed property macro', function (assert) {
   var MyType = Ember.Object.extend({
     attendees: Ember.A(['Charlie', 'Dennis', 'Mac']),
     paddysPubStatus: conditional(empty('attendees'), 'closed', 'open')
   });
 
   var myObj = MyType.create();
-  equal(myObj.get('paddysPubStatus'), 'open');
+  assert.equal(myObj.get('paddysPubStatus'), 'open');
   myObj.get('attendees').clear();
-  equal(myObj.get('paddysPubStatus'), 'closed');
+  assert.equal(myObj.get('paddysPubStatus'), 'closed');
   myObj.get('attendees').addObject('frank');
-  equal(myObj.get('paddysPubStatus'), 'open');
+  assert.equal(myObj.get('paddysPubStatus'), 'open');
 });
 
-test('handles nested conditional computed properties', function () {
+test('handles nested conditional computed properties', function (assert) {
   var MyType = Ember.Object.extend({
     a: 14,
     b: conditional(conditional(eq('a', 15), 'yes', null), 'good', 'bad')
   });
 
   var myObj = MyType.create();
-  equal(myObj.get('b'), 'bad');
+  assert.equal(myObj.get('b'), 'bad');
   myObj.set('a', 15);
-  equal(myObj.get('b'), 'good');
+  assert.equal(myObj.get('b'), 'good');
   myObj.set('a', 16);
-  equal(myObj.get('b'), 'bad');
+  assert.equal(myObj.get('b'), 'bad');
 });
 
-test('handles computed positive and negative values', function() {
+test('handles computed positive and negative values', function(assert) {
   var MyType = Ember.Object.extend({
     a: true,
     positive: 'Yep',
@@ -141,13 +142,13 @@ test('handles computed positive and negative values', function() {
 
   var myObj = MyType.create();
 
-  equal(myObj.get('b'), 'Yep');
+  assert.equal(myObj.get('b'), 'Yep');
   myObj.set('positive', 'Yes!');
-  equal(myObj.get('b'), 'Yes!');
+  assert.equal(myObj.get('b'), 'Yes!');
 
   myObj.set('a', false);
-  equal(myObj.get('b'), 'Nope');
+  assert.equal(myObj.get('b'), 'Nope');
 
   myObj.set('negative', 'No!');
-  equal(myObj.get('b'), 'No!');
+  assert.equal(myObj.get('b'), 'No!');
 });

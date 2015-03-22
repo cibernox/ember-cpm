@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import difference from "ember-cpm/macros/difference";
 import sum from "ember-cpm/macros/sum";
@@ -19,35 +20,35 @@ var myObj = MyType.create({
   b: 2
 });
 
-test('calculates the difference of two basic numeric properties', function () {
-  equal(myObj.get('c'), 4);
+test('calculates the difference of two basic numeric properties', function (assert) {
+  assert.equal(myObj.get('c'), 4);
   myObj.set('a', 8);
-  equal(myObj.get('c'), 6);
+  assert.equal(myObj.get('c'), 6);
   myObj.set('a', 6);
 });
 
-test('calculates the difference of a numeric property and a numeric literal', function () {
-  equal(myObj.get('d'), 3);
-  equal(myObj.get('e'), -3);
+test('calculates the difference of a numeric property and a numeric literal', function (assert) {
+  assert.equal(myObj.get('d'), 3);
+  assert.equal(myObj.get('e'), -3);
   myObj.set('a', 8);
-  equal(myObj.get('d'), 5);
-  equal(myObj.get('e'), -5);
+  assert.equal(myObj.get('d'), 5);
+  assert.equal(myObj.get('e'), -5);
   myObj.set('a', 6);
 });
 
-test('zero argument case', function () {
-  equal(myObj.get('f'), 0);
+test('zero argument case', function (assert) {
+  assert.equal(myObj.get('f'), 0);
 });
 
-test('one argument case', function () {
-  equal(myObj.get('g'), 6);
+test('one argument case', function (assert) {
+  assert.equal(myObj.get('g'), 6);
 });
 
-test('composable properties case', function () {
-  equal(myObj.get('h'), 4);
-  equal(myObj.get('i'), 4);
+test('composable properties case', function (assert) {
+  assert.equal(myObj.get('h'), 4);
+  assert.equal(myObj.get('i'), 4);
   myObj.set('a', 8);
-  equal(myObj.get('h'), 6);
-  equal(myObj.get('i'), 6);
+  assert.equal(myObj.get('h'), 6);
+  assert.equal(myObj.get('i'), 6);
   myObj.set('a', 6);
 });
