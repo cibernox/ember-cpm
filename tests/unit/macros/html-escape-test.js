@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import htmlEscape from "ember-cpm/macros/html-escape";
 
@@ -7,22 +8,22 @@ var MyObj = Ember.Object.extend({
   escaped: htmlEscape('value')
 });
 
-test('returns undefined if the value is undefined', function() {
-  equal(MyObj.create().get('escaped'), undefined);
+test('returns undefined if the value is undefined', function(assert) {
+  assert.equal(MyObj.create().get('escaped'), undefined);
 });
 
-test('returns null if the value is null', function() {
-  equal(MyObj.create({ value: null }).get('escaped'), null);
+test('returns null if the value is null', function(assert) {
+  assert.equal(MyObj.create({ value: null }).get('escaped'), null);
 });
 
-test('HTML-escapes the value', function() {
+test('HTML-escapes the value', function(assert) {
   var tag = '<em>Hi</em>';
   var escaped = '&lt;em&gt;Hi&lt;/em&gt;';
   var actual = MyObj.create({ value: tag }).get('escaped').toString();
-  equal(actual, escaped);
+  assert.equal(actual, escaped);
 });
 
-test('Marks the result as safe', function() {
+test('Marks the result as safe', function(assert) {
   var actual = MyObj.create({ value: '<img />' }).get('escaped');
-  equal(actual instanceof Ember.Handlebars.SafeString, true);
+  assert.equal(actual instanceof Ember.Handlebars.SafeString, true);
 });

@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from 'ember';
 import quotient from 'ember-cpm/macros/quotient';
 
@@ -17,36 +18,36 @@ var myObj = MyType.create({
 
 module('quotient');
 
-test('calculates the quotient of two basic numeric properties', function () {
-  equal(myObj.get('c'), 3);
+test('calculates the quotient of two basic numeric properties', function (assert) {
+  assert.equal(myObj.get('c'), 3);
   myObj.set('a', 8);
-  equal(myObj.get('c'), 4);
+  assert.equal(myObj.get('c'), 4);
   myObj.set('a', 6);
 });
 
-test('calculates the quotient of a numeric property and a numeric literal', function () {
-  equal(myObj.get('d'), 2);
-  equal(myObj.get('e'), 0.5);
+test('calculates the quotient of a numeric property and a numeric literal', function (assert) {
+  assert.equal(myObj.get('d'), 2);
+  assert.equal(myObj.get('e'), 0.5);
   myObj.set('a', 12);
-  equal(myObj.get('d'), 4);
-  equal(myObj.get('e'), 0.25);
+  assert.equal(myObj.get('d'), 4);
+  assert.equal(myObj.get('e'), 0.25);
   myObj.set('a', 6);
 });
 
-test('zero argument case', function () {
-  equal(myObj.get('f'), 0);
+test('zero argument case', function (assert) {
+  assert.equal(myObj.get('f'), 0);
 });
 
-test('single argument case', function () {
-  equal(myObj.get('g'), 6);
+test('single argument case', function (assert) {
+  assert.equal(myObj.get('g'), 6);
   myObj.set('a', 7);
-  equal(myObj.get('g'), 7);
+  assert.equal(myObj.get('g'), 7);
   myObj.set('a', 6);
 });
 
-test('composable CP support', function () {
-  equal(myObj.get('h'), 3);
+test('composable CP support', function (assert) {
+  assert.equal(myObj.get('h'), 3);
   myObj.set('a', 5);
-  equal(myObj.get('h'), 2.5);
+  assert.equal(myObj.get('h'), 2.5);
   myObj.set('a', 6);
 });

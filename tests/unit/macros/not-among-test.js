@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import notAmong from "ember-cpm/macros/not-among";
 
@@ -7,12 +8,12 @@ var MyObj = Ember.Object.extend({
   notCartoonDog: notAmong('value', 'Odie', 'Snoopy')
 });
 
-test('returns false if the value is among the given values', function() {
+test('returns false if the value is among the given values', function(assert) {
   var o = MyObj.create({ value: 'Snoopy' });
-  equal(o.get('notCartoonDog'), false);
+  assert.equal(o.get('notCartoonDog'), false);
 });
 
-test('returns true if the value is not among the given values', function() {
+test('returns true if the value is not among the given values', function(assert) {
   var o = MyObj.create({ value: 'Garfield' });
-  equal(o.get('notCartoonDog'), true);
+  assert.equal(o.get('notCartoonDog'), true);
 });

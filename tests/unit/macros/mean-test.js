@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import mean from "ember-cpm/macros/mean";
 
@@ -31,44 +32,44 @@ module("mean", {
 
 
 
-test('calculates the mean of four basic numeric properties', function () {
-  equal(myObj.get('e'), 3);
+test('calculates the mean of four basic numeric properties', function (assert) {
+  assert.equal(myObj.get('e'), 3);
   myObj.set('b', 9);
-  equal(myObj.get('e'), 4.75);
+  assert.equal(myObj.get('e'), 4.75);
 });
 
-test('calculates the mean numeric properties mixed with numeric literals', function () {
-  equal(myObj.get('f'), 7);
+test('calculates the mean numeric properties mixed with numeric literals', function (assert) {
+  assert.equal(myObj.get('f'), 7);
   myObj.set('b', 18);
-  equal(myObj.get('f'), 8);
+  assert.equal(myObj.get('f'), 8);
 });
 
-test('composable computed properties', function () {
-  equal(myObj.get('g'), 7);
+test('composable computed properties', function (assert) {
+  assert.equal(myObj.get('g'), 7);
   myObj.set('b', 18);
-  equal(myObj.get('g'), myObj.get('f'));
+  assert.equal(myObj.get('g'), myObj.get('f'));
 });
 
-test('zero argument case', function () {
-  equal(myObj.get('h'), 0);
+test('zero argument case', function (assert) {
+  assert.equal(myObj.get('h'), 0);
 });
 
-test('single argument case', function () {
-  equal(myObj.get('i'), 6);
+test('single argument case', function (assert) {
+  assert.equal(myObj.get('i'), 6);
 });
 
-test('array case', function () {
-  equal(myObj.get('j'), 3);
+test('array case', function (assert) {
+  assert.equal(myObj.get('j'), 3);
 });
 
-test('array w/ mapBy case', function () {
-  equal(myObj.get('n'), 25);
+test('array w/ mapBy case', function (assert) {
+  assert.equal(myObj.get('n'), 25);
 });
 
-test('null case', function () {
-  equal(myObj.get('l'), 3);
+test('null case', function (assert) {
+  assert.equal(myObj.get('l'), 3);
 });
 
-test('undefined case', function () {
-  equal(myObj.get('m'), 3);
+test('undefined case', function (assert) {
+  assert.equal(myObj.get('m'), 3);
 });
