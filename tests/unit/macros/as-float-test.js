@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from 'ember';
 import asFloat from 'ember-cpm/macros/as-float';
 
@@ -24,71 +25,71 @@ module('asFloat', {
   }
 });
 
-test('string prop - getting value as a float', function () {
-  strictEqual(myObj.get('valAsFloat'), 6.0);
+test('string prop - getting value as a float', function (assert) {
+  assert.strictEqual(myObj.get('valAsFloat'), 6.0);
   myObj.set('val', '14');
-  strictEqual(myObj.get('valAsFloat'), 14.0);
+  assert.strictEqual(myObj.get('valAsFloat'), 14.0);
 });
 
-test('string prop - setting value as a float', function () {
+test('string prop - setting value as a float', function (assert) {
   myObj.set('valAsFloat', 12.0);
-  strictEqual(myObj.get('val'), '12');
+  assert.strictEqual(myObj.get('val'), '12');
 });
 
-test('numeric prop - getting value as a float', function () {
-  strictEqual(myObj.get('floatAsFloat'), 1.2);
+test('numeric prop - getting value as a float', function (assert) {
+  assert.strictEqual(myObj.get('floatAsFloat'), 1.2);
   myObj.set('floatVal', 14.2);
-  strictEqual(myObj.get('floatAsFloat'), 14.2);
+  assert.strictEqual(myObj.get('floatAsFloat'), 14.2);
 });
 
-test('numeric prop - setting value as a float', function () {
+test('numeric prop - setting value as a float', function (assert) {
   myObj.set('floatAsFloat', 12.1);
-  strictEqual(myObj.get('floatVal'), 12.1);
+  assert.strictEqual(myObj.get('floatVal'), 12.1);
 });
 
-test('null prop - getting value as a float', function () {
-  strictEqual(myObj.get('nullAsFloat').toString(), 'NaN');
+test('null prop - getting value as a float', function (assert) {
+  assert.strictEqual(myObj.get('nullAsFloat').toString(), 'NaN');
 });
 
-test('undefined prop - getting value as a float', function () {
-  strictEqual(myObj.get('undefinedAsFloat').toString(), 'NaN');
+test('undefined prop - getting value as a float', function (assert) {
+  assert.strictEqual(myObj.get('undefinedAsFloat').toString(), 'NaN');
 });
 
-test('string argument case', function () {
-  equal(myObj.get('nonNumericStringAsFloat').toString(), 'NaN', 'non-numeric string');
-  equal(myObj.get('emptyStringAsFloat').toString(), 'NaN', 'empty string');
+test('string argument case', function (assert) {
+  assert.equal(myObj.get('nonNumericStringAsFloat').toString(), 'NaN', 'non-numeric string');
+  assert.equal(myObj.get('emptyStringAsFloat').toString(), 'NaN', 'empty string');
 });
 
-test('Setting float value updates dependant string property', function () {
+test('Setting float value updates dependant string property', function (assert) {
   myObj.set('valAsFloat', 3.2);
-  strictEqual(myObj.get('val'), '3.2', 'string type of dependant property is respected');
+  assert.strictEqual(myObj.get('val'), '3.2', 'string type of dependant property is respected');
 });
 
-test('Setting float value updates dependant numeric property', function () {
+test('Setting float value updates dependant numeric property', function (assert) {
   myObj.set('floatAsFloat', 111.124);
-  strictEqual(myObj.get('floatVal'), 111.124, 'float type of dependant property is respected');
+  assert.strictEqual(myObj.get('floatVal'), 111.124, 'float type of dependant property is respected');
 });
 
-test('boolean argument case', function () {
-  strictEqual(myObj.get('boolAsFloat'), 1.0, 'boolean true evaluates to 1');
+test('boolean argument case', function (assert) {
+  assert.strictEqual(myObj.get('boolAsFloat'), 1.0, 'boolean true evaluates to 1');
   myObj.set('boolVal', false);
-  strictEqual(myObj.get('boolAsFloat'), 0.0, 'boolean false evaluates to 0');
+  assert.strictEqual(myObj.get('boolAsFloat'), 0.0, 'boolean false evaluates to 0');
   myObj.set('boolAsFloat', 1.0);
-  strictEqual(myObj.get('boolVal'), true);
+  assert.strictEqual(myObj.get('boolVal'), true);
   myObj.set('boolAsFloat', 0.0);
-  strictEqual(myObj.get('boolVal'), false);
+  assert.strictEqual(myObj.get('boolVal'), false);
 });
 
-test('zero-argument case throws an exception', function () {
-  throws(function () {
+test('zero-argument case throws an exception', function (assert) {
+  assert.throws(function () {
     Ember.Object.extend({
       prop: asFloat()
     });
   }, /No\sargument/);
 });
 
-test('null-argument case throws an exception', function () {
-  throws(function () {
+test('null-argument case throws an exception', function (assert) {
+  assert.throws(function () {
     Ember.Object.extend({
       prop: asFloat(null)
     });

@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import among from "ember-cpm/macros/among";
 import fmt from 'ember-cpm/macros/fmt';
@@ -7,29 +8,29 @@ var Show = Ember.Object.extend({
   hasCartoonDog: among('pet.name', 'Odie', 'Snoopy')
 });
 
-test("returns false if the value is not among the given values", function() {
+test("returns false if the value is not among the given values", function(assert) {
   var show = Show.create({ pet: { name: 'Garfield' } });
-  equal(show.get('hasCartoonDog'), false);
+  assert.equal(show.get('hasCartoonDog'), false);
 });
 
-test("returns true if the value is among the given values", function() {
+test("returns true if the value is among the given values", function(assert) {
   var show = Show.create({ pet: { name: 'Odie' } });
-  equal(show.get('hasCartoonDog'), true);
+  assert.equal(show.get('hasCartoonDog'), true);
 });
 
-test("returns true if the value of a property is among the given values", function() {
+test("returns true if the value of a property is among the given values", function(assert) {
   var Typ = Ember.Object.extend({
     petName: 'Spot',
     hasCartoonDog: among('petName', 'Odie', 'Snoopy')
   });
   var obj = Typ.create({});
-  strictEqual(obj.get('hasCartoonDog'), false);
+  assert.strictEqual(obj.get('hasCartoonDog'), false);
   obj.set('petName', 'Snoopy');
-  strictEqual(obj.get('hasCartoonDog'), true);
+  assert.strictEqual(obj.get('hasCartoonDog'), true);
 });
 
-test("returns true if the value of a computed property macro is among the given values", function() {
-  expect(2);
+test("returns true if the value of a computed property macro is among the given values", function(assert) {
+  assert.expect(2);
   var Typ = Ember.Object.extend({
     petName: 'Sp',
     petNameEnd: 'ot',
@@ -37,17 +38,17 @@ test("returns true if the value of a computed property macro is among the given 
   });
   var obj = Typ.create({});
   Ember.run(function () {
-    strictEqual(obj.get('hasCartoonDog'), false);
+    assert.strictEqual(obj.get('hasCartoonDog'), false);
     obj.setProperties({
       petName: 'Sno',
       petNameEnd: 'opy'
     });
-    strictEqual(obj.get('hasCartoonDog'), true);
+    assert.strictEqual(obj.get('hasCartoonDog'), true);
   });
 });
 
-test("returns true if the value is among the given values (composable CPM)", function() {
-  expect(2);
+test("returns true if the value is among the given values (composable CPM)", function(assert) {
+  assert.expect(2);
   var Typ = Ember.Object.extend({
     petName: 'Sp',
     petNameEnd: 'ot',
@@ -55,18 +56,18 @@ test("returns true if the value is among the given values (composable CPM)", fun
   });
   var obj = Typ.create({});
   Ember.run(function () {
-    strictEqual(obj.get('hasCartoonDog'), false);
+    assert.strictEqual(obj.get('hasCartoonDog'), false);
     obj.setProperties({
       petName: 'Od',
       petNameEnd: 'ie'
     });
-    strictEqual(obj.get('hasCartoonDog'), true);
+    assert.strictEqual(obj.get('hasCartoonDog'), true);
   });
 });
 
 
-test("Numeric values, with numeric computed property macros", function() {
-  expect(4);
+test("Numeric values, with numeric computed property macros", function(assert) {
+  assert.expect(4);
   var Typ = Ember.Object.extend({
     arr: Ember.A([17, 28, 51]),
     arr_b: Ember.A([12, 21, 28]),
@@ -75,12 +76,12 @@ test("Numeric values, with numeric computed property macros", function() {
   });
   var obj = Typ.create({});
   Ember.run(function () {
-    strictEqual(obj.get('prop'), false);
+    assert.strictEqual(obj.get('prop'), false);
     obj.set('val', 28);
-    strictEqual(obj.get('prop'), true);
+    assert.strictEqual(obj.get('prop'), true);
     obj.set('val', 33);
-    strictEqual(obj.get('prop'), false);
+    assert.strictEqual(obj.get('prop'), false);
     obj.set('arr', Ember.A([17, 28]));
-    strictEqual(obj.get('prop'), true);
+    assert.strictEqual(obj.get('prop'), true);
   });
 });

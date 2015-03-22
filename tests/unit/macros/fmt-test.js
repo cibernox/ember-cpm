@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import fmt from "ember-cpm/macros/fmt";
 
@@ -8,40 +9,40 @@ var MyObj = Ember.Object.extend({
   labeled: fmt('label', 'value', '%@: %@')
 });
 
-test('returns undefined if the value is undefined', function() {
+test('returns undefined if the value is undefined', function(assert) {
   var o = MyObj.create();
-  equal(o.get('starred'), undefined);
+  assert.equal(o.get('starred'), undefined);
 });
 
-test('returns null if the value is null', function() {
+test('returns null if the value is null', function(assert) {
   var o = MyObj.create({ value: null });
-  equal(o.get('starred'), null);
+  assert.equal(o.get('starred'), null);
 });
 
-test('injects the value into the format-string', function() {
+test('injects the value into the format-string', function(assert) {
   var o = MyObj.create({ value: 'Hello' });
-  equal(o.get('starred'), '** Hello **');
+  assert.equal(o.get('starred'), '** Hello **');
 });
 
-test('returns undefined if *any* of the values is undefined', function() {
+test('returns undefined if *any* of the values is undefined', function(assert) {
   var o = MyObj.create({ label: "Name" });
-  equal(o.get('labeled'), undefined);
+  assert.equal(o.get('labeled'), undefined);
 });
 
-test('returns null if *any* of the values is null', function() {
+test('returns null if *any* of the values is null', function(assert) {
   var o = MyObj.create({ value: "Kaylee" });
-  equal(o.get('labeled'), undefined);
+  assert.equal(o.get('labeled'), undefined);
 });
 
-test('injects multiple values into the format-string', function() {
+test('injects multiple values into the format-string', function(assert) {
   var o = MyObj.create({ label: 'Name', value: "Kaylee" });
-  equal(o.get('labeled'), 'Name: Kaylee');
+  assert.equal(o.get('labeled'), 'Name: Kaylee');
 });
 
-test('recomputes', function() {
+test('recomputes', function(assert) {
   var o = MyObj.create({ label: 'Name', value: "Kaylee" });
   Ember.run(function() {o.set('label', 'First Name'); });
-  equal(o.get('labeled'), 'First Name: Kaylee');
+  assert.equal(o.get('labeled'), 'First Name: Kaylee');
   Ember.run(function() {o.set('value', 'Mike');});
-  equal(o.get('labeled'), 'First Name: Mike');
+  assert.equal(o.get('labeled'), 'First Name: Mike');
 });

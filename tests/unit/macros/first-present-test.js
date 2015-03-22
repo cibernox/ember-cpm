@@ -1,3 +1,4 @@
+import { module, test } from "qunit";
 import Ember from "ember";
 import firstPresent from "ember-cpm/macros/first-present";
 
@@ -10,12 +11,12 @@ var Obj = Ember.Object.extend({
 
 module("firstPresent");
 
-test('returns the first value that is not empty', function() {
+test('returns the first value that is not empty', function(assert) {
   var obj = Obj.create();
-  equal(obj.get('displayName'), 'Jean-Luc');
+  assert.equal(obj.get('displayName'), 'Jean-Luc');
 });
 
-test('returns undefined if all values are empty', function() {
+test('returns undefined if all values are empty', function(assert) {
   var obj = Obj.create({ name: '', email: '' });
-  equal(obj.get('displayName'), undefined);
+  assert.equal(obj.get('displayName'), undefined);
 });
