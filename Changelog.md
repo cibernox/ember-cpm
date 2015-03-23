@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.3.2 2014-11-01
+Bugfix: Remove wrong `main.js` from package.json. That was preventing the addont to work with ember-cli master.
+Enhalcement: Build with ember-cli 0.2.0. Updated dependencies.
+
 # 1.3.1 2014-11-01
 Doc: Update to ember-cli-yuidoc. Now documentation is available under the `/docs` url when executing `ember serve --docs`, watching for changes.
 Feature: Added support for composable CPs to `join` macro.
