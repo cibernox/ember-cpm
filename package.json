@@ -11,7 +11,6 @@
     "doc": "doc",
     "test": "tests"
   },
-  "main": "dist/cjs/ember-cpm.js",
   "scripts": {
     "start": "ember server",
     "build": "ember build",
