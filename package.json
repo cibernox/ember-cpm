@@ -42,6 +42,7 @@
     "ember-cli-uglify": "1.0.1",
     "ember-cli-yuidoc": "0.6.2",
     "ember-data": "1.0.0-beta.16.1",
+    "ember-disable-prototype-extensions": "1.0.1",
     "ember-export-application-global": "^1.0.2",
     "ember-publisher": "0.0.7"
   },
