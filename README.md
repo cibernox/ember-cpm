@@ -1,6 +1,10 @@
 ## Ember-CPM
 
 [![Build Status](https://travis-ci.org/cibernox/ember-cpm.png)](http://travis-ci.org/cibernox/ember-cpm)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-cpm.svg)](http://emberobserver.com/addons/ember-cpm)
+[![Code Climate](https://codeclimate.com/github/cibernox/ember-cpm/badges/gpa.svg)](https://codeclimate.com/github/cibernox/ember-cpm)
+[![Dependency Status](https://david-dm.org/cibernox/ember-cpm.svg)](https://david-dm.org/cibernox/ember-cpm)
+[![devDependency Status](https://david-dm.org/cibernox/ember-cpm/dev-status.svg)](https://david-dm.org/cibernox/ember-cpm#info=devDependencies)
 
 Computed Property Macros for Ember
 
