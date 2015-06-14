@@ -1,6 +1,6 @@
 ## Ember-CPM
 
-[![Build Status](https://travis-ci.org/cibernox/ember-cpm.png)](http://travis-ci.org/cibernox/ember-cpm)
+[![Build Status](https://travis-ci.org/cibernox/ember-cpm.svg?branch=master)](https://travis-ci.org/cibernox/ember-cpm)
 
 Computed Property Macros for Ember
 
