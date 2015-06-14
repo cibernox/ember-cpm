@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import {getVal, getDependentPropertyKeys} from '../utils';
+import {getVal, getDependentPropertyKeys, isDescriptor} from '../utils';
 
 /**
    Conditional computed property
@@ -22,10 +22,17 @@ import {getVal, getDependentPropertyKeys} from '../utils';
  */
 export default function EmberCPM_conditional(condition, positive, negative) {
   var propertyArguments = getDependentPropertyKeys([condition, positive, negative]);
-  var isConditionComputed = Ember.Descriptor === condition.constructor;
+  var isConditionComputed = isDescriptor(condition);
 
   propertyArguments.push(function(/* key, value, oldValue */) {
-    var conditionEvaluation = isConditionComputed ? condition.func.apply(this, arguments) : this.get(condition);
+    let conditionEvaluation;
+    if (isConditionComputed) {
+      conditionEvaluation = condition.func ?
+        condition.func.apply(this, arguments) :   // Ember < 1.11.0
+        condition._getter.apply(this, arguments); // Ember >= 1.11.0
+    } else {
+      conditionEvaluation = this.get(condition);
+    }
     return conditionEvaluation ? getVal.call(this, positive) : getVal.call(this, negative);
   });
 

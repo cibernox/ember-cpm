@@ -7,6 +7,18 @@
 
 import Ember from "ember";
 
+
+/**
+ Check to see if a given object is an Ember.Descriptor
+
+ The technique for checking this condition is different
+ pre-1.11 and post-1.11
+ */
+export function isDescriptor(prop) {
+  return Ember.typeOf(prop) === 'object' && (prop.constructor === Ember.Descriptor || // Ember < 1.11
+     prop.isDescriptor); // Ember >= 1.11.0
+}
+
 /**
  Retain items in an array based on type
 
@@ -49,7 +61,7 @@ export function getDependentPropertyKeys(argumentArr) {
         case 'number':
           break;
         default:
-          if (item && item.constructor === Ember.Descriptor && item._dependentKeys) {
+          if (item && isDescriptor(item) && item._dependentKeys) {
             prev.pushObjects(item._dependentKeys);
           }
           break;
@@ -76,8 +88,11 @@ export function getVal(val) {
   if (Ember.typeOf(val) === 'string') {
     var propVal = Ember.get(this, val);
     return  'undefined' === typeof propVal ? val : propVal;
-  } else if (Ember.typeOf(val) === 'object' && Ember.Descriptor === val.constructor) {
-    return val.altKey ? this.get(val.altKey) : val.func.apply(this);
+  } else if (isDescriptor(val)) {
+    let funcName = val.func ?
+      'func' : // Ember < 1.11
+      '_getter'; // Ember >= 1.11
+    return val.altKey ? this.get(val.altKey) : val[funcName].apply(this);
   } else {
     return val;
   }
