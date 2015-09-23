@@ -5,7 +5,7 @@ import sumBy from "ember-cpm/macros/sum-by";
 var objects, base;
 
 module("sumBy", {
-  setup: function(assert){
+  setup: function(){
     objects = Ember.A([]);
     objects.push({blammo: 10},
                  {blammo: 10});
