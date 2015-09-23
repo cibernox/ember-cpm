@@ -43,8 +43,8 @@
     "ember-cli-yuidoc": "~0.7.0",
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-export-application-global": "^1.0.4",
-    "ember-resolver": "^2.0.2",
     "ember-publisher": "0.0.7",
+    "ember-resolver": "^2.0.2",
     "ember-try": "~0.0.8"
   },
   "keywords": [

@@ -4,7 +4,7 @@ var get = Ember.get;
 var guidFor = Ember.guidFor;
 var arrayComputed = Ember.arrayComputed;
 
-var a_forEach = Ember.ArrayPolyfills.forEach;
+var a_forEach = Array.prototype.forEach;
 var a_slice   = Array.prototype.slice;
 
 /*
