@@ -1,5 +1,10 @@
 # Changelog
 
+# 2.0.0
+Feature: Ember 2.x support.
+Breaking enhalcement: Remove `sumBy` CP.
+Breaking enhalcement: Use `Array.prototype` instead of `Array.Polyfills` for `forEach`. Will not work on browsers not supported by Ember 2.x.
+
 # 1.3.2 2014-11-01
 Bugfix: Remove wrong `main.js` from package.json. That was preventing the addont to work with ember-cli master.
 Enhalcement: Build with ember-cli 0.2.0. Updated dependencies.

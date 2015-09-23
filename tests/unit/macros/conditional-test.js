@@ -7,7 +7,6 @@ var gte = Ember.computed.gte;
 var lt = Ember.computed.lt;
 var lte = Ember.computed.lte;
 var and = Ember.computed.and;
-var any = Ember.computed.any;
 var eq = Ember.computed.equal;
 var empty = Ember.computed.empty;
 
@@ -85,23 +84,6 @@ test('handles "and" composable computed property macro', function (assert) {
   assert.equal(myObj.get('readyForCampString'), 'ready');
   myObj.set('hasTent', false);
   assert.equal(myObj.get('readyForCampString'), 'not ready');
-});
-
-test('handles "any" composable computed property macro', function (assert) {
-  var MyType = Ember.Object.extend({
-    hasTent: false,
-    hasBackpack: false,
-    readyForCampString: conditional(any('hasTent', 'hasBackpack'), 'started getting ready', 'did not start yet')
-  });
-
-  var myObj = MyType.create();
-  assert.equal(myObj.get('readyForCampString'), 'did not start yet');
-  myObj.set('hasBackpack', true);
-  assert.equal(myObj.get('readyForCampString'), 'started getting ready');
-  myObj.set('hasBackpack', false);
-  assert.equal(myObj.get('readyForCampString'), 'did not start yet');
-  myObj.setProperties({hasBackpack: true, hasTesnt: true});
-  assert.equal(myObj.get('readyForCampString'), 'started getting ready');
 });
 
 test('handles "empty" composable computed property macro', function (assert) {

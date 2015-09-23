@@ -13,7 +13,6 @@ import notMatch from './macros/not-match';
 import promise from './macros/promise';
 import safeString from './macros/safe-string';
 import join from './macros/join';
-import sumBy from './macros/sum-by';
 import sum from './macros/sum';
 import concat from './macros/concat';
 import conditional from './macros/conditional';
@@ -49,7 +48,6 @@ var Macros = {
   promise: promise,
   safeString: safeString,
   join: join,
-  sumBy: sumBy,
   sum: sum,
   difference: difference,
   concat: concat,
