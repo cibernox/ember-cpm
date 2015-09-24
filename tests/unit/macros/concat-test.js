@@ -21,9 +21,9 @@ module("concat", {
   }
 });
 
-test("contains the concatenation of all elementes in its dependent arrays", function(assert) {
+test("contains the concatenation of all elements in its dependent arrays", function(assert) {
   var allPeople = obj.get('allPeople');
-  assert.deepEqual(allPeople.mapProperty('name'), ['Jaime', 'Cersei', 'Robb', 'Eddard']);
+  assert.deepEqual(allPeople.mapBy('name'), ['Jaime', 'Cersei', 'Robb', 'Eddard']);
 });
 
 test("updates when new items are inserted in its dependent arrays", function(assert) {
@@ -31,10 +31,10 @@ test("updates when new items are inserted in its dependent arrays", function(ass
   var starks = obj.get('starks');
 
   lannisters.insertAt(1, o('Tyrion'));
-  assert.deepEqual(obj.get('allPeople').mapProperty('name'), ['Jaime', 'Tyrion', 'Cersei', 'Robb', 'Eddard']);
+  assert.deepEqual(obj.get('allPeople').mapBy('name'), ['Jaime', 'Tyrion', 'Cersei', 'Robb', 'Eddard']);
 
   starks.insertAt(1, o('Bran'));
-  assert.deepEqual(obj.get('allPeople').mapProperty('name'), ['Jaime', 'Tyrion', 'Cersei', 'Robb', 'Bran', 'Eddard']);
+  assert.deepEqual(obj.get('allPeople').mapBy('name'), ['Jaime', 'Tyrion', 'Cersei', 'Robb', 'Bran', 'Eddard']);
 });
 
 test("updates when new items are removed in its dependent arrays", function(assert) {
@@ -44,13 +44,13 @@ test("updates when new items are removed in its dependent arrays", function(asse
   lannisters.removeAt(0);
   starks.removeAt(1);
 
-  assert.deepEqual(obj.get('allPeople').mapProperty('name'), ['Cersei', 'Robb']);
+  assert.deepEqual(obj.get('allPeople').mapBy('name'), ['Cersei', 'Robb']);
 });
 
 test("updates when elements in dependent arrays are replaced", function(assert) {
   obj.get('lannisters').replace(0, 2, [o('Tytos'), o('Tywin')]);
 
-  assert.deepEqual(obj.get('allPeople').mapProperty('name'), ['Tytos', 'Tywin', 'Robb', 'Eddard']);
+  assert.deepEqual(obj.get('allPeople').mapBy('name'), ['Tytos', 'Tywin', 'Robb', 'Eddard']);
 });
 
 test("updates correctly for initial dependent arrays updated via `set`", function(assert) {
@@ -60,7 +60,7 @@ test("updates correctly for initial dependent arrays updated via `set`", functio
   Ember.run(function() {
     obj.set('lannisters', lannisters);
   });
-  assert.deepEqual(array.mapProperty('name'), ['Tytos', 'Tywin', 'Robb', 'Eddard']);
+  assert.deepEqual(array.mapBy('name'), ['Tytos', 'Tywin', 'Robb', 'Eddard']);
 });
 
 test("updates correctly for subsequent dependent arrays updated via `set`", function(assert) {
@@ -70,7 +70,7 @@ test("updates correctly for subsequent dependent arrays updated via `set`", func
   Ember.run(function() {
     obj.set('starks', starks);
   });
-  assert.deepEqual(array.mapProperty('name'), ['Jaime', 'Cersei', 'Sansa', 'Arya']);
+  assert.deepEqual(array.mapBy('name'), ['Jaime', 'Cersei', 'Sansa', 'Arya']);
 });
 
 test("updates correctly when dependent arrays are swapped", function(assert) {
@@ -83,7 +83,7 @@ test("updates correctly when dependent arrays are swapped", function(assert) {
     obj.set('starks', lannisters);
   });
 
-  assert.deepEqual(array.mapProperty('name'), ['Robb', 'Eddard', 'Jaime', 'Cersei']);
+  assert.deepEqual(array.mapBy('name'), ['Robb', 'Eddard', 'Jaime', 'Cersei']);
 });
 
 test("updates correctly when multiple dependent keys are the same array", function(assert) {
@@ -93,7 +93,7 @@ test("updates correctly when multiple dependent keys are the same array", functi
     obj.set('lannisters', obj.get('starks'));
   });
 
-  assert.deepEqual(array.mapProperty('name'), ['Robb', 'Eddard', 'Robb', 'Eddard']);
+  assert.deepEqual(array.mapBy('name'), ['Robb', 'Eddard', 'Robb', 'Eddard']);
   assert.equal(array[0], array[2]);
   assert.equal(array[1], array[3]);
 });
@@ -104,12 +104,12 @@ test("ignores null or undefined dependent arrays", function(assert) {
   Ember.run(function() {
     obj.set('lannisters', undefined);
   });
-  assert.deepEqual(array.mapProperty('name'), ['Robb', 'Eddard']);
+  assert.deepEqual(array.mapBy('name'), ['Robb', 'Eddard']);
 
   Ember.run(function() {
     obj.set('starks', undefined);
   });
-  assert.deepEqual(array.mapProperty('name'), []);
+  assert.deepEqual(array.mapBy('name'), []);
 });
 
 test("concatenates multiple arrays", function(assert) {
@@ -120,8 +120,8 @@ test("concatenates multiple arrays", function(assert) {
   obj = Obj.create({
     lannisters: Ember.A([o('Jaime'), o('Cersei')]),
     starks: Ember.A([o('Robb'), o('Eddard')]),
-    boltons: Ember.A([o('Ramsey'), o('Roose')]),
+    boltons: Ember.A([o('Ramsey'), o('Roose')])
   });
 
-  assert.deepEqual(obj.get('allPeople').mapProperty('name'), ['Jaime', 'Cersei', 'Robb', 'Eddard', 'Ramsey', 'Roose']);
+  assert.deepEqual(obj.get('allPeople').mapBy('name'), ['Jaime', 'Cersei', 'Robb', 'Eddard', 'Ramsey', 'Roose']);
 });
