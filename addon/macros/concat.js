@@ -36,7 +36,7 @@ export default function EmberCPM_concat() {
   const args = a_slice.call(arguments);
   const arrayReduce = function() {
     return args.reduce((prev, propertyKey) => {
-      return prev.concat(this.get(propertyKey));
+      return prev.concat(this.get(propertyKey) || []);
     }, []);
   };
 

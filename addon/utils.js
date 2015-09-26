@@ -120,9 +120,8 @@ export function parseComputedPropertyMacro (parseFunction) {
       throw new TypeError('Null argument');
     }
     args.push(dependantKey);
-    args.push(function (propKey, val) {
-      if (arguments.length === 1) {
-        //getter
+    args.push({
+      get() {
         var rawValue = this.get(dependantKey);
 
         // Check for null/undefined values
@@ -140,8 +139,8 @@ export function parseComputedPropertyMacro (parseFunction) {
             return parseFunction(rawValue);
           }
         }
-      }
-      else {
+      },
+      set(_, val) {
         //setter
         //respect the type of the dependent property
         switch (Ember.typeOf(this.get(dependantKey))) {
