@@ -95,7 +95,6 @@ var Macros = {
  * `promise` -- wraps the original value in an already-resolved promise
  * `safeString` -- wraps the original value in a `Handlebars.SafeString`
  * `join` -- joins the supplied values together with a provided sepatator
- * `sumBy` -- sums a property from an array of objects
  * `quotient` -- divides one numeric property or literal by another
  * `difference` -- subtracts one numeric property or literal from another
  * `product` -- multiplies numeric properties and literals together

@@ -12,9 +12,6 @@ cache:
 env:
   matrix:
     - EMBER_TRY_SCENARIO=default
-    - EMBER_TRY_SCENARIO=ember-1.10
-    - EMBER_TRY_SCENARIO=ember-1.11
-    - EMBER_TRY_SCENARIO=ember-1.12
     - EMBER_TRY_SCENARIO=ember-release
     - EMBER_TRY_SCENARIO=ember-beta
     - EMBER_TRY_SCENARIO=ember-canary

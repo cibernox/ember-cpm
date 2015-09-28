@@ -22,7 +22,7 @@ test('Property key (should return the key its self)', function (assert) {
 
 test('No argument case', function (assert) {
   assert.throws(function () {
-    var TestType = Ember.Object.extend({
+    Ember.Object.extend({
       val: l()
     });
   }, "Illegal Argument");
@@ -30,7 +30,7 @@ test('No argument case', function (assert) {
 
 test('Null argument case', function (assert) {
   assert.throws(function () {
-    var TestType = Ember.Object.extend({
+    Ember.Object.extend({
       val: l(null)
     });
   }, "Illegal Argument");
@@ -38,7 +38,7 @@ test('Null argument case', function (assert) {
 
 test('Numeric argument case', function (assert) {
   assert.throws(function () {
-    var TestType = Ember.Object.extend({
+    Ember.Object.extend({
       val: l(6)
     });
   }, "Illegal Argument");
@@ -46,7 +46,7 @@ test('Numeric argument case', function (assert) {
 
 test('Nested computed property argument case', function (assert) {
   assert.throws(function () {
-    var TestType = Ember.Object.extend({
+    Ember.Object.extend({
       val: l(Ember.computed.alias('abc'))
     });
   }, "Illegal Argument");
