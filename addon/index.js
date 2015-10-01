@@ -7,9 +7,6 @@ import firstPresent from './macros/first-present';
 import fmt from './macros/fmt';
 import htmlEscape from './macros/html-escape';
 import ifNull from './macros/if-null';
-import notAmong from './macros/not-among';
-import notEqual from './macros/not-equal';
-import notMatch from './macros/not-match';
 import promise from './macros/promise';
 import safeString from './macros/safe-string';
 import join from './macros/join';
@@ -42,9 +39,6 @@ var Macros = {
   fmt: fmt,
   htmlEscape: htmlEscape,
   ifNull: ifNull,
-  notAmong: notAmong,
-  notEqual: notEqual,
-  notMatch: notMatch,
   promise: promise,
   safeString: safeString,
   join: join,

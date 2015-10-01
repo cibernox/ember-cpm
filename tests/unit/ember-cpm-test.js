@@ -5,8 +5,8 @@ import EmberCPM from "ember-cpm";
 module("EmberCPM");
 
 var macrosNames = ['among', 'encodeURIComponent', 'encodeURI', 'firstPresent', 'fmt',
-  'htmlEscape', 'ifNull', 'notAmong', 'notEqual', 'notMatch', 'promise', 'safeString',
-  'join', 'concat', 'product', 'sum', 'conditional', 'difference'];
+  'htmlEscape', 'ifNull', 'promise', 'safeString', 'join', 'concat', 'product', 'sum',
+  'conditional', 'difference'];
 
 test("contains all the macros", function(assert){
   assert.expect(macrosNames.length);
