@@ -10,10 +10,8 @@ Computed Property Macros for Ember
 
 ### Requirements
 
-Ember. Versions between 0.9.8 and 1.x should work fine.
-(If you're running Ember 0.9.x and want the CP macros from Ember 1.0, the
-[ember_09 branch](https://github.com/cibernox/ember-cpm/tree/ember_09)
-has them.)
+Version 2.0+ will only work with Ember 2.0+
+If you are using Ember 1.X stay in user ember-cpm 1.X too.
 
 ### Installation
 
