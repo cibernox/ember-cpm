@@ -14,7 +14,9 @@ var MyType = Ember.Object.extend({
   k: sum(Ember.computed.max('j'), 5),
   l: sum(sum('a', 'b'), 5),
   m: sum('j'),
-  n: sum('a', 'j', 'j')
+  n: sum('a', 'j', 'j'),
+  o: Ember.A([]),
+  p: sum('o')
 });
 
 var myObj = MyType.create({
@@ -68,4 +70,5 @@ test('calculates the result of a composable computed property involving sum', fu
 test('sums up the items in an array', function (assert) {
   assert.equal(myObj.get('m'), 10);
   assert.equal(myObj.get('n'), 26);
+  assert.equal(myObj.get('p'), 0);
 });

@@ -26,7 +26,7 @@ import {reduceComputedPropertyMacro, getVal} from '../utils';
 
 function singleValueOrArraySum(val) {
   if (Ember.isArray(val)) {
-    return val.reduce(function (prev, item) {return prev + item;});
+    return val.reduce(function (prev, item) {return prev + item;}, 0);
   }
   else {
     return val;
