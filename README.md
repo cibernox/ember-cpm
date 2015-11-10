@@ -103,23 +103,21 @@ var Macros = {
 `conditional`, `sum`, `quotient` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
 
 ```javascript
-const {
-  Macros: {product, sum, mapBy, sumArray}
-} = EmberCPM;
+import Ember from 'ember';
+import EmberCPM from 'ember-cpm';
 
-RestaurantCheck = Ember.Object.extend({
-  items: [],
-  taxPercent: 0.05,
-  discount: 5.00,
+const { Macros: { sum, difference, product }} = EmberCPM;
 
-  itemPrices: mapBy('items', 'price'),
-  subTotal: sumArray('itemPrices'), // sums over array
+export default Ember.Component.extend({
+  num1: 45,
+  num2: 3.5,
+  num3: 13.4,
+  num4: -2,
 
-  grandTotal: sum(
-    product('taxPercent', 'subTotal'), // tax
-    'subTotal', // main bill
-    product('subTotal', 0.17), // tip your waiter
-    product(-1, 'discount') // discount
+  total: sum(
+    sum('num1', 'num2', 'num3'),
+    difference('num3', 'num2'),
+    product(difference('num2', 'num1'), 'num4')
   )
 });
 
