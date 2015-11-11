@@ -1,5 +1,8 @@
 # Changelog
 
+# 2.1.0
+Bugfix: Allow summing empty array
+
 # 2.0.0
 Feature: Ember 2.x only support.
 Breaking enhalcement: Remove `sumBy` CP.
