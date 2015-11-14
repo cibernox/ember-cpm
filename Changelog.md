@@ -1,5 +1,8 @@
 # Changelog
 
+# 2.1.1
+Feature: Added `hash` macro keeps returns an object with the given properties.
+
 # 2.1.0
 Bugfix: Allow summing empty array
 
