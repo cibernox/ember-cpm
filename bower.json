@@ -1,6 +1,6 @@
 {
   "name": "ember-cpm",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Computed Propery Macros for Ember.js",
   "main": "dist/named-amd/ember-cpm.js",
   "repository": {
