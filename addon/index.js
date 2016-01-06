@@ -19,6 +19,7 @@ import difference from './macros/difference';
 import not from './macros/not';
 import asFloat from './macros/as-float';
 import asInt from './macros/as-int';
+import computedPromise from './macros/computed-promise';
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -49,7 +50,8 @@ var Macros = {
   asFloat: asFloat,
   asInt: asInt,
   quotient: quotient,
-  product: product
+  product: product,
+  computedPromise: computedPromise
 };
 var install = function(){ reverseMerge(Ember.computed, Macros); };
 

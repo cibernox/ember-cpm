@@ -98,6 +98,7 @@ var Macros = {
  * `product` -- multiplies numeric properties and literals together
  * `sum` -- sums numeric properties and literals together
  * `conditional` -- returns values based on a boolean property (good replacement for ternary operator)
+ * `computedPromise` -- Updates computed property when supplied callback (which must return a promise) is resolved
 
 ### Composable Computed Property Macros
 `conditional`, `sum`, `quotient` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
