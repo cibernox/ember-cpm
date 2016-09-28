@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 var get = Ember.get;
 var computed = Ember.computed;
-var EmberHandlebars = Ember.Handlebars;
+var EmberString = Ember.String;
 
 /**
   Casts the value of the given dependent key to a Handlebars.SafeString
@@ -17,7 +17,7 @@ export default function EmberCPM_safeString(dependentKey) {
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
 
-    return value && new EmberHandlebars.SafeString(value);
+    return value && new EmberString.htmlSafe(value);
   });
 
 }

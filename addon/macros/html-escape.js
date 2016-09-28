@@ -3,6 +3,7 @@ import Ember from 'ember';
 var get = Ember.get;
 var computed = Ember.computed;
 var EmberHandlebars = Ember.Handlebars;
+var EmberString = Ember.String;
 
 /**
   Returns an Handlebars.SafeString with escaped text.
@@ -31,7 +32,7 @@ export default function EmberCPM_htmlEscape(dependentKey) {
     }
 
     var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
-    return new EmberHandlebars.SafeString(escapedExpression);
+    return new EmberString.htmlSafe(escapedExpression);
   });
 
 }
