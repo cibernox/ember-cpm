@@ -9,7 +9,7 @@ var MyType = Ember.Object.extend({
 var myObj;
 
 module('literal', {
-  setup: function () {
+  beforeEach() {
     myObj = MyType.create({
       val: '6'
     });

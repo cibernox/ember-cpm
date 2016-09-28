@@ -9,7 +9,7 @@ var MyType = Ember.Object.extend({
 var myObj;
 
 module('<%= camelizedModuleName %>', {
-  setup: function () {
+  beforeEach() {
     myObj = MyType.create();
   }
 });

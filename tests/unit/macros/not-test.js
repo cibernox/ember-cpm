@@ -16,7 +16,7 @@ var MyType = Ember.Object.extend({
 var myObj;
 
 module('not', {
-  setup: function () {
+  beforeEach() {
     myObj = MyType.create({
       val: false,
       five: '5'

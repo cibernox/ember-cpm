@@ -20,7 +20,7 @@ var MyType = Ember.Object.extend({
 });
 
 module("mean", {
-  setup: function(){
+  beforeEach() {
     myObj = MyType.create({
       a: 6,
       b: 2,
