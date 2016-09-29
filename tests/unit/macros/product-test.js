@@ -45,14 +45,6 @@ test('given one argument, returns the value of that property', function (assert)
   assert.equal(myObj.get('e'), 5);
 });
 
-test('given no arguments, returns 0', function (assert) {
-  assert.throws(function () {
-    Ember.Object.extend({
-      prop: product()
-    });
-  }, 'Error:');
-});
-
 test('product of product', function (assert) {
   assert.equal(myObj.get('k'), 140);
 });

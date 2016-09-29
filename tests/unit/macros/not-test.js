@@ -40,19 +40,3 @@ test('Not all equal (composable CPM)', function (assert) {
 test('Alias inverse (composable CPM)', function (assert) {
   assert.strictEqual(myObj.get('notValAlias'), true);
 });
-
-test('Zero-argument case', function (assert) {
-  assert.throws(function () {
-      Ember.Object.extend({
-        prop: not()
-      });
-  }, 'Illegal Argument');
-});
-
-test('Null-argument case', function (assert) {
-  assert.throws(function () {
-      Ember.Object.extend({
-        prop: not(null)
-      });
-  }, 'Illegal Argument');
-});

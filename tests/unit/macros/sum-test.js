@@ -37,14 +37,6 @@ test('calculates the sum of two basic numeric properties', function (assert) {
   assert.equal(myObj.get('d'), 13);
 });
 
-test('returns 0 when passed no arguments', function (assert) {
-  assert.throws(function () {
-    Ember.Object.extend({
-      prop: sum()
-    });
-  }, 'Error:');
-});
-
 test('calculates the sum of three basic numeric properties', function (assert) {
   assert.equal(myObj.get('e'), 15);
 });

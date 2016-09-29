@@ -42,13 +42,6 @@ var computed = Ember.computed;
  */
 
 export default function EmberCPM_literal(val) {
-  Ember.runInDebug(function () {
-    var valType = Ember.typeOf(val);
-    Ember.assert(
-      Ember.String.fmt("Illegal Argument: %@ (%@) is a non-literal value", val, valType),
-      Ember.A(['string']).indexOf(valType) !== -1
-    );
-  });
   return computed(function () {
       return val;
   }).readOnly();
