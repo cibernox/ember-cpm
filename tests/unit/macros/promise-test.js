@@ -5,7 +5,7 @@ import promise from "ember-cpm/macros/promise";
 var object;
 
 module("promise", {
-  setup: function(){
+  beforeEach() {
     object = Ember.Object.extend({
       asPromise: promise('value')
     }).create({value: 'Kangaroo'});

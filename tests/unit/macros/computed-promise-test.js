@@ -6,7 +6,7 @@ var object;
 var deferred;
 
 module("promise-object", {
-  setup: function(){
+  beforeEach() {
     deferred = Ember.RSVP.defer();
 
     object = Ember.Object.extend({

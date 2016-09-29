@@ -13,7 +13,7 @@ var Obj = Ember.Object.extend({
 var obj;
 
 module("concat", {
-  setup: function(){
+  beforeEach() {
     obj = Obj.create({
       lannisters: Ember.A([o('Jaime'), o('Cersei')]),
       starks: Ember.A([o('Robb'), o('Eddard')])

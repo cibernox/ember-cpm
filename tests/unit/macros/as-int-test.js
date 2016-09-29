@@ -22,7 +22,7 @@ var MyType = Ember.Object.extend({
 var myObj;
 
 module('asInt', {
-  setup: function () {
+  beforeEach() {
     myObj = MyType.create();
   }
 });
