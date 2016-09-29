@@ -16,7 +16,7 @@ var MyType = Ember.Object.extend({
 var myObj;
 
 module('not', {
-  setup: function () {
+  beforeEach() {
     myObj = MyType.create({
       val: false,
       five: '5'
@@ -39,20 +39,4 @@ test('Not all equal (composable CPM)', function (assert) {
 
 test('Alias inverse (composable CPM)', function (assert) {
   assert.strictEqual(myObj.get('notValAlias'), true);
-});
-
-test('Zero-argument case', function (assert) {
-  assert.throws(function () {
-      Ember.Object.extend({
-        prop: not()
-      });
-  }, 'Illegal Argument');
-});
-
-test('Null-argument case', function (assert) {
-  assert.throws(function () {
-      Ember.Object.extend({
-        prop: not(null)
-      });
-  }, 'Illegal Argument');
 });

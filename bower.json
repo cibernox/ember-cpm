@@ -1,32 +1,7 @@
 {
   "name": "ember-cpm",
-  "version": "2.1.2",
-  "description": "Computed Propery Macros for Ember.js",
-  "main": "dist/named-amd/ember-cpm.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cibernox/ember-cpm.git"
-  },
-  "keywords": [
-    "ember",
-    "emberjs"
-  ],
-  "author": "James A. Rosen",
-  "license": "MIT/APLv2",
-  "homepage": "https://github.com/cibernox/ember-cpm",
-  "authors": [
-    "James Alexander Rosen",
-    "Miguel Camba"
-  ],
   "dependencies": {
-    "ember": "2.0.2",
-    "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.5",
-    "ember-cli-test-loader": "ember-cli-test-loader#0.2.1",
-    "ember-load-initializers": "ember-cli/ember-load-initializers#0.1.7",
-    "ember-qunit": "0.4.10",
-    "ember-qunit-notifications": "0.0.7",
-    "jquery": "^1.11.3",
-    "loader.js": "ember-cli/loader.js#3.3.0",
-    "qunit": "~1.19.0"
+    "ember": "~2.9.0-beta.1",
+    "ember-cli-shims": "0.1.3"
   }
 }

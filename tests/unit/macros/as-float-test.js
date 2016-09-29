@@ -20,7 +20,7 @@ var MyType = Ember.Object.extend({
 var myObj;
 
 module('asFloat', {
-  setup: function () {
+  beforeEach() {
     myObj = MyType.create();
   }
 });
