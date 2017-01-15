@@ -11,7 +11,7 @@ var MyType = Ember.Object.extend({
   e: difference(3, 'a'),
   f: difference(),
   g: difference('a'),
-  h: difference(Ember.computed.alias('a'), 2),
+  h: difference(Ember.computed.or('a'), 2),
   i: difference(sum('a', 'b'), 4)
 });
 

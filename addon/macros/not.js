@@ -1,6 +1,4 @@
-import Ember from 'ember';
-import {getDependentPropertyKeys, getVal} from '../utils';
-
+import { resolveKeysUnsafe } from '../utils';
 
 /**
  * not - the boolean inverse of a property or computed property macro
@@ -31,12 +29,4 @@ import {getDependentPropertyKeys, getVal} from '../utils';
  * @param  {String|Number|ComputedProperty} property to invert
  * @return {Boolean} Returns false if @param is evalated to something truthy, otherwise returns false
  */
-
-export default function EmberCPM_not (arg) {
-  var propertyArguments = getDependentPropertyKeys([arg]);
-  propertyArguments.push(function () {
-    return 'undefined' !== typeof arg ? !getVal.call(this, arg) : null;
-  });
-
-  return Ember.computed.apply(this, propertyArguments);
-}
+export default resolveKeysUnsafe(value => !value);

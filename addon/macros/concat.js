@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-var a_slice   = Array.prototype.slice;
+import computed from 'ember-macro-helpers/computed';
+import normalizeArrayKey from 'ember-macro-helpers/normalize-array-key';
 
 /**
   Keeps n arrays concatenated.
@@ -32,15 +31,12 @@ var a_slice   = Array.prototype.slice;
   @param *arguments Dependent keys with the arrays to concat.
   @return {Array}
 */
-export default function EmberCPM_concat() {
-  const args = a_slice.call(arguments);
-  const arrayReduce = function() {
-    return args.reduce((prev, propertyKey) => {
-      return prev.concat(this.get(propertyKey) || []);
+export default function(...args) {
+  const arrayReduce = (...args) => {
+    return args.reduce((prev, value) => {
+      return prev.concat(value || []);
     }, []);
   };
 
-  return Ember.computed(...args.map(function (key) {
-    return `${key}.[]`;
-  }), arrayReduce);
+  return computed(...args.map(normalizeArrayKey), arrayReduce);
 }

@@ -1,5 +1,4 @@
-import Ember from 'ember';
-import {getVal, getDependentPropertyKeys} from '../utils';
+import { resolveKeysUnsafe } from '../utils';
 
 /**
   Returns true if all the dependent values are equal.
@@ -31,25 +30,11 @@ import {getVal, getDependentPropertyKeys} from '../utils';
   @param *arguments Elements that must be equal. It may be a regular value, a property key or another computed property.
   @return {Boolean} Returns true if all elements are equal
 */
-export default function EmberCPM_allEqual() {
-  var mainArguments = Array.prototype.slice.call(arguments); // all arguments
-  var propertyArguments = getDependentPropertyKeys(mainArguments);
-
-  propertyArguments.push(function () {
-    switch (mainArguments.length) {
-      case 0:
-      case 1:
-        return true;
-      default:
-        var firstVal = getVal.call(this, mainArguments[0]);
-        for (var i = 1; i < mainArguments.length; i += 1) {
-          if (getVal.call(this, mainArguments[i]) !== firstVal) {
-            return false;
-          }
-        }
-        return true;
+export default resolveKeysUnsafe((firstVal, ...values) => {
+  for (let i = 0; i < values.length; i += 1) {
+    if (values[i] !== firstVal) {
+      return false;
     }
-  });
-
-  return Ember.computed.apply(this, propertyArguments);
-}
+  }
+  return true;
+});

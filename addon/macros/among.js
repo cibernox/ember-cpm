@@ -1,7 +1,4 @@
-import Ember from 'ember';
-import {getVal, getDependentPropertyKeys} from '../utils';
-
-var computed = Ember.computed;
+import { resolveKeysUnsafe } from '../utils';
 
 /**
   Returns true the given value in is among the supplied options.
@@ -25,20 +22,11 @@ var computed = Ember.computed;
   @param                                  *values      Values among which the dependentKey must be included.
   @return {Boolean} Returns true the value in the given dependent key is among the privided values.
 */
-export default function EmberCPM_among() {
-  var mainArguments = Array.prototype.slice.call(arguments);
-  var propertyArguments = getDependentPropertyKeys(mainArguments);
-
-  var toCompare = mainArguments[0];
-  propertyArguments.push(function () {
-    var value = getVal.call(this, toCompare);
-    for (var i = 1; i < mainArguments.length; i++) {
-      if (getVal.call(this, mainArguments[i]) === value) {
-        return true;
-      }
+export default resolveKeysUnsafe((source, ...values) => {
+  for (let i = 0; i < values.length; i++) {
+    if (values[i] === source) {
+      return true;
     }
-    return false;
-  });
-
-  return computed.apply(this, propertyArguments);
-}
+  }
+  return false;
+});

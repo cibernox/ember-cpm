@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import { resolveKeys } from '../utils';
 
-var get = Ember.get;
-var computed = Ember.computed;
+const { resolve } = RSVP;
 
 /**
   Returns a promise that resolved to the value in the given dependent key
@@ -20,10 +20,7 @@ var computed = Ember.computed;
   @param {String} dependentKey The property key with the resolve value of the promise.
   @return {Promise} A promise
 */
-export default function EmberCPM_promise(dependentKey) {
-  return computed(dependentKey, function(){
-    var value = get(this, dependentKey);
-    if (value == null) { return value; }
-    return Ember.RSVP.Promise.resolve(value);
-  });
-}
+export default resolveKeys(value => {
+  if (value == null) { return value; }
+  return resolve(value);
+});

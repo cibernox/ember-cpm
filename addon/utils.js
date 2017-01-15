@@ -6,98 +6,53 @@
 */
 
 import Ember from "ember";
-
-
-/**
- Check to see if a given object is an Ember.Descriptor
-
- The technique for checking this condition is different
- pre-1.11 and post-1.11
- */
-export function isDescriptor(prop) {
-  return Ember.typeOf(prop) === 'object' && (prop.constructor === Ember.Descriptor || // Ember < 1.11
-     prop.isDescriptor); // Ember >= 1.11.0
-}
+import computed from 'ember-macro-helpers/computed';
+import computedUnsafe from 'ember-macro-helpers/computed-unsafe';
 
 /**
- Retain items in an array based on type
+ Builds a computed property macro
 
- Example:
-
- ```js
- var x = ['a', 'b', 123, {hello: 'world'}];
-
- retainByType(x, 'string'); // ['a', 'b']
- retainByType(x, 'number'); // [123]
- retainByType(x, 'object'); // [{hello: 'world'}]
- ```
-
- @method retainByType
+ @method resolveKeysUnsafe
  @for utils
- @param {Array}  arr  array to iterate over
- @param {String} type string representation of type
-
+ @param {Function} callback passed resolved values to calculate the property
  */
-export function retainByType(arr, type) {
-  return arr.reject(
-    function (item) {
-      return Ember.typeOf(item) !== type;
-    }
-  );
-}
-
-export function getDependentPropertyKeys(argumentArr) {
-  return argumentArr.reduce(
-    function (prev, item) {
-      switch (Ember.typeOf(item)) {
-        case 'string':
-          var containsSpaces = item.indexOf(' ') !== -1;
-
-          if(!containsSpaces) {
-            prev.push(item);
-          }
-          break;
-        case 'boolean':
-        case 'number':
-          break;
-        default:
-          if (item && isDescriptor(item) && item._dependentKeys) {
-            prev.pushObjects(item._dependentKeys);
-          }
-          break;
-      }
-      return prev;
-    },
-    Ember.A()
-  );
+export function resolveKeys(callback) {
+  return function() {
+    return computed(...arguments, callback);
+  };
 }
 
 /**
- Evaluate a value, which could either be a property key or a literal
- if the value is a string, the object that the computed property is installed
- on will be checked for a property of the same name. If one is found, it will
- be evaluated, and the result will be returned. Otherwise the string value its
- self will be returned
+ Builds a computed property macro (unsafe version)
 
- All non-string values pass straight through, and are returned unaltered
-
- @method getVal
- @param val value to evaluate
+ @method resolveKeysUnsafe
+ @for utils
+ @param {Function} callback passed resolved values to calculate the property
  */
-export function getVal(val) {
-  if (Ember.typeOf(val) === 'string') {
-    var propVal = Ember.get(this, val);
-    return  'undefined' === typeof propVal ? val : propVal;
-  } else if (isDescriptor(val)) {
-    let funcName = val.func ?
-      'func' : // Ember < 1.11
-      '_getter'; // Ember >= 1.11
-    return val.altKey ? this.get(val.altKey) : val[funcName].apply(this);
-  } else {
-    return val;
-  }
+export function resolveKeysUnsafe(callback) {
+  return function() {
+    return computedUnsafe(...arguments, callback);
+  };
 }
 
+/**
+ Builds a computed property macro based on array reducing
+
+ @method reduceKeysUnsafe
+ @for utils
+ @param {Function} callback passed resolved values to calculate the property
+ */
+export function reduceKeysUnsafe(callback) {
+  return resolveKeysUnsafe((...values) => {
+    values = values.reduce((values, valueOrArray) => {
+      return values.concat(valueOrArray);
+    }, []);
+    if (values.length === 0) {
+      return 0;
+    }
+    return values.reduce(callback);
+  });
+}
 
 /**
  Generate a "parse-like" computed property macro
@@ -111,19 +66,16 @@ export function getVal(val) {
  @param {function} parseFunction single-argument function that transforms a raw value into a "parsed" value
  */
 export function parseComputedPropertyMacro (parseFunction) {
-  return function parseMacro(dependantKey) {
-    var args = [];
+  return function(dependantKey) {
     if ('undefined' === typeof dependantKey) {
       throw new TypeError('No argument');
     }
     if (dependantKey === null) {
       throw new TypeError('Null argument');
     }
-    args.push(dependantKey);
-    args.push({
-      get() {
-        var rawValue = this.get(dependantKey);
 
+    return computedUnsafe(dependantKey, {
+      get(rawValue) {
         // Check for null/undefined values
         if (Ember.A(['undefined', 'null']).indexOf(Ember.typeOf(rawValue)) !== -1) {
           return NaN;
@@ -140,10 +92,10 @@ export function parseComputedPropertyMacro (parseFunction) {
           }
         }
       },
-      set(_, val) {
+      set(val, rawValue) {
         //setter
         //respect the type of the dependent property
-        switch (Ember.typeOf(this.get(dependantKey))) {
+        switch (Ember.typeOf(rawValue)) {
           case 'number':
             this.set(dependantKey, parseFloat(val));
             break;
@@ -167,50 +119,5 @@ export function parseComputedPropertyMacro (parseFunction) {
         return val;
       }
     });
-    return Ember.computed.apply(this, args);
-  };
-}
-
-/**
- Return a computed property macro
-
- @method reduceComputedPropertyMacro
- @param {Function} reducingFunction
- @param {Object} options
- */
-export function reduceComputedPropertyMacro(reducingFunction, options) {
-  var opts = options || {};
-  var singleItemCallback = opts.singleItemCallback || function (item) {return getVal.call(this,item);};
-
-  return function () {
-    var mainArguments = Array.prototype.slice.call(arguments); // all arguments
-
-    var propertyArguments = getDependentPropertyKeys(mainArguments);
-
-    propertyArguments.push(function () {
-      var self = this;
-      switch (mainArguments.length) {
-        // case 0:   // We already handle the zero-argument case above
-        case 1:   // Handle one-argument case
-          return singleItemCallback.call(this, mainArguments[0]);
-
-        default:  // Handle multi-argument case
-          return mainArguments.reduce(
-            function (prev, item, idx, enumerable) {
-              // Evaluate "prev" value if this is the first time the reduce callback is called
-              var prevValue = idx === 1 ? getVal.call(self, prev) : prev,
-
-                // Evaluate the "item" value
-                itemValue = getVal.call(self, item);
-
-              // Call the reducing function, replacing "prev" and "item" arguments with
-              // their respective evaluated values
-              return reducingFunction.apply(self, [prevValue, itemValue, idx, enumerable]);
-
-            }
-          );
-      }
-    });
-    return Ember.computed.apply(this, propertyArguments);
   };
 }

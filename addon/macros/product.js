@@ -1,4 +1,4 @@
-import {reduceComputedPropertyMacro} from '../utils';
+import { reduceKeysUnsafe } from '../utils';
 
 /**
   Returns an the multiplication of its arguments.
@@ -20,8 +20,4 @@ import {reduceComputedPropertyMacro} from '../utils';
   @param *arguments It can be numbers, property keys containing numbers or other computed properties.
   @return {Number} The product of all its arguments.
 */
-export default reduceComputedPropertyMacro(
-  function (prev, item) {
-    return prev * item;
-  }
-);
+export default reduceKeysUnsafe((prev, item) => prev * item);

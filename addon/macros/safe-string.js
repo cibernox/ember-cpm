@@ -1,7 +1,6 @@
 import Ember from 'ember';
+import { resolveKeys } from '../utils';
 
-var get = Ember.get;
-var computed = Ember.computed;
 var EmberString = Ember.String;
 
 /**
@@ -12,12 +11,6 @@ var EmberString = Ember.String;
   @param {String} Dependent key with the string to cast.
   @return {Ember.Handlebars.SafeString} The casted string.
 */
-export default function EmberCPM_safeString(dependentKey) {
-
-  return computed(dependentKey, function(){
-    var value = get(this, dependentKey);
-
-    return value && new EmberString.htmlSafe(value);
-  });
-
-}
+export default resolveKeys(value => {
+  return value && new EmberString.htmlSafe(value);
+});

@@ -9,7 +9,7 @@ var MyType = Ember.Object.extend({
   f: allEqual(),
   g: allEqual('a'),
   h: allEqual('a', 'c', 6),
-  i: allEqual(Ember.computed.alias('a'), 6),
+  i: allEqual(Ember.computed.or('a'), 6),
   j: allEqual(sum('a','b'), 8)
 });
 
