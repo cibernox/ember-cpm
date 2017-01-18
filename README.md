@@ -5,6 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/cibernox/ember-cpm/badges/gpa.svg)](https://codeclimate.com/github/cibernox/ember-cpm)
 [![Dependency Status](https://david-dm.org/cibernox/ember-cpm.svg)](https://david-dm.org/cibernox/ember-cpm)
 [![devDependency Status](https://david-dm.org/cibernox/ember-cpm/dev-status.svg)](https://david-dm.org/cibernox/ember-cpm#info=devDependencies)
+![Ember Version](https://embadge.io/v1/badge.svg?start=2.0.0)
 
 Computed Property Macros for Ember
 
