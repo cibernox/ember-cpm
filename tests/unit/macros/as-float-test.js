@@ -13,7 +13,6 @@ var MyType = Ember.Object.extend({
   undefinedAsFloat: asFloat('undefinedValue'),
   boolAsFloat: asFloat('boolVal'),
   floatAsFloat: asFloat('floatVal'),
-  emptyStringAsFloat: asFloat(''),
   nonNumericStringAsFloat: asFloat('abcd')
 });
 
@@ -57,7 +56,6 @@ test('undefined prop - getting value as a float', function (assert) {
 
 test('string argument case', function (assert) {
   assert.equal(myObj.get('nonNumericStringAsFloat').toString(), 'NaN', 'non-numeric string');
-  assert.equal(myObj.get('emptyStringAsFloat').toString(), 'NaN', 'empty string');
 });
 
 test('Setting float value updates dependant string property', function (assert) {
