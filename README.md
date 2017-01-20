@@ -12,23 +12,15 @@ Computed Property Macros for Ember
 ### Requirements
 
 Version 2.0+ will only work with Ember 2.0+
-If you are using Ember 1.X stay in user ember-cpm 1.X too.
 
 ### Installation
 
-If you are using [Ember CLI](https://github.com/stefanpenner/ember-cli), you can install ember-cpm as
-an addon with `npm install ember-cpm --save-dev` and you will be able to import native ES modules from
-within your app.
+Just run `ember install ember-cpm`
 
-If not, you need to add `ember-cpm.js` manually to your project.
-
-You can find the latest versions of ember-cpm in [the S3 bucket](http://ember-cpm-builds.s3-website-us-east-1.amazonaws.com/) in two flavours: globals or AMD.
-Alternatively, you can also build from source. See [Contributing](https://github.com/cibernox/ember-cpm#contributing) for more info about how to build from source.
-If you use the global build, an `EmberCPM` global should be available.
 
 ### Usage
 
-In Ember CLI:
+Just import individual macros from `ember-cpm/macros/*` or all macros from `ember-cpm`.
 
 ```js
 // Import only one macros
@@ -37,27 +29,10 @@ import ifNull from "ember-cpm/macros/if-null";
 import EmberCPM from "ember-cpm";
 ```
 
-In any other scenario, include `ember-cpm.js` after ember but before your app, and a gobal will be available:
-
-```js
-Person = Ember.Object.extend({
-  name: null,
-  handle: EmberCPM.Macros.ifNull('name', 'Anonymous'),
-});
-```
 
 ### Contributing
 
-You have to install Ember CLI to build this library. If you don't have it, visit [www.ember-cli.com/](http://www.ember-cli.com/) for further guidance about how to install it.
-
-After running `npm install` to get all the dependencies you can:
-
-* Run `ember serve` and go to `localhost:4200/test` to run the tests in watch mode. You can also run `ember serve --docs` to see generate and expose documentation in `/docs`.
-* Run `ember test` to run all tests once (requires phantomjs).
-* Run `ember build` to build from source.
-* Run `ember yuidoc` to generate all the documentation inside the `/docs` folder
-
-#### Generating new computed property macros with ember-cli
+To generate a new computed property macros with ember-cli
 
 * Run `ember g macro <dasherized-macro-name>`. This will generate a few files
   * `./addon/macros/dasherized-macro-name.js` (the macro)
@@ -102,13 +77,15 @@ var Macros = {
  * `computedPromise` -- Updates computed property when supplied callback (which must return a promise) is resolved
 
 ### Composable Computed Property Macros
-`conditional`, `sum`, `quotient` and `product` have support for *composable* computed property macros. This allows developers to mix other macros together without defining a bunch of otherwise-useless intermediate properties
+
+Unlike Ember's computed property macros, the macros in this addon are *composable*. That means
+you define macros inside other macros without defining them in a separate key.
 
 ```javascript
 import Ember from 'ember';
 import EmberCPM from 'ember-cpm';
 
-const { Macros: { sum, difference, product }} = EmberCPM;
+const { Macros: { sum, difference, product } } = EmberCPM;
 
 export default Ember.Component.extend({
   num1: 45,
@@ -122,11 +99,4 @@ export default Ember.Component.extend({
     product(difference('num2', 'num1'), 'num4')
   )
 });
-
 ```
-
-### `Ember.computed`
-
-If you would prefer to use `Ember.computed.{macro}` instead of
-`EmberCPM.Macros.{macro}` (for the sake of uniform access), simply call
-`EmberCPM.install()` before your application code.

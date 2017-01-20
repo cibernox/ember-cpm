@@ -25,5 +25,5 @@ test('HTML-escapes the value', function(assert) {
 
 test('Marks the result as safe', function(assert) {
   var actual = MyObj.create({ value: '<img />' }).get('escaped');
-  assert.equal(actual instanceof Ember.Handlebars.SafeString, true);
+  assert.ok(Ember.String.isHTMLSafe(actual));
 });
