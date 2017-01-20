@@ -1,10 +1,5 @@
-import Ember from 'ember';
-
-var get = Ember.get;
-var computed = Ember.computed;
-var EmberString = Ember.String;
-
-var a_slice = Array.prototype.slice;
+import { fmt } from 'ember-string';
+import computed from 'ember-macro-helpers/computed';
 
 /**
   Generates a string interpolating the given values.
@@ -28,24 +23,16 @@ var a_slice = Array.prototype.slice;
                     The string interpolations follows the same rules in `Ember.String.fmt`
   @return The formatted string.
 */
-export default function EmberCPM_fmt() {
-  var formatString = '' + a_slice.call(arguments, -1),
-      properties   = a_slice.call(arguments, 0, -1),
-      propertyArguments = a_slice.call(arguments, 0 , -1);
+export default function(...args) {
+  let formatString = args.pop();
 
-  propertyArguments.push(function(){
-    var values = [], i, value;
-
-    for (i = 0; i < properties.length; ++i) {
-      value = get(this, properties[i]);
+  return computed(...args, (...values) => {
+    for (let i in values) {
+      let value = values[i];
       if (value === undefined) { return undefined; }
       if (value === null)      { return null; }
-      values.push(value);
     }
 
-    return EmberString.fmt(formatString, values);
+    return fmt(formatString, values);
   });
-
-  return computed.apply(this, propertyArguments);
-
 }

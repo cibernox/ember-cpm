@@ -1,7 +1,3 @@
-import Ember from 'ember';
-
-var computed = Ember.computed;
-
 /**
  * Returns a literal value. Useful for disambiguating
  * between string literals and property keys
@@ -40,10 +36,4 @@ var computed = Ember.computed;
  * @param {String} String value that you don't want to be interpreted as a propertyKey event.
  * @return {ComputedProperty}
  */
-
-export default function EmberCPM_literal(val) {
-  return computed(function () {
-      return val;
-  }).readOnly();
-
-}
+export { default } from 'ember-macro-helpers/literal';

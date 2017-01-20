@@ -1,7 +1,6 @@
 import Ember from 'ember';
+import { resolveKeys } from '../utils';
 
-var get = Ember.get;
-var computed = Ember.computed;
 var EmberHandlebars = Ember.Handlebars;
 var EmberString = Ember.String;
 
@@ -23,16 +22,11 @@ var EmberString = Ember.String;
   @param {String} Dependent key with the string to scape.
   @return {Ember.Handlebars.SafeString} The escaped string.
 */
-export default function EmberCPM_htmlEscape(dependentKey) {
-  return computed(dependentKey, function(){
-    var value = get(this, dependentKey);
+export default resolveKeys(value => {
+  if (value == null) {
+    return value;
+  }
 
-    if (value == null) {
-      return value;
-    }
-
-    var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
-    return new EmberString.htmlSafe(escapedExpression);
-  });
-
-}
+  var escapedExpression = EmberHandlebars.Utils.escapeExpression(value);
+  return new EmberString.htmlSafe(escapedExpression);
+});

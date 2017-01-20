@@ -1,5 +1,4 @@
-import Ember from 'ember';
-import {reduceComputedPropertyMacro, getVal} from '../utils';
+import { reduceKeysUnsafe } from '../utils';
 
 /**
   Returns an the sum of its arguments.
@@ -23,25 +22,4 @@ import {reduceComputedPropertyMacro, getVal} from '../utils';
   @param *arguments It can be numbers, property keys containing numbers or other computed properties.
   @return {Number} The sum of all its arguments.
 */
-
-function singleValueOrArraySum(val) {
-  if (Ember.isArray(val)) {
-    return val.reduce(function (prev, item) {return prev + item;}, 0);
-  }
-  else {
-    return val;
-  }
-}
-
-var EmberCPM_sum = reduceComputedPropertyMacro(
-  function (prev, item) {
-    return singleValueOrArraySum(prev) + singleValueOrArraySum(item);
-  },
-  {
-    singleItemCallback: function (item) {
-      return singleValueOrArraySum(getVal.call(this, item));
-    }
-  }
-);
-
-export default EmberCPM_sum;
+export default reduceKeysUnsafe((prev, item) => prev + item);

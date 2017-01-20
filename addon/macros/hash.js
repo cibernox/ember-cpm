@@ -1,10 +1,4 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  get
-} = Ember;
-
+import computed from 'ember-macro-helpers/computed';
 
 /**
   Returns a hash of its arguments
@@ -24,13 +18,11 @@ const {
   @param *arguments Property keys to include
   @return {Object} Mapping of key names to values
 */
-
-
 export default function(...props) {
-  return computed(...props, function(){
+  return computed(...props, (...values) => {
     let result = {};
-    props.forEach((prop) => {
-      result[prop] = get(this, prop);
+    props.forEach((prop, i) => {
+      result[prop] = values[i];
     });
     return result;
   });

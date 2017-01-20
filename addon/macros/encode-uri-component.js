@@ -1,7 +1,4 @@
-import Ember from 'ember';
-
-var get = Ember.get;
-var computed = Ember.computed;
+import { resolveKeys } from '../utils';
 
 /**
   Encodes the given value to make it URL safe
@@ -22,12 +19,9 @@ var computed = Ember.computed;
   @param {String} dependentKey String with the dependent key which value will be encoded.
   @return {String} A sanitized string
 */
-export default function EmberCPM_encodeURIComponent(dependentKey) {
-  return computed(dependentKey, function(){
-    var value = get(this, dependentKey);
-    if (value == null) {
-      return value;
-    }
-    return encodeURIComponent(value);
-  });
-}
+export default resolveKeys(value => {
+  if (value == null) {
+    return value;
+  }
+  return encodeURIComponent(value);
+});

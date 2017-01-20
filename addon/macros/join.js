@@ -1,8 +1,4 @@
-import Ember from 'ember';
-import {getVal, getDependentPropertyKeys} from '../utils';
-
-var computed = Ember.computed;
-var a_slice = Array.prototype.slice;
+import computed from 'ember-macro-helpers/computed';
 
 /**
   Joins the strings in the given property keys.
@@ -26,17 +22,10 @@ var a_slice = Array.prototype.slice;
     computed property macros
   @return {String}  The joined string.
 */
-export default function EmberCPM_join() {
-  var mainArguments = a_slice.call(arguments);
-  var componentsToJoin = mainArguments.slice(0, -1);
-  var propertyArguments = getDependentPropertyKeys(componentsToJoin);
+export default function(...args) {
+  var separator = args.pop();
 
-  propertyArguments.push(function () {
-    var separator = mainArguments[mainArguments.length - 1];
-    var self = this;
-    return componentsToJoin.map(function (x) {
-      return getVal.call(self, x);
-    }).join(separator);
+  return computed(...args, (...values) => {
+    return values.join(separator);
   });
-  return computed.apply(this, propertyArguments);
 }

@@ -1,5 +1,4 @@
-import Ember from 'ember';
-import {getVal, getDependentPropertyKeys, isDescriptor} from '../utils';
+import { resolveKeysUnsafe } from '../utils';
 
 /**
    Conditional computed property
@@ -20,21 +19,6 @@ import {getVal, getDependentPropertyKeys, isDescriptor} from '../utils';
   @param {Number|String|ComputedProperty} Negative value, key or CP. Used if the first params is falsy
   @return the second or third parameter.
  */
-export default function EmberCPM_conditional(condition, positive, negative) {
-  var propertyArguments = getDependentPropertyKeys([condition, positive, negative]);
-  var isConditionComputed = isDescriptor(condition);
-
-  propertyArguments.push(function(/* key, value, oldValue */) {
-    let conditionEvaluation;
-    if (isConditionComputed) {
-      conditionEvaluation = condition.func ?
-        condition.func.apply(this, arguments) :   // Ember < 1.11.0
-        condition._getter.apply(this, arguments); // Ember >= 1.11.0
-    } else {
-      conditionEvaluation = this.get(condition);
-    }
-    return conditionEvaluation ? getVal.call(this, positive) : getVal.call(this, negative);
-  });
-
-  return Ember.computed.apply(this, propertyArguments);
-}
+export default resolveKeysUnsafe((condition, positive, negative) => {
+  return condition ? positive : negative;
+});

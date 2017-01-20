@@ -8,7 +8,7 @@ var MyType = Ember.Object.extend({
   e: quotient(3, 'a'),
   f: quotient(),
   g: quotient('a'),
-  h: quotient(Ember.computed.alias('a'), 2)
+  h: quotient(Ember.computed.or('a'), 2)
 });
 
 var myObj = MyType.create({

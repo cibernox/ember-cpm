@@ -29,7 +29,7 @@ test('updates when resolved', function(assert){
   object.get('myComputedPromise');
 
   deferred.promise.then(function() {
-    assert.equal(object.get('myComputedPromise').foo, 'bar');
+    assert.equal(object.get('myComputedPromise.foo'), 'bar');
 
     done();
   });
@@ -46,7 +46,7 @@ test('when dependent key changes cb is invoked (non-eagerly)', function(assert){
   object.get('myComputedPromise');
 
   deferred.promise.then(function() {
-    assert.equal(object.get('myComputedPromise').foo, 'bar');
+    assert.equal(object.get('myComputedPromise.foo'), 'bar');
   }).then(function(){
     object.set('dep', 'does not matter');
   }).then(function(){
@@ -59,7 +59,7 @@ test('when dependent key changes cb is invoked (non-eagerly)', function(assert){
 
     return deferred.promise;
   }).then(function(){
-    assert.equal(object.get('myComputedPromise').foo, 'baz');
+    assert.equal(object.get('myComputedPromise.foo'), 'baz');
     done();
   });
 
@@ -84,7 +84,7 @@ test('works when not given a cb who returns a promise', function(assert){
   object.get('myComputedPromise');
 
   deferred.promise.then(function() {
-    assert.equal(object.get('myComputedPromise').foo, 'bar');
+    assert.equal(object.get('myComputedPromise.foo'), 'bar');
 
     done();
   });

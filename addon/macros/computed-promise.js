@@ -1,6 +1,11 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
+import computedUnsafe from 'ember-macro-helpers/computed-unsafe';
 
-const { computed } = Ember;
+const { ObjectProxy, PromiseProxyMixin } = Ember;
+const { Promise } = RSVP;
+
+const PromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
 /**
   Updates computed property when supplied callback (which must return a
@@ -36,23 +41,14 @@ export default function(...args) {
     throw new Error('You must supply a function as the last argument to this macro.');
   }
 
-  const dependentKeys = args.slice();
-  let pendingPromise = false;
-  let result;
+  return computedUnsafe(...args, function() {
+    const promise = fn.call(this);
+    if (!(promise instanceof Promise)) {
+      return promise;
+    }
 
-  return computed(...dependentKeys, function(key) {
-    if (!pendingPromise) {
-      const promise = fn.call(this);
-      pendingPromise = true;
-
-      Ember.RSVP.resolve(promise)
-        .then((promiseResult) => {
-          result = promiseResult;
-          pendingPromise = false;
-          this.notifyPropertyChange(key);
-        });
-      }
-
-    return result;
+    return PromiseProxy.create({
+      promise
+    });
   });
 }
