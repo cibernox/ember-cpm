@@ -122,6 +122,12 @@ export function parseComputedPropertyMacro (parseFunction) {
     args.push(dependantKey);
     args.push({
       get() {
+        // Cannot call `Ember.get` with an empty string
+        // https://github.com/emberjs/ember.js/issues/14572
+        if (dependantKey === '') {
+          return NaN;
+        }
+
         var rawValue = this.get(dependantKey);
 
         // Check for null/undefined values
