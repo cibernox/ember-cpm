@@ -21,14 +21,6 @@ import asFloat from './macros/as-float';
 import asInt from './macros/as-int';
 import computedPromise from './macros/computed-promise';
 
-function reverseMerge(dest, source) {
-  for (var key in source) {
-    if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
-      dest[key] = source[key];
-    }
-  }
-}
-
 var VERSION = '1.3.1';
 var Macros = {
   not: not,
@@ -53,7 +45,6 @@ var Macros = {
   product: product,
   computedPromise: computedPromise
 };
-var install = function(){ reverseMerge(Ember.computed, Macros); };
 
 
 if (Ember.libraries) {
@@ -62,12 +53,10 @@ if (Ember.libraries) {
 
 export {
   VERSION,
-  Macros,
-  install
+  Macros
 };
 
 export default {
   VERSION: VERSION,
-  Macros: Macros,
-  install: install
+  Macros: Macros
 };

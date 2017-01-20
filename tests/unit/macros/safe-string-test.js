@@ -21,5 +21,5 @@ test('returns null if the value is null', function(assert) {
 test('returns a safe version of the value', function(assert) {
   var actual = MyObj.create({ value: 'Wombat' }).get('safe');
   assert.equal(actual.toString(), 'Wombat');
-  assert.equal(actual instanceof Ember.Handlebars.SafeString, true);
+  assert.ok(Ember.String.isHTMLSafe(actual));
 });
