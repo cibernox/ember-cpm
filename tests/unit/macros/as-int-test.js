@@ -15,8 +15,7 @@ var MyType = Ember.Object.extend({
   undefinedAsInt: asInt('undefinedValue'),
   intValAsInt: asInt('intVal'),
   floatValAsInt: asInt('floatVal'),
-  nonNumericStringAsInt: asInt('adas'),
-  emptyStringAsInt: asInt(''),
+  nonNumericStringAsInt: asInt('adas')
 });
 
 var myObj;
@@ -63,7 +62,6 @@ test('undefined prop - getting value as a int', function (assert) {
 
 test('string argument case', function (assert) {
   assert.equal(myObj.get('nonNumericStringAsInt').toString(), 'NaN', 'non-numeric string');
-  assert.equal(myObj.get('emptyStringAsInt').toString(), 'NaN', 'empty string');
 });
 
 test('boolean argument case', function (assert) {
