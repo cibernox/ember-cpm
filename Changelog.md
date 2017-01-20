@@ -1,5 +1,11 @@
 # Changelog
 
+# 3.0.0
+Breaking: Remove `install` method. Modifying `Ember.computed` is considered a bad practice.
+Feature: Use `ember-macro-helpers`. That means that the footprint of the addon is much smaller
+         and ALL macros are composable by default.
+BREAKING: Stop testing in 1.13.
+
 # 2.1.1
 Feature: Added `hash` macro keeps returns an object with the given properties.
 

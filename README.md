@@ -12,6 +12,7 @@ Computed Property Macros for Ember
 ### Requirements
 
 Version 2.0+ will only work with Ember 2.0+
+Version 3.0+ is only tested in the last 2 LTS.
 
 ### Installation
 
