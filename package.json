@@ -53,7 +53,7 @@
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.7",
-    "ember-macro-helpers": "kellyselden/ember-macro-helpers#ember-cpm"
+    "ember-macro-helpers": "^0.7.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
