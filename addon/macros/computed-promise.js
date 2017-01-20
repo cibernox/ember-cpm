@@ -42,7 +42,7 @@ export default function(...args) {
 
   return computed(...dependentKeys, function(key) {
     if (!pendingPromise) {
-      const promise = fn.call(this);
+      const promise = fn.call(this, key);
       pendingPromise = true;
 
       Ember.RSVP.resolve(promise)
