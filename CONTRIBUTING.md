@@ -1,9 +1,11 @@
 ## Running the tests
 
-You'll need [npm](https://npmjs.org) and `make`.
+You'll need [npm](https://npmjs.org);
 
 ```bash
-make test
+npm install
+bower install
+ember test
 ```
 
 ## License
