@@ -1,4 +1,4 @@
-import { isBlank } from 'ember-utils';
+import { isBlank } from '@ember/utils';
 import { resolveKeys } from '../utils';
 
 /**
