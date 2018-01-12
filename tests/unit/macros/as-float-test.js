@@ -1,8 +1,8 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import asFloat from 'ember-cpm/macros/as-float';
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   val: '6',
   floatVal: 1.2,
   boolVal: true,
@@ -80,7 +80,7 @@ test('boolean argument case', function (assert) {
 
 test('zero-argument case throws an exception', function (assert) {
   assert.throws(function () {
-    Ember.Object.extend({
+    EmberObject.extend({
       prop: asFloat()
     });
   }, /No\sargument/);
@@ -88,7 +88,7 @@ test('zero-argument case throws an exception', function (assert) {
 
 test('null-argument case throws an exception', function (assert) {
   assert.throws(function () {
-    Ember.Object.extend({
+    EmberObject.extend({
       prop: asFloat(null)
     });
   }, /Null\sargument/);

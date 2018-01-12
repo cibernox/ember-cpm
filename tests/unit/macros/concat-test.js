@@ -1,12 +1,14 @@
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import concat from "ember-cpm/macros/concat";
 
 function o(name) {
-  return Ember.Object.create({name: name});
+  return EmberObject.create({name: name});
 }
 
-var Obj = Ember.Object.extend({
+var Obj = EmberObject.extend({
   allPeople: concat('lannisters', 'starks')
 });
 
@@ -15,8 +17,8 @@ var obj;
 module("concat", {
   beforeEach() {
     obj = Obj.create({
-      lannisters: Ember.A([o('Jaime'), o('Cersei')]),
-      starks: Ember.A([o('Robb'), o('Eddard')])
+      lannisters: A([o('Jaime'), o('Cersei')]),
+      starks: A([o('Robb'), o('Eddard')])
     });
   }
 });
@@ -54,10 +56,10 @@ test("updates when elements in dependent arrays are replaced", function(assert) 
 });
 
 test("updates correctly for initial dependent arrays updated via `set`", function(assert) {
-  var lannisters = Ember.A([o('Tytos'), o('Tywin')]);
+  var lannisters = A([o('Tytos'), o('Tywin')]);
   obj.get('allPeople');
 
-  Ember.run(function() {
+  run(function() {
     obj.set('lannisters', lannisters);
   });
 
@@ -66,10 +68,10 @@ test("updates correctly for initial dependent arrays updated via `set`", functio
 });
 
 test("updates correctly for subsequent dependent arrays updated via `set`", function(assert) {
-  var starks = Ember.A([o('Sansa'), o('Arya')]);
+  var starks = A([o('Sansa'), o('Arya')]);
   obj.get('allPeople');
 
-  Ember.run(function() {
+  run(function() {
     obj.set('starks', starks);
   });
   var array = obj.get('allPeople');
@@ -81,7 +83,7 @@ test("updates correctly when dependent arrays are swapped", function(assert) {
   var starks = obj.get('starks');
   obj.get('allPeople');
 
-  Ember.run(function() {
+  run(function() {
     obj.set('lannisters', starks);
     obj.set('starks', lannisters);
   });
@@ -93,7 +95,7 @@ test("updates correctly when dependent arrays are swapped", function(assert) {
 test("updates correctly when multiple dependent keys are the same array", function(assert) {
   obj.get('allPeople');
 
-  Ember.run(function() {
+  run(function() {
     obj.set('lannisters', obj.get('starks'));
   });
   var array = obj.get('allPeople');
@@ -106,13 +108,13 @@ test("updates correctly when multiple dependent keys are the same array", functi
 test("ignores null or undefined dependent arrays", function(assert) {
   var array;
 
-  Ember.run(function() {
+  run(function() {
     obj.set('lannisters', undefined);
   });
   array = obj.get('allPeople');
   assert.deepEqual(array.map(p => p.get('name')), ['Robb', 'Eddard']);
 
-  Ember.run(function() {
+  run(function() {
     obj.set('starks', undefined);
   });
   array = obj.get('allPeople');
@@ -120,14 +122,14 @@ test("ignores null or undefined dependent arrays", function(assert) {
 });
 
 test("concatenates multiple arrays", function(assert) {
-  var Obj = Ember.Object.extend({
+  var Obj = EmberObject.extend({
     allPeople: concat('lannisters', 'starks', 'boltons')
   });
 
   obj = Obj.create({
-    lannisters: Ember.A([o('Jaime'), o('Cersei')]),
-    starks: Ember.A([o('Robb'), o('Eddard')]),
-    boltons: Ember.A([o('Ramsey'), o('Roose')])
+    lannisters: A([o('Jaime'), o('Cersei')]),
+    starks: A([o('Robb'), o('Eddard')]),
+    boltons: A([o('Ramsey'), o('Roose')])
   });
 
   assert.deepEqual(obj.get('allPeople').map(p => p.get('name')), ['Jaime', 'Cersei', 'Robb', 'Eddard', 'Ramsey', 'Roose']);

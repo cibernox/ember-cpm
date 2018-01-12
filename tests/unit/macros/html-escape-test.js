@@ -1,10 +1,11 @@
+import { isHTMLSafe } from '@ember/string';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import htmlEscape from "ember-cpm/macros/html-escape";
 
 module("html-escape");
 
-var MyObj = Ember.Object.extend({
+var MyObj = EmberObject.extend({
   escaped: htmlEscape('value')
 });
 
@@ -25,5 +26,5 @@ test('HTML-escapes the value', function(assert) {
 
 test('Marks the result as safe', function(assert) {
   var actual = MyObj.create({ value: '<img />' }).get('escaped');
-  assert.ok(Ember.String.isHTMLSafe(actual));
+  assert.ok(isHTMLSafe(actual));
 });

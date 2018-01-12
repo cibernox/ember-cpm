@@ -1,10 +1,10 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import ifNull from 'ember-cpm/macros/if-null';
 
 module('ifNull');
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   orSushi: ifNull('value', 'Sushi')
 });
 
@@ -26,7 +26,7 @@ test('returns other falsy values', function(assert) {
 });
 
 test('allows a computed property as the default value', function(assert) {
-  var MyType = Ember.Object.extend({
+  var MyType = EmberObject.extend({
     fallback: 'Sashimi',
     orSashimi: ifNull('value', 'fallback')
   });

@@ -1,10 +1,10 @@
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
-import Ember from 'ember';
 import hash from 'ember-cpm/macros/hash';
 
 module('hash');
 
-var Pokemon = Ember.Object.extend({
+var Pokemon = EmberObject.extend({
   stats: hash('name', 'type', 'atk')
 });
 

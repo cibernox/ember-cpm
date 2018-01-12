@@ -5,7 +5,9 @@
   @requires ember
 */
 
-import Ember from "ember";
+import { typeOf } from '@ember/utils';
+import { A, isArray } from '@ember/array';
+import { inspect } from '@ember/debug';
 import computed from 'ember-macro-helpers/computed';
 import computedUnsafe from 'ember-macro-helpers/computed-unsafe';
 
@@ -77,7 +79,7 @@ export function parseComputedPropertyMacro (parseFunction) {
     return computedUnsafe(dependantKey, {
       get(rawValue) {
         // Check for null/undefined values
-        if (Ember.A(['undefined', 'null']).indexOf(Ember.typeOf(rawValue)) !== -1) {
+        if (A(['undefined', 'null']).indexOf(typeOf(rawValue)) !== -1) {
           return NaN;
         }
         else {
@@ -95,12 +97,12 @@ export function parseComputedPropertyMacro (parseFunction) {
       set(val, rawValue) {
         //setter
         //respect the type of the dependent property
-        switch (Ember.typeOf(rawValue)) {
+        switch (typeOf(rawValue)) {
           case 'number':
             this.set(dependantKey, parseFloat(val));
             break;
           case 'boolean':
-            switch(Ember.typeOf(val)) {
+            switch(typeOf(val)) {
               case 'string':
                 this.set(dependantKey, val.toLowerCase() === 'true');
                 break;
@@ -108,7 +110,7 @@ export function parseComputedPropertyMacro (parseFunction) {
                 this.set(dependantKey, val !== 0);
                 break;
               default:
-                var msg = Ember.String.fmt('Can\'t transform value of type %@ into a boolean', Ember.typeOf(val));
+                var msg = fmt('Can\'t transform value of type %@ into a boolean', typeOf(val));
                 throw new TypeError(msg);
             }
             break;
@@ -120,4 +122,24 @@ export function parseComputedPropertyMacro (parseFunction) {
       }
     });
   };
+}
+
+export function fmt(str, formats) {
+  var cachedFormats = formats;
+
+  if (!isArray(cachedFormats) || arguments.length > 2) {
+    cachedFormats = new Array(arguments.length - 1);
+
+    for (var i = 1, l = arguments.length; i < l; i++) {
+      cachedFormats[i - 1] = arguments[i];
+    }
+  }
+
+  // first, replace any ORDERED replacements.
+  var idx  = 0; // the current index for non-numerical replacements
+  return str.replace(/%@([0-9]+)?/g, function(s, argIndex) {
+    argIndex = (argIndex) ? parseInt(argIndex, 10) - 1 : idx++;
+    s = cachedFormats[argIndex];
+    return (s === null) ? '(null)' : (s === undefined) ? '' : inspect(s);
+  });
 }

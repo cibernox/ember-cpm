@@ -1,8 +1,8 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import l from 'ember-cpm/macros/literal';
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   literalProp: l('val')
 });
 

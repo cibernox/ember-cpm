@@ -1,8 +1,8 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import firstPresent from "ember-cpm/macros/first-present";
 
-var Obj = Ember.Object.extend({
+var Obj = EmberObject.extend({
   nickname: '',
   name: 'Jean-Luc',
   email: 'jean@starship-enterprise.space',
