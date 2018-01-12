@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
-    "ember-macro-helpers": "^0.9.0"
+    "ember-macro-helpers": "^0.9.0",
+    "ember-string-fmt": "^0.0.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
