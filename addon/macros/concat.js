@@ -38,5 +38,5 @@ export default function(...args) {
     }, []);
   };
 
-  return computed(...args.map(normalizeArrayKey), arrayReduce);
+  return computed(...args.map((a) => normalizeArrayKey(a, [])), arrayReduce);
 }

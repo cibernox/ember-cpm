@@ -1,4 +1,4 @@
-import fmt from 'ember-string-fmt';
+import { fmt } from '../utils';
 import computed from 'ember-macro-helpers/computed';
 
 /**

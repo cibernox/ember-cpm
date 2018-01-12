@@ -1,5 +1,5 @@
 import { A } from '@ember/array';
-import fmt from 'ember-string-fmt';
+import { fmt } from 'ember-cpm/utils';
 import EmberObject from '@ember/object';
 import {
   gt,
