@@ -5,10 +5,9 @@
   @requires ember
 */
 
-import { fmt } from '@ember/string';
-
 import { typeOf } from '@ember/utils';
-import { A } from '@ember/array';
+import { A, isArray } from '@ember/array';
+import { inspect } from '@ember/debug';
 import computed from 'ember-macro-helpers/computed';
 import computedUnsafe from 'ember-macro-helpers/computed-unsafe';
 
@@ -123,4 +122,24 @@ export function parseComputedPropertyMacro (parseFunction) {
       }
     });
   };
+}
+
+export function fmt(str, formats) {
+  var cachedFormats = formats;
+
+  if (!isArray(cachedFormats) || arguments.length > 2) {
+    cachedFormats = new Array(arguments.length - 1);
+
+    for (var i = 1, l = arguments.length; i < l; i++) {
+      cachedFormats[i - 1] = arguments[i];
+    }
+  }
+
+  // first, replace any ORDERED replacements.
+  var idx  = 0; // the current index for non-numerical replacements
+  return str.replace(/%@([0-9]+)?/g, function(s, argIndex) {
+    argIndex = (argIndex) ? parseInt(argIndex, 10) - 1 : idx++;
+    s = cachedFormats[argIndex];
+    return (s === null) ? '(null)' : (s === undefined) ? '' : inspect(s);
+  });
 }
