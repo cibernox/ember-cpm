@@ -1,15 +1,16 @@
+import { or } from '@ember/object/computed';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import allEqual from 'ember-cpm/macros/all-equal';
 import sum from 'ember-cpm/macros/sum';
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   d: allEqual('a', 'c'),
   e: allEqual('a', 'b'),
   f: allEqual(),
   g: allEqual('a'),
   h: allEqual('a', 'c', 6),
-  i: allEqual(Ember.computed.or('a'), 6),
+  i: allEqual(or('a'), 6),
   j: allEqual(sum('a','b'), 8)
 });
 

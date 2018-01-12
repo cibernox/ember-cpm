@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import ObjectProxy from '@ember/object/proxy';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import RSVP from 'rsvp';
 import computedUnsafe from 'ember-macro-helpers/computed-unsafe';
 
-const { ObjectProxy, PromiseProxyMixin } = Ember;
 const { Promise } = RSVP;
 
 const PromiseProxy = ObjectProxy.extend(PromiseProxyMixin);

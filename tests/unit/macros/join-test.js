@@ -1,16 +1,16 @@
+import EmberObject, { computed } from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import join from "ember-cpm/macros/join";
 
 module("join");
 
 function upcase (dependantKey) {
-  return Ember.computed(dependantKey, function () {
+  return computed(dependantKey, function () {
     return this.get(dependantKey).toUpperCase();
   });
 }
 
-var Obj = Ember.Object.extend({
+var Obj = EmberObject.extend({
   firstName: 'Jean-Luc',
   lastName:  'Picard',
   fullName:  join('firstName', 'lastName', ' '),

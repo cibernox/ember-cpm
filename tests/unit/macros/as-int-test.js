@@ -1,8 +1,8 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import asInt from 'ember-cpm/macros/as-int';
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   val: '6',
   intVal: 2,
   floatVal: 2.6,
@@ -87,7 +87,7 @@ test('Setting int value updates dependant int property', function (assert) {
 
 test('zero-argument case throws an exception', function (assert) {
   assert.throws(function () {
-    Ember.Object.extend({
+    EmberObject.extend({
       prop: asInt()
     });
   }, /No\sargument/);
@@ -95,7 +95,7 @@ test('zero-argument case throws an exception', function (assert) {
 
 test('null-argument case throws an exception', function (assert) {
   assert.throws(function () {
-    Ember.Object.extend({
+    EmberObject.extend({
       prop: asInt(null)
     });
   }, /Null\sargument/);

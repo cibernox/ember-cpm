@@ -1,17 +1,18 @@
+import { or } from '@ember/object/computed';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import difference from "ember-cpm/macros/difference";
 import sum from "ember-cpm/macros/sum";
 
 module("difference");
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   c: difference('a', 'b'),
   d: difference('a', 3),
   e: difference(3, 'a'),
   f: difference(),
   g: difference('a'),
-  h: difference(Ember.computed.or('a'), 2),
+  h: difference(or('a'), 2),
   i: difference(sum('a', 'b'), 4)
 });
 

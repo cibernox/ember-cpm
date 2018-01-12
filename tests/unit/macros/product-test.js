@@ -1,10 +1,10 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import product from "ember-cpm/macros/product";
 
 module("product");
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   c: product('a', 'b'),
   d: product('a', 'c'),
   e: product('a'),

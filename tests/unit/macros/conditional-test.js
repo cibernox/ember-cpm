@@ -1,19 +1,24 @@
+import { A } from '@ember/array';
+import { fmt } from '@ember/string';
+import EmberObject from '@ember/object';
+import {
+  gt,
+  gte,
+  lt,
+  lte,
+  and,
+  equal,
+  empty
+} from '@ember/object/computed';
 import { module, test } from "qunit";
-import Ember from "ember";
 import conditional from "ember-cpm/macros/conditional";
 
-var gt = Ember.computed.gt;
-var gte = Ember.computed.gte;
-var lt = Ember.computed.lt;
-var lte = Ember.computed.lte;
-var and = Ember.computed.and;
-var eq = Ember.computed.equal;
-var empty = Ember.computed.empty;
+var eq = equal;
 
 module('conditional');
 
 test('handles a boolean conditional properly', function(assert) {
-  var MyType = Ember.Object.extend({
+  var MyType = EmberObject.extend({
     a: true,
     b: conditional('a', 'yes', 'no')
   });
@@ -26,8 +31,8 @@ test('handles a boolean conditional properly', function(assert) {
 });
 
 function simpleComputedPropertyMacroTest(name, fn, tests) {
-  test(Ember.String.fmt('handles composed "%@" computed proerty', name), function (assert) {
-    var MyType = Ember.Object.extend({
+  test(fmt('handles composed "%@" computed proerty', name), function (assert) {
+    var MyType = EmberObject.extend({
       a: -1,
       mac: conditional(fn('a', 15), 'yes', 'no')
     });
@@ -72,7 +77,7 @@ simpleComputedPropertyMacroTest('gte', gte, [
 ]);
 
 test('handles "and" composable computed property macro', function (assert) {
-  var MyType = Ember.Object.extend({
+  var MyType = EmberObject.extend({
     hasTent: true,
     hasBackpack: false,
     readyForCampString: conditional(and('hasTent', 'hasBackpack'), 'ready', 'not ready')
@@ -87,8 +92,8 @@ test('handles "and" composable computed property macro', function (assert) {
 });
 
 test('handles "empty" composable computed property macro', function (assert) {
-  var MyType = Ember.Object.extend({
-    attendees: Ember.A(['Charlie', 'Dennis', 'Mac']),
+  var MyType = EmberObject.extend({
+    attendees: A(['Charlie', 'Dennis', 'Mac']),
     paddysPubStatus: conditional(empty('attendees'), 'closed', 'open')
   });
 
@@ -101,7 +106,7 @@ test('handles "empty" composable computed property macro', function (assert) {
 });
 
 test('handles nested conditional computed properties', function (assert) {
-  var MyType = Ember.Object.extend({
+  var MyType = EmberObject.extend({
     a: 14,
     b: conditional(conditional(eq('a', 15), 'yes', null), 'good', 'bad')
   });
@@ -115,7 +120,7 @@ test('handles nested conditional computed properties', function (assert) {
 });
 
 test('handles computed positive and negative values', function(assert) {
-  var MyType = Ember.Object.extend({
+  var MyType = EmberObject.extend({
     a: true,
     positive: 'Yep',
     negative: 'Nope',
