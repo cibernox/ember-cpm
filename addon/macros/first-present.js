@@ -1,8 +1,8 @@
-import { isBlank } from '@ember/utils';
+import { isPresent } from '@ember/utils';
 import { resolveKeys } from '../utils';
 
 /**
-  Returns the first argument that is not blank (as in Ember.isBlank)
+  Returns the first argument that has a value (as determined by isPresent).
 
   Example
 
@@ -26,7 +26,7 @@ import { resolveKeys } from '../utils';
 export default resolveKeys((...values) => {
   for (let i in values) {
     let value = values[i];
-    if (!isBlank(value)) {
+    if (isPresent(value)) {
       return value;
     }
   }

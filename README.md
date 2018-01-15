@@ -61,7 +61,7 @@ var Macros = {
    (testing using `===`)
  * `encodeURIComponent` -- calls `encodeURIComponent` on the original value
  * `encodeURI` -- calls `encodeURI` on the original value
- * `firstPresent` -- returns the first property with a value, as determined by `Ember.isBlank`
+ * `firstPresent` -- returns the first property with a value, as determined by `Ember.isPresent`
  * `fmt` -- pass the original values into a format-string
  * `htmlEscape` -- escapes the original value with
    `Handlebars.Utils.escapeExpression` *and* wraps the result in a
