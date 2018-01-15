@@ -1,14 +1,15 @@
+import { or } from '@ember/object/computed';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import quotient from 'ember-cpm/macros/quotient';
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   c: quotient('a', 'b'),
   d: quotient('a', 3),
   e: quotient(3, 'a'),
   f: quotient(),
   g: quotient('a'),
-  h: quotient(Ember.computed.or('a'), 2)
+  h: quotient(or('a'), 2)
 });
 
 var myObj = MyType.create({

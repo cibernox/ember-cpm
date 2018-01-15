@@ -1,11 +1,12 @@
+import { alias } from '@ember/object/computed';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from 'ember';
 import not from 'ember-cpm/macros/not';
 import allEqual from 'ember-cpm/macros/all-equal';
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
 
-  valAlias: Ember.computed.alias('val'),
+  valAlias: alias('val'),
   notValAlias: not('valAlias'),
   notTrue: not(true),
   notFalse: not(false),

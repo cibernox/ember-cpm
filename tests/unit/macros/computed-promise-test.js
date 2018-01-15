@@ -1,5 +1,6 @@
+import EmberObject from '@ember/object';
+import { defer } from 'rsvp';
 import { module, test } from "qunit";
-import Ember from "ember";
 import computedPromise from "ember-cpm/macros/computed-promise";
 
 var object;
@@ -7,9 +8,9 @@ var deferred;
 
 module("promise-object", {
   beforeEach() {
-    deferred = Ember.RSVP.defer();
+    deferred = defer();
 
-    object = Ember.Object.extend({
+    object = EmberObject.extend({
       dep: null,
       promise: deferred.promise,
       myComputedPromise: computedPromise('dep', function(){
@@ -50,7 +51,7 @@ test('when dependent key changes cb is invoked (non-eagerly)', function(assert){
   }).then(function(){
     object.set('dep', 'does not matter');
   }).then(function(){
-    deferred = Ember.RSVP.defer();
+    deferred = defer();
 
     object.set('promise', deferred.promise);
     object.get('myComputedPromise');

@@ -1,21 +1,23 @@
+import { max } from '@ember/object/computed';
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import sum from "ember-cpm/macros/sum";
 
 module("sum");
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   d: sum('a', 'b'),
   e: sum('a', 'b', 'c'),
   f: sum('a', 'b', 'c', 2),
   g: sum('a'),
   h: sum(2),
-  j: Ember.A([1, 2, 3, 4]),
-  k: sum(Ember.computed.max('j'), 5),
+  j: A([1, 2, 3, 4]),
+  k: sum(max('j'), 5),
   l: sum(sum('a', 'b'), 5),
   m: sum('j'),
   n: sum('a', 'j', 'j'),
-  o: Ember.A([]),
+  o: A([]),
   p: sum('o')
 });
 

@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import ifNull from 'ember-cpm/macros/if-null';
 import EmberCPM from 'ember-cpm';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   a: 1,
   b: 2,
   something: null,

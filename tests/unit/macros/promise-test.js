@@ -1,12 +1,12 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import promise from "ember-cpm/macros/promise";
 
 var object;
 
 module("promise", {
   beforeEach() {
-    object = Ember.Object.extend({
+    object = EmberObject.extend({
       asPromise: promise('value')
     }).create({value: 'Kangaroo'});
   }

@@ -1,8 +1,8 @@
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import encodeURIComponent from "ember-cpm/macros/encode-uri-component";
 
-var MyObj = Ember.Object.extend({
+var MyObj = EmberObject.extend({
   encoded: encodeURIComponent('value')
 });
 

@@ -1,4 +1,4 @@
-import { isPresent } from 'ember-utils';
+import { isPresent } from '@ember/utils';
 import { resolveKeys } from '../utils';
 
 /**

@@ -1,4 +1,4 @@
-import {parseComputedPropertyMacro} from '../utils';
+import { parseComputedPropertyMacro } from '../utils';
 
 /**
   Converts the value in the given dependent key into a float.

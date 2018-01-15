@@ -1,22 +1,24 @@
+import { mapBy } from '@ember/object/computed';
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import mean from "ember-cpm/macros/mean";
 
 var myObj;
 
 
-var MyType = Ember.Object.extend({
+var MyType = EmberObject.extend({
   e: mean('a', 'b', 'c', 'd'), //3
   f: mean('e', 5, 13, 7),
   g: mean(mean('a', 'b', 'c', 'd'), 5, 13, 7),
   h: mean(),
   i: mean('a'),
-  j_data: Ember.A([6, 2, 1, 3]),
+  j_data: A([6, 2, 1, 3]),
   j: mean('j_data'),
   l: mean('a', 'b', 'c', null),
   m: mean('a', 'b', 'c', undefined),
-  n_data: Ember.A([{id: 1, val: 30}, {id: 2, val: 20}]),
-  n: mean(Ember.computed.mapBy('n_data', 'val'))
+  n_data: A([{id: 1, val: 30}, {id: 2, val: 20}]),
+  n: mean(mapBy('n_data', 'val'))
 });
 
 module("mean", {

@@ -1,10 +1,11 @@
+import { run } from '@ember/runloop';
+import EmberObject from '@ember/object';
 import { module, test } from "qunit";
-import Ember from "ember";
 import fmt from "ember-cpm/macros/fmt";
 
 module("fmt");
 
-var MyObj = Ember.Object.extend({
+var MyObj = EmberObject.extend({
   starred: fmt('value', '** %@ **'),
   labeled: fmt('label', 'value', '%@: %@')
 });
@@ -41,8 +42,8 @@ test('injects multiple values into the format-string', function(assert) {
 
 test('recomputes', function(assert) {
   var o = MyObj.create({ label: 'Name', value: "Kaylee" });
-  Ember.run(function() {o.set('label', 'First Name'); });
+  run(function() {o.set('label', 'First Name'); });
   assert.equal(o.get('labeled'), 'First Name: Kaylee');
-  Ember.run(function() {o.set('value', 'Mike');});
+  run(function() {o.set('value', 'Mike');});
   assert.equal(o.get('labeled'), 'First Name: Mike');
 });
