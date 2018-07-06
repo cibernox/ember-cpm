@@ -61,7 +61,8 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "contributors": [
-    "Miguel Camba <miguel.camba@gmail.com>"
+    "Miguel Camba <miguel.camba@gmail.com>",
+	"Ryan Mark <rgmark@gmail.com>"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
