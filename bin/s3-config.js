@@ -1,4 +1,5 @@
-module.exports = function(revision, tag, date){
+/*eslint-disable no-undef */
+module.exports = function(revision, tag){
   var names = ['ember-cpm-latest.js', 'ember-cpm-' + revision + '.js'];
   if (tag) {
     names.push('ember-cpm-' + tag + '.js')

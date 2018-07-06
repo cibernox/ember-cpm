@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "ember-cli-babel": "^6.14.1",
-    "ember-macro-helpers": "^1.0.0"
+    "ember-macro-helpers": "^1.0.0",
+    "inflection": "^1.12.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.7.0",
@@ -62,7 +63,7 @@
   },
   "contributors": [
     "Miguel Camba <miguel.camba@gmail.com>",
-	"Ryan Mark <rgmark@gmail.com>"
+    "Ryan Mark <rgmark@gmail.com>"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
