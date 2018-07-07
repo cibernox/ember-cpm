@@ -9,6 +9,8 @@
 // S3_SECRET_ACCESS_KEY
 // S3_ACCESS_KEY_ID
 //
+
+/* eslint-disable no-undef */
 var S3Publisher = require('ember-publisher');
 var configPath = require('path').join(__dirname, './s3-config.js');
 

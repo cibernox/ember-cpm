@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape, no-console */
 var path        = require('path');
 var fs          = require('fs');
 var inflection  = require('inflection');
