@@ -16,28 +16,28 @@ var MyType = EmberObject.extend({
 
 var myObj;
 
-module('not', {
-  beforeEach() {
+module('not', function(hooks) {
+  hooks.beforeEach(function() {
     myObj = MyType.create({
       val: false,
       five: '5'
     });
-  }
-});
+  });
 
-test('Boolean literals', function (assert) {
-  assert.strictEqual(myObj.get('notTrue'), false);
-  assert.strictEqual(myObj.get('notFalse'), true);
-});
+  test('Boolean literals', function (assert) {
+    assert.strictEqual(myObj.get('notTrue'), false);
+    assert.strictEqual(myObj.get('notFalse'), true);
+  });
 
-test('Not all equal (composable CPM)', function (assert) {
-  assert.strictEqual(myObj.get('notAllEqual'), false);
-  assert.strictEqual(myObj.get('notNotAllEqual'), true);
-  myObj.set('five', '6');
-  assert.strictEqual(myObj.get('notAllEqual'), true);
-  assert.strictEqual(myObj.get('notNotAllEqual'), false);
-});
+  test('Not all equal (composable CPM)', function (assert) {
+    assert.strictEqual(myObj.get('notAllEqual'), false);
+    assert.strictEqual(myObj.get('notNotAllEqual'), true);
+    myObj.set('five', '6');
+    assert.strictEqual(myObj.get('notAllEqual'), true);
+    assert.strictEqual(myObj.get('notNotAllEqual'), false);
+  });
 
-test('Alias inverse (composable CPM)', function (assert) {
-  assert.strictEqual(myObj.get('notValAlias'), true);
+  test('Alias inverse (composable CPM)', function (assert) {
+    assert.strictEqual(myObj.get('notValAlias'), true);
+  });
 });
