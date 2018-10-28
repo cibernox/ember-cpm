@@ -8,14 +8,14 @@ var MyType = EmberObject.extend({
 
 var myObj;
 
-module('literal', {
-  beforeEach() {
+module('literal', function(hooks) {
+  hooks.beforeEach(function() {
     myObj = MyType.create({
       val: '6'
     });
-  }
-});
+  });
 
-test('Property key (should return the key its self)', function (assert) {
-  assert.strictEqual(myObj.get('literalProp'), 'val');
+  test('Property key (should return the key its self)', function (assert) {
+    assert.strictEqual(myObj.get('literalProp'), 'val');
+  });
 });

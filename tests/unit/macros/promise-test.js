@@ -4,37 +4,37 @@ import promise from "ember-cpm/macros/promise";
 
 var object;
 
-module("promise", {
-  beforeEach() {
+module("promise", function(hooks) {
+  hooks.beforeEach(function() {
     object = EmberObject.extend({
       asPromise: promise('value')
     }).create({value: 'Kangaroo'});
-  }
-});
-
-test('returns a promise', function(assert) {
-  var p = object.get('asPromise');
-  assert.equal(typeof(p.then), 'function');
-});
-
-test('is pre-resolved', function(assert) {
-  var done = assert.async();
-  var state;
-  var p = object.get('asPromise');
-  p.then(function() { state = 'passed'; }, function() { state = 'failed'; });
-  setTimeout(function(){
-    assert.equal(state, 'passed');
-    done();
   });
-});
 
-test('resolves with the value', function(assert) {
-  var done = assert.async();
-  var state;
-  var p = object.get('asPromise');
-  p.then(function(x) { state = x; }, function(x) { state = x; });
-  setTimeout(function(){
-    assert.equal(state, 'Kangaroo');
-    done();
+  test('returns a promise', function(assert) {
+    var p = object.get('asPromise');
+    assert.equal(typeof(p.then), 'function');
+  });
+
+  test('is pre-resolved', function(assert) {
+    var done = assert.async();
+    var state;
+    var p = object.get('asPromise');
+    p.then(function() { state = 'passed'; }, function() { state = 'failed'; });
+    setTimeout(function(){
+      assert.equal(state, 'passed');
+      done();
+    });
+  });
+
+  test('resolves with the value', function(assert) {
+    var done = assert.async();
+    var state;
+    var p = object.get('asPromise');
+    p.then(function(x) { state = x; }, function(x) { state = x; });
+    setTimeout(function(){
+      assert.equal(state, 'Kangaroo');
+      done();
+    });
   });
 });
